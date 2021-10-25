@@ -13,14 +13,13 @@ for latest ongoing, or upcoming news
 
 # installation
 
-the module is on [pypi](https://pypi.org/kr-g/pygitonic) and can be installed with pip
-
-  python -m pip install pygitonic
+...
 
 
 # limitations
 
 ...
+
 
 # license
 
