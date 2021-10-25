@@ -40,7 +40,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     license="MIT",
     keywords="python utility shell git",
-    install_requires=["requests"],
+    install_requires=["pyjsoncfg",],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: POSIX :: Linux",
