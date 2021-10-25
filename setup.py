@@ -24,7 +24,7 @@ def find_projectname():
     return name
 
 
-file = os.path.join("pygitgrab", "__init__.py")
+file = os.path.join("pygitonic", "__init__.py")
 version = find_version(file)
 projectname = find_projectname()
 
@@ -33,22 +33,24 @@ setuptools.setup(
     version=version,
     author="k.r. goger",
     author_email=f"k.r.goger+{projectname}@gmail.com",
-    description="grab only certain information from remote git repo and store them local",
+    description="manage a multi git workspace",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url=f"https://github.com/kr-g/{projectname}",
     packages=setuptools.find_packages(),
     license="MIT",
-    keywords="python utility shell, git",
+    keywords="python utility shell git",
     install_requires=["requests"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: POSIX :: Linux",
         "Environment :: Console",
+        "Environment :: Other Environment",
         "Intended Audience :: Developers",
         "Topic :: Utilities",
+        "Topic :: Desktop Environment",
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     ],
     python_requires=">=3.6",
 )
