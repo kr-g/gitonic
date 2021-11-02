@@ -136,7 +136,7 @@ class Tile(TkMixin):
                     pass
                 if el != self:
                     el.unregister_idn()
-        
+
     def destroy(self):
         for f in [self.frame, *self._frame]:
             if f:
@@ -155,7 +155,7 @@ class Tile(TkMixin):
         p = self.parent_frame()
 
         # opts = { "borderwidth":2,  "relief":"ridge" }  ##todo debug
-    
+
         self.frame = ttk.Frame(p)  ## **opts
 
     def _end_frame(self):
@@ -167,7 +167,7 @@ class Tile(TkMixin):
 
         if self._visible:
             self._init_frame()
-        
+
             self._build()
             self._pack_elems()
 
@@ -176,7 +176,7 @@ class Tile(TkMixin):
         return self
 
     def _build(self):
-        #self._init_frame()
+        # self._init_frame()
 
         el = self.create_element()
         self._add_frames(el)
@@ -342,7 +342,11 @@ class TileEntry(Tile):
         self._var = self._create_var()
         self._entry = self._create_entry()
 
-        val = self.pref(VALUE, None)
+        try:
+            val = self._val
+        except:
+            val = self.pref(VALUE, None)
+
         if val:
             self.set_val(val)
 
@@ -365,6 +369,7 @@ class TileEntry(Tile):
         return self._var.get()
 
     def set_val(self, val=None):
+        self._val = val
         self._var.set(val)
 
     def on_focus_enter(self, ev):
@@ -373,6 +378,7 @@ class TileEntry(Tile):
     def on_focus_leave(self, ev):
         try:
             nval = self.get_val()
+            self._val = nval
         except:
             # validation error
             self.set_val(self._old_val)
