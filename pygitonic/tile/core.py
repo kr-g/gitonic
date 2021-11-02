@@ -136,7 +136,7 @@ class Tile(TkMixin):
                     pass
                 if el != self:
                     el.unregister_idn()
-
+        
     def destroy(self):
         for f in [self.frame, *self._frame]:
             if f:
@@ -155,7 +155,7 @@ class Tile(TkMixin):
         p = self.parent_frame()
 
         # opts = { "borderwidth":2,  "relief":"ridge" }  ##todo debug
-
+    
         self.frame = ttk.Frame(p)  ## **opts
 
     def _end_frame(self):
@@ -165,15 +165,18 @@ class Tile(TkMixin):
     def layout(self):
         self._end_frame()
 
-        self._build()
-        self._pack_elems()
+        if self._visible:
+            self._init_frame()
+        
+            self._build()
+            self._pack_elems()
 
-        self._pack_frame()
+            self._pack_frame()
 
         return self
 
     def _build(self):
-        self._init_frame()
+        #self._init_frame()
 
         el = self.create_element()
         self._add_frames(el)
