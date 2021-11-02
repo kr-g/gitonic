@@ -39,8 +39,10 @@ setuptools.setup(
     url=f"https://github.com/kr-g/{projectname}",
     packages=setuptools.find_packages(),
     license="MIT",
-    keywords="python utility shell git",
-    install_requires=["pyjsoncfg",],
+    keywords="python utility shell git tkinter",
+    install_requires=[
+        "pyjsoncfg",
+    ],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Operating System :: POSIX :: Linux",

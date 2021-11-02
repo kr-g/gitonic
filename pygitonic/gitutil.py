@@ -168,4 +168,4 @@ if __name__ == "__main__":
 
             for stat in git.status:
                 fs = git.stat(stat)
-                print(stat, fs.is_file())
+                print(stat, "file" if fs.is_file() else "dir")
