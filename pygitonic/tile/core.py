@@ -10,8 +10,15 @@ import os
 
 import logging
 
+enableLogging = logging.DEBUG
+
 _logger = logging.getLogger("ruckzuck")
-_logger.addHandler(logging.NullHandler())
+
+if enableLogging:
+    logging.basicConfig()
+    _logger.setLevel(enableLogging)
+else:
+    _logger.addHandler(logging.NullHandler())
 
 
 def _flat(args):
@@ -111,6 +118,8 @@ class Tile(TkMixin):
 
         self.set_parent(parent)
 
+        self._container = None
+
         self._init_frame()
         self.__init__internal__()
 
@@ -169,8 +178,8 @@ class Tile(TkMixin):
             self._init_frame()
 
             self._build()
-            self._pack_elems()
 
+            self._pack_elems()
             self._pack_frame()
 
         return self
@@ -183,10 +192,11 @@ class Tile(TkMixin):
 
         for el in self._elems:
             if isinstance(el, Tile):
+                print_t("h...ups", self)
                 el.layout()
                 self._add_frames(el.frame)
             else:
-                print_t("ups")
+                print_t("...ups")
                 self._add_frames(el)
 
         return self
