@@ -36,6 +36,8 @@ def join_files(files, sep=" "):
     return sep.join(map(lambda x: "'" + x + "'", files))
 
 
+git_version = lambda: git_cmd(f"--version")[0].split()[2]
+
 git_pull = lambda repo: with_git_cmd(repo, f"pull")
 
 git_stat = lambda repo: with_git_cmd(repo, f"status --porcelain")

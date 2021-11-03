@@ -558,6 +558,8 @@ class TileEntryListbox(TileEntry):
         self._values = list(vals if vals else [])
 
         self._width = int(self.pref("width", 20))
+
+        self._sel_mode = int(self.pref("select_many", False))
         ##todo self._height = int(self.pref("height", 5))
 
     def destroy(self):
@@ -656,6 +658,7 @@ class TileEntryListbox(TileEntry):
             exportselection=False,
             height=h,
             width=self._width,
+            selectmode="multiple" if self._sel_mode else None,
         )
 
         return self._listb_wg_parent
@@ -674,6 +677,9 @@ class TileEntryListbox(TileEntry):
         print_t(ON_DOUBLE_CLICK, ref_self)
 
     def _select_handler(self, event):
+        if self._sel_mode:
+            self.pref("on_sel", self.on_sel)(self)
+            return
         sel = self._listb.curselection()
         nullable = self.pref("nullable", True)
         if sel == self._lastsel and nullable:
@@ -683,6 +689,33 @@ class TileEntryListbox(TileEntry):
         else:
             self.pref(ON_SELECT, self.on_select)(self)
         self._lastsel = sel
+
+    def get_selection(self):
+        sel = self._listb.curselection()
+        return sel
+
+    def get_selection_values(self):
+        sel = self._listb.curselection()
+        vals = list(map(lambda x: (x, self._values[x]), sel))
+        return vals
+
+    def set_selection(self, vals):
+        self.clr_selection()
+        if vals == -1:
+            # select all
+            vals = self._values
+        for v in vals:
+            try:
+                idx = self._values.index(v)
+                self._listb.selection_set(idx)
+                self._listb.see(idx)
+            except:
+                print_t("not found", v)
+
+    def on_sel(self, ref_self):
+        print_t(
+            self.__class__.__name__, "on_sel", ref_self, ref_self.get_selection_values()
+        )
 
     def on_select(self, ref_self):
         print_t(self.__class__.__name__, ON_SELECT, ref_self.get_val())
@@ -859,11 +892,13 @@ class TileCols(TileCompositFlow):
 class TileTab(Tile):
     def __init__internal__(self):
         self._tabs = {}
+        self._tabs_show = {}
 
     def create_element(self):
 
         self._tab = ttk.Notebook(self.frame)
         self._elem = []
+        self._tabs.clear()
 
         for el in self.pref(SOURCE, []):
             caption = ""
@@ -877,12 +912,16 @@ class TileTab(Tile):
 
             el.set_parent(self.frame)
             el.layout()
-
             self._elem.append(el)
-            self._tab.add(el.frame, text=caption)
 
-            idx = str(len(self._tab.tabs()) - 1)
-            self._tabs[idn] = idx
+            if idn not in self._tabs_show:
+                self._tabs_show[idn] = True
+
+            if self._tabs_show[idn]:
+                self._tab.add(el.frame, text=caption)
+
+                idx = str(len(self._tab.tabs()) - 1)
+                self._tabs[idn] = idx
 
             self._tab_sel = 0
 
@@ -908,6 +947,12 @@ class TileTab(Tile):
         print_t("select", self._tabs)
         idx = self._tabs[nam]
         self._tab.select(idx)
+
+    def show_tab(self, idn, show=True):
+        self._tabs_show[idn] = show
+
+    def hide_tab(self, idn):
+        self.show(idn, False)
 
 
 class TileTreeView(Tile):
