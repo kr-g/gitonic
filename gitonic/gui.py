@@ -234,7 +234,7 @@ def minimize():
     tk_root.iconify()
 
 
-url_homepage = "https://github.com/kr-g/pygitonic"
+url_homepage = "https://github.com/kr-g/gitonic"
 
 
 def open_homepage():
