@@ -148,12 +148,12 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntry(caption="", idn="commit_short", width=50),
+                    TileEntry(caption="message:", idn="commit_short", width=50),
                     TileEntryText(caption="", idn="commit_long", width=80, height=10),
                     TileLabelButton(
                         caption="",
                         commandtext="commit",
-                        idn="commit_workspace",
+                        command=lambda: on_commit(),
                     ),
                 ]
             ),
@@ -384,6 +384,23 @@ def on_pull_tracked():
 
 def pull_all_workspace():
     pull_gits(sorted(gws.gits.keys()))
+
+
+def on_commit():
+    head = gt("commit_short").get_val().strip()
+    body = gt("commit_long").get_val().strip()
+
+    if len(head) < 10 or len(head) > 50:
+        tkinter.messagebox.showerror(
+            "error",
+            f"length: 10 > message < 50\ncurrent: {len(head)}",
+        )
+        return
+
+    message = head
+    if len(body) > 0:
+        message += "\n" * 2 + body
+    print(message)
 
 
 # init
