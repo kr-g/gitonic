@@ -434,6 +434,7 @@ def on_clr_commit():
 
 
 def on_commit():
+    print("on_commit")
     head = gt("commit_short").get_val().strip()
     body = gt("commit_long").get_val().strip()
 
@@ -450,11 +451,12 @@ def on_commit():
 
     for gnam in tracked_gits:
         try:
+            print("use", gnam)
             git = gws.find(gnam)[0]
             rc = git_commit(git.path, message)
             print(f"--- {git}")
             [print(x) for x in rc]
-            do_log_time(f"commit: {git.path} {message}")
+            do_log_time(f"commit: {git.path} '{message}'")
             do_logs(rc)
         except Exception as ex:
             print(ex)
