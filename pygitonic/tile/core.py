@@ -980,10 +980,14 @@ class TileTab(Tile):
         self._tab.select(idx)
 
     def show_tab(self, idn, show=True):
+        # todo
+        raise Exception("untested")
         self._tabs_show[idn] = show
 
     def hide_tab(self, idn):
-        self.show(idn, False)
+        # todo
+        raise Exception("untested")
+        self.show_tab(idn, False)
 
 
 class TileTreeView(Tile):

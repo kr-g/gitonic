@@ -158,19 +158,19 @@ main = TileTab(
                 ]
             ),
         ),
-        (
-            "tag",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileEntryButton(
-                        caption="new tag name",
-                        commandtext="tag",
-                        idn="tag_workspace",
-                    ),
-                ]
-            ),
-        ),
+        #         (
+        #             "tag",
+        #             TileRows(
+        #                 source=[
+        #                     TileLabel(caption=""),
+        #                     TileEntryButton(
+        #                         caption="new tag name",
+        #                         commandtext="tag",
+        #                         idn="tag_workspace",
+        #                     ),
+        #                 ]
+        #             ),
+        #         ),
         (
             "log",
             TileRows(
