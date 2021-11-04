@@ -55,7 +55,7 @@ class Cmd(object):
                     line = f.readline()
                     if len(line) == 0:
                         break
-                    line = line.strip()
+                    line = line.rstrip()
                     if self._callb:
                         self._callb(line)
             rc = 0

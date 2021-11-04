@@ -97,11 +97,12 @@ git_make_branch = lambda repo, branch, callb=None: with_git_cmd(
 
 
 class GitStatus(object):
-    def __init__(self, mode=None, file=None):
-        self.set(mode, file)
+    def __init__(self, mode=None, staged=None, file=None):
+        self.set(mode, staged, file)
 
-    def set(self, mode, file):
+    def set(self, mode, staged, file):
         self.mode = mode.upper() if mode else ""
+        self.staged = staged.upper() if staged else ""
         self.file = file
         self.state = {}
 
@@ -118,14 +119,25 @@ class GitStatus(object):
             self.state.update(comb)
             self.__dict__.update(comb)
 
+            comb = {f"is_staged_{fc}": self.staged.find(s) >= 0}
+            self.state.update(comb)
+            self.__dict__.update(comb)
+
         return self
 
     def from_str(self, s):
-        self.set(*s.split(" "))
+        if s[:2] == "??":
+            mode = "??"
+            staged = ""
+        else:
+            staged = s[0].strip()
+            mode = s[1].strip()
+        file = s[3:].strip()
+        self.set(mode, staged, file)
         return self
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{ self.file }', '{ str(self.mode) }' )"
+        return f"{self.__class__.__name__}('{ self.file }', '{ str(self.mode) }', '{ str(self.staged) }' )"
 
 
 class GitRepo(object):

@@ -10,7 +10,9 @@ import tkinter
 from tkinter import Tk
 
 from file import FileStat
-from gitutil import GitWorkspace, git_diff, git_difftool, git_pull, git_commit
+from gitutil import GitWorkspace, git_diff, git_difftool
+from gitutil import git_add, git_add_undo, git_commit
+from gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 #
 
@@ -99,7 +101,7 @@ main = TileTab(
                         header=[
                             ("git", None),
                             ("file", None),
-                            ("state", None),
+                            ("state", "mode / staged"),
                             ("type", None),
                         ],
                     ),
@@ -113,10 +115,12 @@ main = TileTab(
                             TileLabelButton(
                                 caption="selected",
                                 commandtext="add",
+                                command=lambda: on_add(),
                             ),
                             TileLabelButton(
                                 caption="",
                                 commandtext="unstage",
+                                command=lambda: on_add_undo(),
                             ),
                             TileLabelButton(
                                 caption="",
@@ -376,6 +380,7 @@ def pull_gits(gits):
             do_logs(rc)
         except Exception as ex:
             print(ex)
+    set_changes()
 
 
 def on_pull_tracked():
@@ -384,6 +389,38 @@ def on_pull_tracked():
 
 def pull_all_workspace():
     pull_gits(sorted(gws.gits.keys()))
+
+
+def on_add():
+    print("on_add")
+    sel = gt("changes").get_selection_values()
+    for rec in sel:
+        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        git = gws.find(pg)[0]
+        rc = git_add(git.path, [rec["file"]])
+        print(f"--- {git}")
+        [print(x) for x in rc]
+        do_log_time(
+            "on_add",
+        )
+        do_logs(rc)
+    set_changes()
+
+
+def on_add_undo():
+    print("on_add_undo")
+    sel = gt("changes").get_selection_values()
+    for rec in sel:
+        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        git = gws.find(pg)[0]
+        rc = git_add_undo(git.path, [rec["file"]])
+        print(f"--- {git}")
+        [print(x) for x in rc]
+        do_log_time(
+            "on_add_undo",
+        )
+        do_logs(rc)
+    set_changes()
 
 
 def on_commit():
@@ -465,7 +502,7 @@ def set_changes():
                 gst = {
                     "git": rnam,
                     "file": stat.file,
-                    "state": stat.mode,
+                    "state": stat.mode + " / " + stat.staged,
                     "type": ("file" if fs.is_file() else "dir"),
                 }
                 changes.append(gst)
