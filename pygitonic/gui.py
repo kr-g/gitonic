@@ -146,8 +146,8 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntry(caption="", idn="commit_short", width=40),
-                    TileEntryText(caption="", idn="commit_long", height=10),
+                    TileEntry(caption="", idn="commit_short", width=50),
+                    TileEntryText(caption="", idn="commit_long", width=80, height=10),
                     TileLabelButton(
                         caption="",
                         commandtext="commit",
@@ -238,7 +238,7 @@ main_content = TileRows(
             source=[
                 TileLabelClick(
                     caption=f"gitonic - {url_homepage}",
-                    on_click=open_homepage,
+                    on_click=lambda x: open_homepage(),
                 ),
                 TileLabel(
                     caption=f"version: {VERSION}",
