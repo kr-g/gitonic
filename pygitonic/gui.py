@@ -1,3 +1,5 @@
+VERSION = "v0.0.1-a"
+
 import os
 
 from tile import *
@@ -15,33 +17,13 @@ tk_root = Tk()
 mainframe = Tile(tk_root=tk_root, idn="mainframe")
 
 
-def toogleLabel():
-    print("toogleLabel")
-    lbl = gt("the_label")
-    lbl._visible = not lbl._visible
-    mainframe.layout()
-
-
-main = TileRows(
-    source=[
-        TileLabel(caption="test label", idn="the_label"),
-        TileEntryInt(
-            caption="input",
-            value=1234,
-        ),
-        TileLabelButton(
-            caption="change the label", commandtext="toogle", on_click=toogleLabel
-        ),
-    ]
-)
-
-
-all_tabs = TileTab(
+main = TileTab(
     source=[
         (
             "settings",
             TileRows(
                 source=[
+                    TileLabel(caption=""),
                     TileEntryButton(
                         caption="workspace", commandtext="select", idn="workspace"
                     ),
@@ -79,8 +61,17 @@ all_tabs = TileTab(
                             ),
                         ]
                     ),
-                    TileLabelButton(
-                        caption="selected", commandtext="pull", idn="pull_workspace"
+                    TileCols(
+                        source=[
+                            TileLabelButton(
+                                caption="pull",
+                                commandtext="selected",
+                                idn="pull_selected_workspace",
+                            ),
+                            TileLabelButton(
+                                caption="", commandtext="all", idn="pull_all_workspace"
+                            ),
+                        ]
                     ),
                 ]
             ),
@@ -122,7 +113,7 @@ all_tabs = TileTab(
             "commit",
             TileRows(
                 source=[
-                    TileLabel(caption="commit"),
+                    TileLabel(caption=""),
                     TileEntry(caption="", idn="commit_short", width=40),
                     TileEntryText(caption="", idn="commit_long", height=10),
                     TileLabelButton(
@@ -137,6 +128,7 @@ all_tabs = TileTab(
             "tag",
             TileRows(
                 source=[
+                    TileLabel(caption=""),
                     TileEntryButton(
                         caption="new tag name",
                         commandtext="tag",
@@ -146,20 +138,83 @@ all_tabs = TileTab(
             ),
         ),
         (
-            "about",
-            TileRows(source=[]),
+            "log",
+            TileRows(
+                source=[
+                    TileLabel(caption=""),
+                    TileEntryText(caption="", idn="log", height=20),
+                    TileLabelButton(
+                        caption="",
+                        commandtext="clear",
+                        idn="clr_log",
+                    ),
+                ]
+            ),
         ),
     ]
 )
 
-main_content = TileRows(source=[main, all_tabs])
+
+def quit_all(frame):
+    def quit():
+        print("quit_all")
+        # removes all, including threads
+        # sys.exit()
+        # soft, state remains
+        # download_stop()
+        frame.quit()
+
+    return quit
+
+
+def minimize():
+    print("minimize")
+    tk_root.iconify()
+
+
+url_homepage = "https://github.com/kr-g/pygitonic"
+
+
+def open_homepage():
+    import webbrowser
+
+    webbrowser.get().open(url_homepage, new=0)
+
+
+main_content = TileRows(
+    source=[
+        TileCols(
+            source=[
+                TileLabelButton(
+                    caption="close app", commandtext="bye", command=quit_all(mainframe)
+                ),
+                TileLabelButton(caption="", commandtext="minimize", command=minimize),
+            ]
+        ),
+        main,
+        TileCols(
+            source=[
+                TileLabelClick(
+                    caption=f"gitonic - {url_homepage}",
+                    on_click=open_homepage,
+                ),
+                TileLabel(
+                    caption=f"version: {VERSION}",
+                ),
+            ]
+        ),
+    ]
+)
+
+mainframe.tk.protocol("WM_DELETE_WINDOW", quit_all(mainframe))
+mainframe.tk.bind("<Escape>", lambda e: minimize())
 
 mainframe.resize_grip()
 
-# mainframe.add(main)
 mainframe.add(main_content)
 mainframe.layout()
 
+# init
 
 frepo = FileStat("~/repo")
 gt("workspace").set_val(frepo.name)
@@ -168,8 +223,9 @@ gws = GitWorkspace(frepo.name)
 gws.refresh()
 gws.refresh_status()
 
-gt("gits").set_values(gws.gits.keys())
+gt("gits").set_values(sorted(gws.gits.keys()))
 
+# end-of init
 
 print(tk_root.geometry())
 print(tk_root.winfo_reqwidth(), tk_root.winfo_reqheight())
