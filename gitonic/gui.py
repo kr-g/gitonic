@@ -292,32 +292,26 @@ def on_unsel_all_gits():
     set_tracked_gits()
 
 
-def on_diff():
-    print("on_diff")
+def on_cmd_diff(info, diff_):
+    print(info)
     sel = gt("changes").get_selection_values()
     for rec in sel:
         if rec["type"] == "file":
             pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
             git = gws.find(pg)[0]
-            rc = git_diff(git.path, rec["file"])
+            rc = diff_(git.path, rec["file"])
             print(f"--- {git}")
             [print(x) for x in rc]
-            do_log_time("on_diff")
+            do_log_time(info)
             do_logs(rc)
+
+
+def on_diff():
+    on_cmd_diff("on_diff", git_diff)
 
 
 def on_difftool():
-    print("on_difftool")
-    sel = gt("changes").get_selection_values()
-    for rec in sel:
-        if rec["type"] == "file":
-            pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
-            git = gws.find(pg)[0]
-            rc = git_difftool(git.path, rec["file"])
-            print(f"--- {git}")
-            [print(x) for x in rc]
-            do_log_time("on_difftool")
-            do_logs(rc)
+    on_cmd_diff("on_difftool", git_difftool)
 
 
 def on_log_clr():
@@ -405,46 +399,27 @@ def pull_all_workspace():
     pull_gits(sorted(gws.gits.keys()))
 
 
-def on_black():
-    print("on_black")
+def on_sel_cmd(info, selcmd_, ignore_switch=False, update_change=False):
+    print(info)
     sel = gt("changes").get_selection_values()
+    do_log_time(info, ignore_switch)
     for rec in sel:
         pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
         git = gws.find(pg)[0]
-        rc = run_black(git.path, [rec["file"]])
+        rc = selcmd_(git.path, [rec["file"]])
         print(f"--- {git}")
         [print(x) for x in rc]
-        do_log_time("on_black", True)
         do_logs(rc)
-    # set_changes()
+    if update_change:
+        set_changes()
 
 
 def on_add():
-    print("on_add")
-    sel = gt("changes").get_selection_values()
-    for rec in sel:
-        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
-        git = gws.find(pg)[0]
-        rc = git_add(git.path, [rec["file"]])
-        print(f"--- {git}")
-        [print(x) for x in rc]
-        do_log_time("on_add", True)
-        do_logs(rc)
-    set_changes()
+    on_sel_cmd("on_add", git_add, True, True)
 
 
 def on_add_undo():
-    print("on_add_undo")
-    sel = gt("changes").get_selection_values()
-    for rec in sel:
-        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
-        git = gws.find(pg)[0]
-        rc = git_add_undo(git.path, [rec["file"]])
-        print(f"--- {git}")
-        [print(x) for x in rc]
-        do_log_time("on_add_undo", True)
-        do_logs(rc)
-    set_changes()
+    on_sel_cmd("on_add", git_add_undo, True, True)
 
 
 def on_clr_commit():
@@ -525,20 +500,20 @@ def set_changes():
     print(gits)
 
     for path_git in gits:
-        path,git = path_git
-        
-        print(path,git)
-        
-        fs = FileStat(path,prefetch=True)
+        path, git = path_git
+
+        print(path, git)
+
+        fs = FileStat(path, prefetch=True)
         if not fs.exists():
             continue
-        
+
         print(git)
         git = git[0]
-        
+
         rnam = fs.basename()
         git.refresh_status()
-        
+
         if len(git.status) > 0:
             for stat in git.status:
                 fs = git.stat(stat)
@@ -547,7 +522,9 @@ def set_changes():
                     "git": rnam,
                     "file": stat.file,
                     "state": stat.mode + " / " + stat.staged,
-                    "type": ("file" if fs.is_file() else "dir") if fs_ex else "---deleted---",
+                    "type": ("file" if fs.is_file() else "dir")
+                    if fs_ex
+                    else "---deleted---",
                 }
                 changes.append(gst)
     gt("changes").set_values(changes)
