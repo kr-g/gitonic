@@ -20,6 +20,7 @@ mainframe = Tile(tk_root=tk_root, idn="mainframe")
 
 
 main = TileTab(
+    idn="maintabs",
     source=[
         (
             "settings",
@@ -117,6 +118,7 @@ main = TileTab(
                                 caption="all",
                                 commandtext="select",
                                 idn="sel_all_workspace",
+                                command=lambda: gt("changes").set_selection(-1),
                             ),
                             TileLabelButton(
                                 caption="",
@@ -162,7 +164,7 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntryText(caption="", idn="log", height=20),
+                    TileEntryText(caption="", idn="log", height=20, width=80),
                     TileLabelButton(
                         caption="",
                         commandtext="clear",
@@ -171,7 +173,7 @@ main = TileTab(
                 ]
             ),
         ),
-    ]
+    ],
 )
 
 
@@ -250,7 +252,6 @@ for path, git in gws.gits.items():
     if len(git.status) > 0:
         for stat in git.status:
             fs = git.stat(stat)
-            #
             gst = {
                 "git": rnam,
                 "file": stat.file,
@@ -258,8 +259,9 @@ for path, git in gws.gits.items():
                 "type": ("file" if fs.is_file() else "dir"),
             }
             changes.append(gst)
-
 gt("changes").set_values(changes)
+if len(changes) > 0:
+    gt("maintabs").select("tab_changes")
 
 # end-of init
 

@@ -980,7 +980,6 @@ class TileTreeView(Tile):
             self.header_name.append(key)
             if cap is None:
                 cap = key
-            print(key, cap)
             self.header_title.append(cap)
 
         self._treeview = ttk.Treeview(
@@ -989,6 +988,8 @@ class TileTreeView(Tile):
         self._treeview.bind("<<TreeviewSelect>>", self._select_handler)
 
         for key, cap in header:
+            if cap is None:
+                cap = key
             self._treeview.heading(key, text=cap)
 
         values = self.pref(VALUES, [])
@@ -1016,24 +1017,43 @@ class TileTreeView(Tile):
 
     def set_values(self, values, mapval=True):
         print("set_values", values)
+        self._values = values
+        self._iid = []
         self.clear()
-        for v in values:
+        for v in self._values:
             if mapval:
                 try:
                     v = v.__dict__
                 except:
                     pass
-                rec = list(map(lambda x: v[x], self.header_name))
+                rec = self.get_record(v)
             else:
                 rec = v
-            self._treeview.insert("", "end", values=rec)
+
+            iid = self._treeview.insert("", "end", values=rec)
+            self._iid.append(iid)
+
+    def get_record(self, vals):
+        rec = list(map(lambda x: vals[x], self.header_name))
+        return rec
+
+    def get_iid(self, val):
+        pos = self._values.index(val)
+        return self._iid[pos]
 
     def clr_selection(self):
         if len(self._treeview.selection()) > 0:
             self._treeview.selection_remove(self._treeview.selection())
 
     def set_selection(self, vals):
-        pass
+        self.clr_selection()
+        if vals == -1:
+            vals = self._iid
+        else:
+            vals = list(map(lambda x: self.get_iid(x), vals))
+        for v in vals:
+            self._treeview.selection_add(v)
+            self._treeview.see(v)
 
     def get_selection(self):
-        pass
+        return self._treeview.selection()
