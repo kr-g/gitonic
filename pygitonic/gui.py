@@ -10,7 +10,7 @@ import tkinter
 from tkinter import Tk
 
 from file import FileStat
-from gitutil import GitWorkspace, git_diff, git_difftool
+from gitutil import GitWorkspace, git_diff, git_difftool, git_pull
 
 #
 
@@ -76,10 +76,12 @@ main = TileTab(
                             TileLabelButton(
                                 caption="pull",
                                 commandtext="selected",
-                                idn="pull_selected_workspace",
+                                command=lambda: on_pull_tracked(),
                             ),
                             TileLabelButton(
-                                caption="", commandtext="all", idn="pull_all_workspace"
+                                caption="",
+                                commandtext="all",
+                                command=lambda: pull_all_workspace(),
                             ),
                         ]
                     ),
@@ -360,6 +362,28 @@ def tracked_read():
 
 def sel_tracked():
     gt("gits").set_selection(tracked_gits)
+
+
+def pull_gits(gits):
+    print("on_pull_gits")
+    for gnam in gits:
+        try:
+            git = gws.find(gnam)[0]
+            rc = git_pull(git.path)
+            print(f"--- {git}")
+            [print(x) for x in rc]
+            do_log_time(f"pull: {git.path}")
+            do_logs(rc)
+        except Exception as ex:
+            print(ex)
+
+
+def on_pull_tracked():
+    pull_gits(tracked_gits)
+
+
+def pull_all_workspace():
+    pull_gits(sorted(gws.gits.keys()))
 
 
 # init
