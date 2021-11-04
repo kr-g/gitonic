@@ -2,6 +2,7 @@ VERSION = "v0.0.1-a"
 
 import os
 import time
+import json
 
 from tile import *
 
@@ -184,6 +185,9 @@ main = TileTab(
                                 command=lambda: on_log_clr(),
                             ),
                             TileCheckbutton(caption="follow log", idn="follow"),
+                            TileCheckbutton(
+                                caption="auto switch log", idn="auto_switch"
+                            ),
                         ]
                     ),
                 ]
@@ -306,8 +310,14 @@ def on_follow_log():
         gt("log").gotoline()
 
 
+def do_log_show(always=False):
+    if always or int(gt("auto_switch").get_val()) > 0:
+        gt("maintabs").select("tab_log")
+
+
 def do_log_time(x):
     print("do_log_time", x)
+    do_log_show()
     log = gt("log")
     ts = time.asctime(time.localtime(time.time()))
     log.append(f"\n\n\n--- {x} --- {ts}")
@@ -324,6 +334,28 @@ def do_logs(x):
     print("do_logs", x)
     gt("log").extend(x)
     on_follow_log()
+
+
+tracked = FileStat(FileStat.get_tempdir()).join(["gitonic", "tracked.json"])
+tracked.makedirs()
+
+
+def tracked_write():
+    with open(tracked.name, "w") as f:
+        f.write(json.dumps(tracked_gits))
+
+
+def tracked_read():
+    try:
+        with open(
+            tracked.name,
+        ) as f:
+            cont = f.read()
+            global tracked_gits
+            tracked_gits = json.loads(cont)
+            gt("gits").set_selection(tracked_gits)
+    except Exception as ex:
+        print(ex)
 
 
 # init
@@ -347,12 +379,15 @@ def set_tracked_gits(update=True):
     tracked_gits = gt("gits").get_selection_values()
     tracked_gits = list(map(lambda x: x[1], tracked_gits))
     print("tracked_gits", tracked_gits)
+    tracked_write()
     if update:
         set_changes()
 
 
 set_workspace(False)
-set_tracked_gits(False)
+tracked_read()
+
+# set_tracked_gits(False)
 
 
 def set_changes():
@@ -384,6 +419,7 @@ if len(changes) > 0:
     gt("maintabs").select("tab_changes")
 
 gt("follow").set_val(1)
+gt("auto_switch").set_val(1)
 
 # end-of init
 

@@ -9,6 +9,8 @@ import os
 import stat
 import time
 
+import tempfile
+
 import warnings
 
 from collections import namedtuple
@@ -180,6 +182,16 @@ class FileStat(object):
         if expand:
             path = FileStat.expandpath(path)
         return path
+
+    # temp helpers
+
+    @staticmethod
+    def get_tempdir():
+        return tempfile.gettempdir()
+
+    # def get_tempfile(suffix=None, prefix=None,):
+    #    """this file is not deleted automatically"""
+    #    return tempfile.mkstemp(suffix=suffix, prefix=prefix,)
 
     # os env helpers
 
