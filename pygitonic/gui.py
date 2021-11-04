@@ -154,10 +154,19 @@ main = TileTab(
                     TileLabel(caption=""),
                     TileEntry(caption="message:", idn="commit_short", width=50),
                     TileEntryText(caption="", idn="commit_long", width=80, height=10),
-                    TileLabelButton(
-                        caption="",
-                        commandtext="commit",
-                        command=lambda: on_commit(),
+                    TileCols(
+                        source=[
+                            TileLabelButton(
+                                caption="",
+                                commandtext="commit",
+                                command=lambda: on_commit(),
+                            ),
+                            TileLabelButton(
+                                caption="",
+                                commandtext="clear",
+                                command=lambda: on_clr_commit(),
+                            ),
+                        ]
                     ),
                 ]
             ),
@@ -417,6 +426,11 @@ def on_add_undo():
         do_log_time("on_add_undo", True)
         do_logs(rc)
     set_changes()
+
+
+def on_clr_commit():
+    gt("commit_short").clr()
+    gt("commit_long").clr()
 
 
 def on_commit():

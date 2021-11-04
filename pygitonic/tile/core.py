@@ -378,6 +378,9 @@ class TileEntry(Tile):
     def get_val(self):
         return self._var.get()
 
+    def clr(self):
+        self.set_val("")
+
     def set_val(self, val=None):
         self._val = val
         self._var.set(val)
