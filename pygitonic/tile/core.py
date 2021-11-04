@@ -678,6 +678,7 @@ class TileEntryListbox(TileEntry):
 
     def _select_handler(self, event):
         if self._sel_mode:
+            # todo select and unselect
             self.pref("on_sel", self.on_sel)(self)
             return
         sel = self._listb.curselection()
@@ -982,10 +983,20 @@ class TileTreeView(Tile):
                 cap = key
             self.header_title.append(cap)
 
+        self._cont = ttk.Frame(self.frame)
+
         self._treeview = ttk.Treeview(
-            self.frame, columns=self.header_name, show="headings"
+            self._cont, columns=self.header_name, show="headings"
         )
         self._treeview.bind("<<TreeviewSelect>>", self._select_handler)
+
+        self._yscroll = ttk.Scrollbar(
+            self._cont, orient="vertical", command=self._treeview.yview
+        )
+        self._treeview.configure(yscrollcommand=self._yscroll.set)
+
+        self._treeview.pack(side="left")
+        self._yscroll.pack(side="right", fill="both", padx=0)
 
         for key, cap in header:
             if cap is None:
@@ -995,7 +1006,7 @@ class TileTreeView(Tile):
         values = self.pref(VALUES, [])
         self.set_values(values)
 
-        return self._treeview
+        return self._cont
 
     def _select_handler(self, event):
         print("_select_handler", event)
@@ -1057,3 +1068,15 @@ class TileTreeView(Tile):
 
     def get_selection(self):
         return self._treeview.selection()
+
+    def get_selection_values(self):
+        sel = self.get_selection()
+        vals = []
+        for iid in sel:
+            try:
+                pos = self._iid.index(iid)
+                vals.append(self._values[pos])
+            except:
+                print("not found", iid)
+
+        return vals
