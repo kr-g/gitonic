@@ -11,7 +11,7 @@ from tkinter import Tk
 
 from file import FileStat
 from gitutil import GitWorkspace, git_diff, git_difftool
-from gitutil import git_add, git_add_undo, git_commit
+from gitutil import run_black, git_add, git_add_undo, git_commit
 from gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 #
@@ -112,6 +112,11 @@ main = TileTab(
                     ),
                     TileCols(
                         source=[
+                            # TileLabelButton(
+                            #    caption="selected",
+                            #    commandtext="run black",
+                            #    command=lambda: on_black(),
+                            # ),
                             TileLabelButton(
                                 caption="selected",
                                 commandtext="add",
@@ -398,6 +403,20 @@ def on_pull_tracked():
 
 def pull_all_workspace():
     pull_gits(sorted(gws.gits.keys()))
+
+
+def on_black():
+    print("on_black")
+    sel = gt("changes").get_selection_values()
+    for rec in sel:
+        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        git = gws.find(pg)[0]
+        rc = run_black(git.path, [rec["file"]])
+        print(f"--- {git}")
+        [print(x) for x in rc]
+        do_log_time("on_black", True)
+        do_logs(rc)
+    # set_changes()
 
 
 def on_add():

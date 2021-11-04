@@ -11,13 +11,14 @@ from file import FileStat, PushDir
 from task import Cmd, CmdTask
 
 GIT = "git"
+BLACK = "black"
 
 
 join_wait = True
 
 
-def git_cmd(cmdline, callb=None):
-    cmd = CmdTask().set_command(f"{GIT} {cmdline}").set_callb(callb)
+def run_cmd(cmdline, callb=None):
+    cmd = CmdTask().set_command(f"{cmdline}").set_callb(callb)
     cmd.start()
     if join_wait:
         cmd.join()
@@ -26,14 +27,27 @@ def git_cmd(cmdline, callb=None):
     return cmd
 
 
+def git_cmd(cmdline, callb=None):
+    return run_cmd(f"{GIT} {cmdline}", callb=callb)
+
+
 def with_git_cmd(repo, cmd, callb=None):
     with PushDir(repo) as pd:
         return git_cmd(cmd, callb=callb)
 
 
+def with_cmd(repo, cmd, callb=None):
+    with PushDir(repo) as pd:
+        return run_cmd(cmd, callb=callb)
+
+
 def join_files(files, sep=" "):
     return sep.join(map(lambda x: "'" + x + "'", files))
 
+
+run_black = lambda repo, files, callb=None: with_cmd(
+    repo, f"{BLACK} {join_files(files)}", callb=callb
+)
 
 git_version = lambda callb=None: git_cmd(f"--version", callb=callb)[0].split()[2]
 
