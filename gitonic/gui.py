@@ -376,6 +376,19 @@ def sel_tracked():
     gt("gits").set_selection(tracked_gits)
 
 
+def on_gits_cmd(info, selcmd_, gits, ignore_switch=False, update_change=False):
+    do_log_time(info, ignore_switch)
+    for rec in gits:
+        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        git = gws.find(pg)[0]
+        rc = selcmd_(git.path, [rec["file"]])
+        print(f"--- {git}")
+        [print(x) for x in rc]
+        do_logs(rc)
+    if update_change:
+        set_changes()
+
+
 def pull_gits(gits):
     print("on_pull_gits")
     for gnam in gits:
@@ -401,17 +414,10 @@ def pull_all_workspace():
 
 def on_sel_cmd(info, selcmd_, ignore_switch=False, update_change=False):
     print(info)
-    sel = gt("changes").get_selection_values()
-    do_log_time(info, ignore_switch)
-    for rec in sel:
-        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
-        git = gws.find(pg)[0]
-        rc = selcmd_(git.path, [rec["file"]])
-        print(f"--- {git}")
-        [print(x) for x in rc]
-        do_logs(rc)
-    if update_change:
-        set_changes()
+    gits = gt("changes").get_selection_values()
+    on_gits_cmd(
+        info, selcmd_, gits, ignore_switch=ignore_switch, update_change=update_change
+    )
 
 
 def on_add():
