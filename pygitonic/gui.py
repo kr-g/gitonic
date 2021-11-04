@@ -353,9 +353,13 @@ def tracked_read():
             cont = f.read()
             global tracked_gits
             tracked_gits = json.loads(cont)
-            gt("gits").set_selection(tracked_gits)
+            sel_tracked()
     except Exception as ex:
         print(ex)
+
+
+def sel_tracked():
+    gt("gits").set_selection(tracked_gits)
 
 
 # init
@@ -370,6 +374,7 @@ def set_workspace(update=True):
     print("gws", gws)
     # gws.refresh_status()
     if update:
+        tracked_read()
         set_tracked_gits()
 
 
