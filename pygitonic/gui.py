@@ -1,6 +1,7 @@
 VERSION = "v0.0.1-a"
 
 import os
+import time
 
 from tile import *
 
@@ -172,11 +173,18 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntryText(caption="", idn="log", height=20, width=80),
-                    TileLabelButton(
-                        caption="",
-                        commandtext="clear",
-                        idn="clr_log",
+                    TileEntryText(
+                        caption="", idn="log", height=20, width=80, readonly=True
+                    ),
+                    TileCols(
+                        source=[
+                            TileLabelButton(
+                                caption="",
+                                commandtext="clear",
+                                command=lambda: on_log_clr(),
+                            ),
+                            TileCheckbutton(caption="follow log", idn="follow"),
+                        ]
                     ),
                 ]
             ),
@@ -270,6 +278,8 @@ def on_diff():
             rc = git_diff(git.path, rec["file"])
             print(f"--- {git}")
             [print(x) for x in rc]
+            do_log_time("on_diff")
+            do_logs(rc)
 
 
 def on_difftool():
@@ -282,6 +292,38 @@ def on_difftool():
             rc = git_difftool(git.path, rec["file"])
             print(f"--- {git}")
             [print(x) for x in rc]
+            do_log_time("on_difftool")
+            do_logs(rc)
+
+
+def on_log_clr():
+    print("on_log_clr")
+    gt("log").clr()
+
+
+def on_follow_log():
+    if int(gt("follow").get_val()) > 0:
+        gt("log").gotoline()
+
+
+def do_log_time(x):
+    print("do_log_time", x)
+    log = gt("log")
+    ts = time.asctime(time.localtime(time.time()))
+    log.append(f"\n\n\n--- {x} --- {ts}")
+    on_follow_log()
+
+
+def do_log(x):
+    print("do_log", x)
+    gt("log").append(x)
+    on_follow_log()
+
+
+def do_logs(x):
+    print("do_logs", x)
+    gt("log").extend(x)
+    on_follow_log()
 
 
 # init
@@ -340,6 +382,8 @@ def set_changes():
 set_changes()
 if len(changes) > 0:
     gt("maintabs").select("tab_changes")
+
+gt("follow").set_val(1)
 
 # end-of init
 

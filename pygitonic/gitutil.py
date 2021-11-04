@@ -8,23 +8,22 @@ import os
 import glob
 
 from file import FileStat, PushDir
+from task import Cmd, CmdTask
 
 GIT = "git"
 
 
-def git_cmd(cmd, callb=None):
-    lines = []
-    with os.popen(f"{GIT} {cmd}") as f:
-        while True:
-            line = f.readline()
-            if len(line) == 0:
-                break
-            line = line.strip()
-            if callb:
-                callb(line)
-            else:
-                lines.append(line)
-    return lines
+join_wait = True
+
+
+def git_cmd(cmdline, callb=None):
+    cmd = CmdTask().set_command(f"{GIT} {cmdline}").set_callb(callb)
+    cmd.start()
+    if join_wait:
+        cmd.join()
+        assert not cmd.running()
+        return cmd.popall()
+    return cmd
 
 
 def with_git_cmd(repo, cmd, callb=None):
@@ -36,38 +35,62 @@ def join_files(files, sep=" "):
     return sep.join(map(lambda x: "'" + x + "'", files))
 
 
-git_version = lambda: git_cmd(f"--version")[0].split()[2]
+git_version = lambda callb=None: git_cmd(f"--version", callb=callb)[0].split()[2]
 
-git_pull = lambda repo: with_git_cmd(repo, f"pull")
+git_pull = lambda repo, callb=None: with_git_cmd(repo, f"pull", callb=callb)
 
-git_stat = lambda repo: with_git_cmd(repo, f"status --porcelain")
-
-git_diff = lambda repo, file: with_git_cmd(repo, f"diff {file}")
-git_difftool = lambda repo, file: with_git_cmd(repo, f"difftool {file}")
-
-git_add = lambda repo, files: with_git_cmd(repo, f"add {join_files(files)}")
-
-git_commit = lambda repo, comment: with_git_cmd(
-    repo, f"commit --porcelain -m {comment} "
+git_stat = lambda repo, callb=None: with_git_cmd(
+    repo, f"status --porcelain", callb=callb
 )
 
-git_push = lambda repo, comment: with_git_cmd(repo, f"push --porcelain")
-git_push_tags = lambda repo, comment: with_git_cmd(repo, f"push --porcelain --tags")
-git_push_all = lambda repo, comment: git_push(repo) + ["---"] + git_push_tags(repo)
-
-git_add_undo = lambda repo, files: with_git_cmd(
-    repo, f"restore --staged {join_files(files)}"
+git_diff = lambda repo, file, callb=None: with_git_cmd(
+    repo, f"diff {file}", callb=callb
+)
+git_difftool = lambda repo, file, callb=None: with_git_cmd(
+    repo, f"difftool {file}", callb=callb
 )
 
-git_checkout = lambda repo, files: with_git_cmd(repo, f"checkout {join_files(files)}")
-git_checkout_ref = lambda repo, ref: git_checkout(repo, [ref])
+git_add = lambda repo, files, callb=None: with_git_cmd(
+    repo, f"add {join_files(files)}", callb=callb
+)
 
-git_tags = lambda repo: with_git_cmd(repo, "tag")
-git_branches = lambda repo: with_git_cmd(repo, "branch --all")
-git_curbranch = lambda repo: with_git_cmd(repo, "branch --show-current")
+git_commit = lambda repo, comment, callb=None: with_git_cmd(
+    repo, f"commit --porcelain -m {comment} ", callb=callb
+)
 
-git_make_tag = lambda repo, tag: with_git_cmd(repo, f"tag {tag}")
-git_make_branch = lambda repo, branch: with_git_cmd(repo, f"branch {branch}")
+git_push = lambda repo, comment, callb=None: with_git_cmd(
+    repo, f"push --porcelain", callb=callb
+)
+git_push_tags = lambda repo, comment, callb=None: with_git_cmd(
+    repo, f"push --porcelain --tags", callb=callb
+)
+git_push_all = (
+    lambda repo, comment, callb=None: git_push(repo, callb=callb)
+    + ["---"]
+    + git_push_tags(repo, callb=callb)
+)
+
+git_add_undo = lambda repo, files, callb=None: with_git_cmd(
+    repo, f"restore --staged {join_files(files)}", callb=callb
+)
+
+git_checkout = lambda repo, files, callb=None: with_git_cmd(
+    repo, f"checkout {join_files(files)}", callb=callb
+)
+git_checkout_ref = lambda repo, ref, callb=None: git_checkout(repo, [ref], callb=callb)
+
+git_tags = lambda repo, callb=None: with_git_cmd(repo, "tag", callb=callb)
+git_branches = lambda repo, callb=None: with_git_cmd(repo, "branch --all", callb=callb)
+git_curbranch = lambda repo, callb=None: with_git_cmd(
+    repo, "branch --show-current", callb=callb
+)
+
+git_make_tag = lambda repo, tag, callb=None: with_git_cmd(
+    repo, f"tag {tag}", callb=callb
+)
+git_make_branch = lambda repo, branch, callb=None: with_git_cmd(
+    repo, f"branch {branch}", callb=callb
+)
 
 
 class GitStatus(object):

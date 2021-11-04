@@ -481,10 +481,27 @@ class TileEntryText(TileEntry):
         self._entry.delete("1.0", "end")
         self._preserve_state(False)
 
-    def append(self, val):
+    def append(self, val, nl=True):
         self._preserve_state()
         self._entry.insert("end", str(val))
+        if nl:
+            self._entry.insert("end", "\n")
         self._preserve_state(False)
+
+    def extend(self, vals, nl=True):
+        self._preserve_state()
+        for val in vals:
+            self._entry.insert("end", str(val))
+            if nl:
+                self._entry.insert("end", "\n")
+        self._preserve_state(False)
+
+    def gotoline(self, lineno=-1):
+        if lineno < 0:
+            lineno = "end"
+        else:
+            lineno = float(lineno)
+        self._entry.yview_pickplace(lineno)
 
 
 class TileEntryButton(TileEntry, TileButton):
