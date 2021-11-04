@@ -316,14 +316,14 @@ def on_follow_log():
         gt("log").gotoline()
 
 
-def do_log_show(always=False):
-    if always or int(gt("auto_switch").get_val()) > 0:
+def do_log_show(ignore_switch=False):
+    if not ignore_switch and int(gt("auto_switch").get_val()) > 0:
         gt("maintabs").select("tab_log")
 
 
-def do_log_time(x):
+def do_log_time(x, ignore_switch=False):
     print("do_log_time", x)
-    do_log_show()
+    do_log_show(ignore_switch)
     log = gt("log")
     ts = time.asctime(time.localtime(time.time()))
     log.append(f"\n\n\n--- {x} --- {ts}")
@@ -400,9 +400,7 @@ def on_add():
         rc = git_add(git.path, [rec["file"]])
         print(f"--- {git}")
         [print(x) for x in rc]
-        do_log_time(
-            "on_add",
-        )
+        do_log_time("on_add", True)
         do_logs(rc)
     set_changes()
 
@@ -416,9 +414,7 @@ def on_add_undo():
         rc = git_add_undo(git.path, [rec["file"]])
         print(f"--- {git}")
         [print(x) for x in rc]
-        do_log_time(
-            "on_add_undo",
-        )
+        do_log_time("on_add_undo", True)
         do_logs(rc)
     set_changes()
 
