@@ -12,6 +12,8 @@ from gitutil import GitWorkspace
 
 #
 
+frepo = FileStat("~/repo")
+
 tk_root = Tk()
 
 mainframe = Tile(tk_root=tk_root, idn="mainframe")
@@ -24,8 +26,11 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntryButton(
-                        caption="workspace", commandtext="select", idn="workspace"
+                    TileDirectorySelect(
+                        caption="select workspace",
+                        commandtext="...",
+                        idn="workspace",
+                        path=frepo.name,
                     ),
                 ]
             ),
@@ -81,7 +86,16 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntryListbox(caption="", idn="changes"),
+                    TileTreeView(
+                        caption="",
+                        idn="changes",
+                        header=[
+                            ("git", None),
+                            ("file", None),
+                            ("state", None),
+                            ("type", None),
+                        ],
+                    ),
                     TileLabelButton(
                         caption="",
                         commandtext="refresh",
@@ -90,9 +104,14 @@ main = TileTab(
                     TileCols(
                         source=[
                             TileLabelButton(
-                                caption="",
+                                caption="selected",
                                 commandtext="add",
                                 idn="add_workspace",
+                            ),
+                            TileLabelButton(
+                                caption="",
+                                commandtext="unstage",
+                                idn="unstage_workspace",
                             ),
                             TileLabelButton(
                                 caption="all",
@@ -103,6 +122,7 @@ main = TileTab(
                                 caption="",
                                 commandtext="unselect",
                                 idn="unsel_all_workspace",
+                                command=lambda: gt("changes").clr_selection(),
                             ),
                         ]
                     ),
@@ -209,6 +229,7 @@ main_content = TileRows(
 mainframe.tk.protocol("WM_DELETE_WINDOW", quit_all(mainframe))
 mainframe.tk.bind("<Escape>", lambda e: minimize())
 
+mainframe.title("gitonic")
 mainframe.resize_grip()
 
 mainframe.add(main_content)
@@ -216,14 +237,29 @@ mainframe.layout()
 
 # init
 
-frepo = FileStat("~/repo")
-gt("workspace").set_val(frepo.name)
 
 gws = GitWorkspace(frepo.name)
 gws.refresh()
 gws.refresh_status()
 
 gt("gits").set_values(sorted(gws.gits.keys()))
+
+changes = []
+for path, git in gws.gits.items():
+    rnam = FileStat(path).basename()
+    if len(git.status) > 0:
+        for stat in git.status:
+            fs = git.stat(stat)
+            #
+            gst = {
+                "git": rnam,
+                "file": stat.file,
+                "state": stat.mode,
+                "type": ("file" if fs.is_file() else "dir"),
+            }
+            changes.append(gst)
+
+gt("changes").set_values(changes)
 
 # end-of init
 

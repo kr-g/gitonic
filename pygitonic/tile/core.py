@@ -273,9 +273,9 @@ class TileLabel(Tile):
 
 class ClickHandlerMixIn(object):
     def _click_handler(self):
-        self.pref(ON_CLICK, self.on_click)()
+        self.pref(ON_CLICK, self.on_click)(self)
 
-    def on_click(self):
+    def on_click(self, ref_self):
         print_t(self.__class__.__name__, ON_CLICK)
 
 
@@ -814,8 +814,6 @@ class TileFileSelect(TileEntryButton):
 
     def on_click(self, o):
 
-        print(ON_CLICK)
-
         basedir = os.path.dirname(self.get_val())
 
         file = filedialog.askopenfilename(
@@ -837,6 +835,21 @@ class TileFileSelect(TileEntryButton):
         path = os.path.expandvars(path)
         path = os.path.abspath(path)
         return path
+
+
+class TileDirectorySelect(TileFileSelect):
+    def on_click(self, o):
+
+        basedir = self.get_val()
+
+        file = filedialog.askdirectory(
+            initialdir=basedir,
+            title=self.get_caption(),
+        )
+
+        if file:
+            print_t("selected", file)
+            self.set_val(file)
 
 
 class TileCompositFlow(Tile):
@@ -958,8 +971,6 @@ class TileTab(Tile):
 class TileTreeView(Tile):
     def create_element(self):
 
-        raise Exception("untested")
-
         header = self.pref("header", [])
 
         self.header_name = []
@@ -967,6 +978,9 @@ class TileTreeView(Tile):
 
         for key, cap in header:
             self.header_name.append(key)
+            if cap is None:
+                cap = key
+            print(key, cap)
             self.header_title.append(cap)
 
         self._treeview = ttk.Treeview(
@@ -984,10 +998,13 @@ class TileTreeView(Tile):
 
     def _select_handler(self, event):
         print("_select_handler", event)
-        self.pref(ON_CLICK, self.on_select)()
+        self.pref(ON_CLICK, self.on_select)(self)
 
     def on_select(self, ref_self):
-        print_t(self.__class__.__name__, ON_SELECT, ref_self.get_val())
+        print_t(
+            self.__class__.__name__,
+            ON_SELECT,
+        )
 
         sel = self._treeview.focus()
         sel = self._treeview.item(sel)
@@ -1010,3 +1027,13 @@ class TileTreeView(Tile):
             else:
                 rec = v
             self._treeview.insert("", "end", values=rec)
+
+    def clr_selection(self):
+        if len(self._treeview.selection()) > 0:
+            self._treeview.selection_remove(self._treeview.selection())
+
+    def set_selection(self, vals):
+        pass
+
+    def get_selection(self):
+        pass
