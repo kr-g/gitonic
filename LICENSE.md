@@ -4,7 +4,7 @@ Copyright (c) 2021 k.r. goger - https://github.com/kr-g
 email: k.r.goger@gmail.com
 
 project homepage:
-https://github.com/kr-g/pygitonic
+https://github.com/kr-g/gitonic
 
 ---
 

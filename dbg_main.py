@@ -1,4 +1,4 @@
-from pygitonic.main import main_func
+from gitonic.main import main_func
 
 if __name__ == "__main__":
 

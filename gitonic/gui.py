@@ -521,20 +521,33 @@ def set_changes():
     global changes
     changes = []
 
-    gits = list(map(lambda x: (x, gws.find(x)[0]), tracked_gits))
+    gits = list(map(lambda x: (x, gws.find(x)), tracked_gits))
     print(gits)
 
-    for path, git in gits:
-        rnam = FileStat(path).basename()
+    for path_git in gits:
+        path,git = path_git
+        
+        print(path,git)
+        
+        fs = FileStat(path,prefetch=True)
+        if not fs.exists():
+            continue
+        
+        print(git)
+        git = git[0]
+        
+        rnam = fs.basename()
         git.refresh_status()
+        
         if len(git.status) > 0:
             for stat in git.status:
                 fs = git.stat(stat)
+                fs_ex = fs.exists()
                 gst = {
                     "git": rnam,
                     "file": stat.file,
                     "state": stat.mode + " / " + stat.staged,
-                    "type": ("file" if fs.is_file() else "dir"),
+                    "type": ("file" if fs.is_file() else "dir") if fs_ex else "---deleted---",
                 }
                 changes.append(gst)
     gt("changes").set_values(changes)
