@@ -55,6 +55,9 @@ git_add = lambda repo, files, callb=None: with_git_cmd(
 )
 
 git_commit = lambda repo, comment, callb=None: with_git_cmd(
+    repo, f"commit -m {comment} ", callb=callb
+)
+git_commit_porcelain = lambda repo, comment, callb=None: with_git_cmd(
     repo, f"commit --porcelain -m {comment} ", callb=callb
 )
 

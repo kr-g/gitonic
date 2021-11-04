@@ -10,7 +10,7 @@ import tkinter
 from tkinter import Tk
 
 from file import FileStat
-from gitutil import GitWorkspace, git_diff, git_difftool, git_pull
+from gitutil import GitWorkspace, git_diff, git_difftool, git_pull, git_commit
 
 #
 
@@ -400,7 +400,19 @@ def on_commit():
     message = head
     if len(body) > 0:
         message += "\n" * 2 + body
-    print(message)
+
+    for gnam in tracked_gits:
+        try:
+            git = gws.find(gnam)[0]
+            rc = git_commit(git.path, message)
+            print(f"--- {git}")
+            [print(x) for x in rc]
+            do_log_time(f"commit: {git.path} {message}")
+            do_logs(rc)
+        except Exception as ex:
+            print(ex)
+
+    set_changes()
 
 
 # init
