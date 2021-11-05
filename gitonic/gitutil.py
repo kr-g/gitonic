@@ -7,8 +7,8 @@
 import os
 import glob
 
-from file import FileStat, PushDir
-from task import Cmd, CmdTask
+from .file import FileStat, PushDir
+from .task import Cmd, CmdTask
 
 GIT = "git"
 BLACK = "black"

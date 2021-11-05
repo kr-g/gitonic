@@ -1,2 +1,2 @@
 def main_func():
-    pass
+    import gitonic.gui

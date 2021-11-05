@@ -24,7 +24,7 @@ def find_projectname():
     return name
 
 
-file = os.path.join("pygitonic", "__init__.py")
+file = os.path.join("gitonic", "__init__.py")
 version = find_version(file)
 projectname = find_projectname()
 

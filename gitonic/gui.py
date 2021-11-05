@@ -1,18 +1,18 @@
-VERSION = "v0.0.1-a"
+from . import VERSION
 
 import os
 import time
 import json
 
-from tile import *
+from .tile import *
 
 import tkinter
 from tkinter import Tk
 
-from file import FileStat
-from gitutil import GitWorkspace, git_diff, git_difftool
-from gitutil import run_black, git_add, git_add_undo, git_commit
-from gitutil import git_pull, git_push, git_push_tags, git_push_all
+from .file import FileStat
+from .gitutil import GitWorkspace, git_diff, git_difftool
+from .gitutil import run_black, git_add, git_add_undo, git_commit
+from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 #
 
