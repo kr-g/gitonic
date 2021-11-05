@@ -75,14 +75,12 @@ git_commit_porcelain = lambda repo, comment, callb=None: with_git_cmd(
     repo, f"commit --porcelain -m '{comment}'", callb=callb
 )
 
-git_push = lambda repo, comment, callb=None: with_git_cmd(
-    repo, f"push --porcelain", callb=callb
-)
-git_push_tags = lambda repo, comment, callb=None: with_git_cmd(
+git_push = lambda repo, callb=None: with_git_cmd(repo, f"push --porcelain", callb=callb)
+git_push_tags = lambda repo, callb=None: with_git_cmd(
     repo, f"push --porcelain --tags", callb=callb
 )
 git_push_all = (
-    lambda repo, comment, callb=None: git_push(repo, callb=callb)
+    lambda repo, callb=None: git_push(repo, callb=callb)
     + ["---"]
     + git_push_tags(repo, callb=callb)
 )

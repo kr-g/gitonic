@@ -173,6 +173,12 @@ main = TileTab(
                                 commandtext="clear",
                                 command=lambda: on_clr_commit(),
                             ),
+                            TileLabelButton(
+                                caption="tracked git's",
+                                commandtext="push",
+                                command=lambda: on_push_tracked(),
+                            ),
+                            TileCheckbutton(caption="push tags", idn="push_tags"),
                         ]
                     ),
                 ]
@@ -340,7 +346,7 @@ def do_log_time(x, ignore_switch=False):
     on_follow_log()
 
 
-def do_log(x):
+def do_log(x=""):
     print("do_log", x)
     gt("log").append(x)
     on_follow_log()
@@ -470,6 +476,48 @@ def on_commit():
             print(ex)
 
     set_changes()
+
+
+def on_cmd_push(info, push_, gits):
+    print(info)
+    push_tags = int(gt("push_tags").get_val()) > 0
+    sel = gt("changes").get_selection_values()
+    do_log_time(info)
+    for pg in gits:
+        git = gws.find(pg)[0]
+        rc = push_(
+            git.path,
+        )
+        [print(x) for x in rc]
+        do_log()
+        do_log(f"--- push: {git}")
+        do_logs(rc)
+        if push_tags:
+            rc = git_push_tags(git.path)
+            [print(x) for x in rc]
+            do_log()
+            do_log(f"--- push tags: {git}")
+            do_logs(rc)
+
+
+def on_push_tracked():
+    print("on_push_tracked")
+    cmd_ = git_push
+    on_cmd_push(
+        "on_push_tracked",
+        cmd_,
+        tracked_gits,
+    )
+
+
+def on_push_all_workspace():
+    print("on_push_all_workspace")
+    cmd_ = git_push
+    on_cmd_push(
+        "on_push_all_workspace",
+        cmd_,
+        sorted(gws.gits.keys()),
+    )
 
 
 # init
