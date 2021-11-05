@@ -12,6 +12,7 @@
 - git exe configuration in settings
 - check for installed git
 - filter git on changes tab
+- rework logging
 - 
 
 
