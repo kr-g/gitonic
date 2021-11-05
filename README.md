@@ -8,15 +8,17 @@
 
 Check
 [`CHANGELOG`](https://github.com/kr-g/gitonic/blob/master/CHANGELOG.md)
-for latest ongoing, or upcoming news
-
-
-# installation
-
-...
+for latest ongoing, or upcoming news.
 
 
 # limitations
+
+Check 
+[`BACKLOG`](https://github.com/kr-g/gitonic/blob/master/BACKLOG.md)
+for open issues and limitations.
+
+
+# installation
 
 ...
 
