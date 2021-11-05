@@ -457,14 +457,15 @@ def on_commit():
             print("use", gnam)
             git = gws.find(gnam)[0]
             do_log_time(f"commit: {git.path} '{message}'")
-            do_log(f"staged {git.has_staged()}")
-            #if git.has_staged():
+            # do_log(f"staged {git.has_staged()}")
+            # if git.has_staged():
+            # raise
             rc = git_commit(git.path, message)
             print(f"--- {git}")
             [print(x) for x in rc]
             do_logs(rc)
             do_log("commited staged files")
-            #else:
+            # else:
             #    do_log("nothing staged")
 
         except Exception as ex:

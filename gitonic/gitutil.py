@@ -179,6 +179,10 @@ class GitRepo(object):
         return fs
 
     def has_staged(self):
+        print("has_staged")
+        for s in self.status:
+            print("***", s.file, s.has_staged())
+        print("has_staged done")
         return any(map(lambda x: x.has_staged(), self.status))
 
 
