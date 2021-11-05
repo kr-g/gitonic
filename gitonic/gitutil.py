@@ -179,10 +179,6 @@ class GitRepo(object):
         return fs
 
     def has_staged(self):
-        print("has_staged")
-        for s in self.status:
-            print("***", s.file, s.has_staged())
-        print("has_staged done")
         return any(map(lambda x: x.has_staged(), self.status))
 
 
@@ -209,7 +205,7 @@ class GitWorkspace(object):
     def find(self, search_str):
         return list(
             map(
-                lambda x: GitRepo(x),
+                lambda x: self.gits[x],
                 filter(lambda x: x.find(search_str) >= 0, self.gits),
             )
         )
