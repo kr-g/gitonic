@@ -5,8 +5,15 @@
 - gui rework
 - background task and event loop -> freezing gui when running git utils
 - merge tool integration
-- black support
-  
+- black PEP8 support
+  - run external jobs
+- config file for last known config
+- refact for integration in other tools
+- git exe configuration in settings
+- check for installed git
+- filter git on changes tab
+- 
+
 
 # open issues
 
