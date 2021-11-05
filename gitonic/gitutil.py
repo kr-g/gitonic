@@ -139,6 +139,9 @@ class GitStatus(object):
 
         return self
 
+    def has_staged(self):
+        return len(self.staged) > 0
+
     def from_str(self, s):
         if s[:2] == "??":
             mode = "??"
@@ -174,6 +177,9 @@ class GitRepo(object):
         fs = FileStat(self.path).join([status.file])
         fs.stat()
         return fs
+
+    def has_staged(self):
+        return any(map(lambda x: x.has_staged(), self.status))
 
 
 class GitWorkspace(object):
