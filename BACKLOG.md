@@ -14,6 +14,7 @@
 - filter git on changes tab
 - rework logging
 - check for latest version 
+- remove print statements
 - 
 
 
