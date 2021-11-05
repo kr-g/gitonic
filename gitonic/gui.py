@@ -101,9 +101,11 @@ main = TileTab(
                         header=[
                             ("git", None),
                             ("file", None),
-                            ("state", "mode / staged"),
+                            ("unstaged", None),
+                            ("staged", None),
                             ("type", None),
                         ],
+                        header_width=(150, 250, 100, 100, 100),
                     ),
                     TileLabelButton(
                         caption="",
@@ -350,7 +352,7 @@ def do_logs(x):
     on_follow_log()
 
 
-tracked = FileStat(FileStat.get_tempdir()).join(["gitonic", "tracked.json"])
+tracked = FileStat("~").join([".gitonic", "tracked.json"])
 tracked.makedirs()
 
 
@@ -367,6 +369,7 @@ def tracked_read():
             cont = f.read()
             global tracked_gits
             tracked_gits = json.loads(cont)
+            print(tracked, "->", tracked_gits)
             sel_tracked()
     except Exception as ex:
         print(ex)
@@ -491,12 +494,6 @@ def set_tracked_gits(update=True):
         set_changes()
 
 
-set_workspace(False)
-tracked_read()
-
-# set_tracked_gits(False)
-
-
 def set_changes():
     print("set_changes")
     global changes
@@ -527,7 +524,8 @@ def set_changes():
                 gst = {
                     "git": rnam,
                     "file": stat.file,
-                    "state": stat.mode + " / " + stat.staged,
+                    "unstaged": stat.mode,
+                    "staged": stat.staged,
                     "type": ("file" if fs.is_file() else "dir")
                     if fs_ex
                     else "---deleted---",
@@ -536,7 +534,10 @@ def set_changes():
     gt("changes").set_values(changes)
 
 
-set_changes()
+tracked_read()
+set_workspace()
+
+
 if len(changes) > 0:
     gt("maintabs").select("tab_changes")
 

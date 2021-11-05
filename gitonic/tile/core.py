@@ -997,6 +997,7 @@ class TileTreeView(Tile):
     def create_element(self):
 
         header = self.pref("header", [])
+        header_width = self.pref("header_width", [])
 
         self.header_name = []
         self.header_title = []
@@ -1026,6 +1027,11 @@ class TileTreeView(Tile):
             if cap is None:
                 cap = key
             self._treeview.heading(key, text=cap)
+
+        for i in range(0, len(header_width)):
+            width = header_width[i]
+            if width:
+                self._treeview.column(self.header_name[i], width=width)
 
         values = self.pref(VALUES, [])
         self.set_values(values)
