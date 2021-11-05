@@ -13,6 +13,7 @@
 - check for installed git
 - filter git on changes tab
 - rework logging
+- check for latest version 
 - 
 
 
