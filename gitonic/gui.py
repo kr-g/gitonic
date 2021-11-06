@@ -49,7 +49,7 @@ tk_root = Tk()
 
 
 def _r(self):
-    print(self.opts.i)
+    print(self.opts.i, self._info)
     self.opts.i -= 1
     if self.opts.i < 0:
         return 0
