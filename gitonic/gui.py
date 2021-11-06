@@ -11,6 +11,7 @@ from tkinter import Tk
 
 from .tile import *
 from .file import FileStat
+from .sysutil import open_file_explorer
 
 from .gitutil import GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
@@ -19,6 +20,7 @@ from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 # configuration
 
+fconfigdir = FileStat("~").join([".gitonic"])
 frepo = FileStat("~/repo")
 max_history = 1000
 
@@ -31,7 +33,7 @@ def set_config():
 
 def read_config():
     global config, max_history
-    fconfig = FileStat("~").join([".gitonic", "config.json"]).name
+    fconfig = FileStat(fconfigdir.name).join(["config.json"]).name
     config = Config(filename=fconfig)
     config().setdefault("workspace", frepo.name)
     config().setdefault("max_history", max_history)
@@ -87,6 +89,10 @@ main = TileTab(
                         idn="max_history",
                         value=max_history,
                         on_change=lambda o, n: write_config(),
+                    ),
+                    TileLabelButton(
+                        caption="open gitonic config folder",
+                        on_click=lambda x: open_file_explorer(fconfigdir.name),
                     ),
                 ]
             ),
