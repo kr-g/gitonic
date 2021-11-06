@@ -449,7 +449,7 @@ def do_logs(x):
     on_follow_log()
 
 
-tracked = FileStat("~").join([".gitonic", "tracked.json"])
+tracked = FileStat(fconfigdir.name).join(["tracked.json"])
 tracked.makedirs()
 
 
