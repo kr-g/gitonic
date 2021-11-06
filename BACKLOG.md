@@ -43,5 +43,6 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 
 # LIMITATIONS
 
+- currently the tracked workspace is fix located under `~/repo`
 - 
 
