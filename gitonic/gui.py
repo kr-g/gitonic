@@ -34,6 +34,7 @@ git_exe = GIT
 follow = True
 auto_switch = True
 push_tags = False
+min_commit_length = 5
 
 
 def set_config():
@@ -55,6 +56,9 @@ def set_config():
     global push_tags
     push_tags = bool(config().push_tags)
 
+    global min_commit_length
+    min_commit_length = config().min_commit_length
+
 
 def read_config():
     global config
@@ -67,6 +71,7 @@ def read_config():
     config().setdefault("follow", follow)
     config().setdefault("auto_switch", auto_switch)
     config().setdefault("push_tags", push_tags)
+    config().setdefault("min_commit_length", min_commit_length)
 
     set_config()
 
@@ -80,6 +85,7 @@ def write_config():
     config().follow = bool(int(gt("follow").get_val()))
     config().auto_switch = bool(int(gt("auto_switch").get_val()))
     config().push_tags = bool(int(gt("push_tags").get_val()))
+    config().min_commit_length = gt("min_commit_length").get_val()
 
     config.save()
     set_config()
@@ -109,6 +115,12 @@ main = TileRows(
                                 caption="refresh tracked git's on the next tab manually"
                             ),
                             TileLabel(caption=""),
+                            TileEntryInt(
+                                caption="minimum commit text length",
+                                idn="min_commit_length",
+                                value=min_commit_length,
+                                on_change=lambda o, n: write_config(),
+                            ),
                             TileEntryInt(
                                 caption="max records in log history",
                                 idn="max_history",
@@ -593,10 +605,10 @@ def on_commit():
     head = gt("commit_short").get_val().strip()
     body = gt("commit_long").get_val().strip()
 
-    if len(head) < 4 or len(head) > 50:
+    if len(head) < min_commit_length or len(head) > 50:
         tkinter.messagebox.showerror(
             "error",
-            f"length: 4 > message < 50\ncurrent: {len(head)}",
+            f"length: {min_commit_length} >= message < 50\ncurrent: {len(head)}",
         )
         return
 
