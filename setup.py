@@ -39,7 +39,7 @@ setuptools.setup(
     url=f"https://github.com/kr-g/{projectname}",
     packages=setuptools.find_packages(),
     license="MIT",
-    keywords="python utility shell git tkinter",
+    keywords="python utility shell git git-workspace tkinter",
     install_requires=[
         "pyjsoncfg",
     ],
@@ -54,7 +54,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
 
 # python3 -m setup sdist build bdist_wheel
