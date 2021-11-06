@@ -10,14 +10,14 @@ gitonic comes with an easy to use Tkinter GUI.
 # what's new ?
 
 Check
-[`CHANGELOG`](https://github.com/kr-g/gitonic/blob/master/CHANGELOG.md)
+[`CHANGELOG`](https://github.com/kr-g/gitonic/blob/main/CHANGELOG.md)
 for latest ongoing, or upcoming news.
 
 
 # limitations
 
 Check 
-[`BACKLOG`](https://github.com/kr-g/gitonic/blob/master/BACKLOG.md)
+[`BACKLOG`](https://github.com/kr-g/gitonic/blob/main/BACKLOG.md)
 for open development tasks and limitations.
 
 
@@ -43,4 +43,4 @@ tested on python3, and linux
 # license
 
 gitonic is released under the following
-[`LICENSE`](https://github.com/kr-g/gitonic/blob/master/LICENSE.md)
+[`LICENSE`](https://github.com/kr-g/gitonic/blob/main/LICENSE.md)
