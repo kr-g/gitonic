@@ -31,16 +31,29 @@ frepo = FileStat("~/repo")
 max_history = 1000
 max_commit = 15
 git_exe = GIT
+follow = 1
+auto_switch = 1
+push_tags = 0
 
 
 def set_config():
-    global frepo, max_history, max_commit, git_exe
+    global frepo
     frepo = FileStat(config().workspace)
+    global max_history
     max_history = config().max_history
+    global max_commit
     max_commit = config().max_commit
 
+    global git_exe
     git_exe = config().git_exe
     set_git_exe(git_exe)
+
+    global follow
+    follow = config().follow
+    global auto_switch
+    auto_switch = config().auto_switch
+    global push_tags
+    push_tags = config().push_tags
 
 
 def read_config():
@@ -51,6 +64,10 @@ def read_config():
     config().setdefault("max_history", max_history)
     config().setdefault("max_commit", max_commit)
     config().setdefault("git_exe", GIT)
+    config().setdefault("follow", follow)
+    config().setdefault("auto_switch", auto_switch)
+    config().setdefault("push_tags", push_tags)
+
     set_config()
 
 
@@ -60,6 +77,10 @@ def write_config():
     config().max_history = gt("max_history").get_val()
     config().max_commit = gt("max_commit").get_val()
     config().git_exe = gt("git_exe").get_val()
+    config().follow = gt("follow").get_val()
+    config().auto_switch = gt("auto_switch").get_val()
+    config().push_tags = gt("push_tags").get_val()
+
     config.save()
     set_config()
 
@@ -258,7 +279,9 @@ main = TileRows(
                                         command=lambda: on_push_tracked(),
                                     ),
                                     TileCheckbutton(
-                                        caption="push tags", idn="push_tags"
+                                        caption="push tags",
+                                        idn="push_tags",
+                                        on_click=lambda x: write_config(),
                                     ),
                                 ]
                             ),
@@ -297,9 +320,15 @@ main = TileRows(
                                         commandtext="clear",
                                         command=lambda: on_log_clr(),
                                     ),
-                                    TileCheckbutton(caption="follow log", idn="follow"),
                                     TileCheckbutton(
-                                        caption="auto switch log", idn="auto_switch"
+                                        caption="follow log",
+                                        idn="follow",
+                                        on_click=lambda x: write_config(),
+                                    ),
+                                    TileCheckbutton(
+                                        caption="auto switch log",
+                                        idn="auto_switch",
+                                        on_click=lambda x: write_config(),
                                     ),
                                 ]
                             ),
@@ -598,7 +627,6 @@ def on_commit():
 
 def on_cmd_push(info, push_, gits):
     print(info)
-    push_tags = int(gt("push_tags").get_val()) > 0
     sel = gt("changes").get_selection_values()
     do_log_time(info)
     for pg in gits:
@@ -705,17 +733,15 @@ def set_changes():
 
 def startup_gui():
     read_config()
-
     read_commit()
-
-    # tracked_read()
     set_workspace(True)
 
     if len(changes) > 0:
         gt("maintabs").select("tab_changes")
 
-    gt("follow").set_val(1)
-    gt("auto_switch").set_val(1)
+    gt("follow").set_val(follow)
+    gt("auto_switch").set_val(auto_switch)
+    gt("push_tags").set_val(push_tags)
 
 
 # main

@@ -326,9 +326,9 @@ class TileCheckbutton(Tile):
         return self._var.set(val)
 
     def _click_handler(self):
-        self.pref(ON_CLICK, self.on_click)()
+        self.pref(ON_CLICK, self.on_click)(self)
 
-    def on_click(self):
+    def on_click(self, ref_self):
         print_t(ON_CLICK, self.get_val())
 
 
