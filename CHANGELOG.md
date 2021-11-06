@@ -2,7 +2,7 @@
 # Changelog
 
 
-## version v0.0.2 - 20211106
+## pre version v0.0.2 - 20211106
 
 - config parameter in config file
 - workspace not fixed anymore to ~/repo
@@ -12,7 +12,7 @@
 - 
 
 
-## version v0.0.1 - 20211106
+## pre version v0.0.1 - 20211106
 
 - first version 
   - no yet released official 
