@@ -13,7 +13,7 @@ from .tile import *
 from .file import FileStat
 from .sysutil import open_file_explorer
 
-from .gitutil import GitWorkspace, git_diff, git_difftool
+from .gitutil import set_git_exe, GIT, GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
 from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
@@ -24,22 +24,27 @@ fconfigdir = FileStat("~").join([".gitonic"])
 frepo = FileStat("~/repo")
 max_history = 1000
 max_commit = 15
+git_exe = GIT
 
 
 def set_config():
-    global frepo, max_history, max_commit
+    global frepo, max_history, max_commit, git_exe
     frepo = FileStat(config().workspace)
     max_history = config().max_history
     max_commit = config().max_commit
 
+    git_exe = config().git_exe
+    set_git_exe(git_exe)
+
 
 def read_config():
-    global config, max_history
+    global config
     fconfig = FileStat(fconfigdir.name).join(["config.json"]).name
     config = Config(filename=fconfig)
     config().setdefault("workspace", frepo.name)
     config().setdefault("max_history", max_history)
     config().setdefault("max_commit", max_commit)
+    config().setdefault("git_exe", GIT)
     set_config()
 
 
@@ -48,6 +53,7 @@ def write_config():
     config().workspace = gt("workspace").get_val()
     config().max_history = gt("max_history").get_val()
     config().max_commit = gt("max_commit").get_val()
+    config().git_exe = gt("git_exe").get_val()
     config.save()
     set_config()
 
@@ -98,6 +104,12 @@ main = TileTab(
                         caption="max records in commit history",
                         idn="max_commit",
                         value=max_commit,
+                        on_change=lambda o, n: write_config(),
+                    ),
+                    TileEntry(
+                        caption="git executable",
+                        idn="git_exe",
+                        value=GIT,
                         on_change=lambda o, n: write_config(),
                     ),
                     TileLabelButton(

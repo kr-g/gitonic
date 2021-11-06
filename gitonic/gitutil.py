@@ -17,6 +17,11 @@ BLACK = "black"
 join_wait = True
 
 
+def set_git_exe(git_exe):
+    global GIT
+    GIT = git_exe
+
+
 def run_cmd(cmdline, callb=None):
     cmd = CmdTask().set_command(f"{cmdline}").set_callb(callb)
     cmd.start()
