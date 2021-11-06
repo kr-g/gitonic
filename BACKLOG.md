@@ -1,5 +1,5 @@
 
-# backlog
+# BACKLOG
 
 - documentation
 - testcases?
@@ -27,15 +27,18 @@
 - filter git on 'changes' tab
 - rework logging
 - remove print statements
+- desktop integration
+  - open shell at repo path
+  - open file management too at repo path
 - 
 
 
-# open issues
+# OPEN ISSUES
 
 - 
 
 
-# limitations
+# LIMITATIONS
 
 - 
 
