@@ -21,16 +21,18 @@
   - 
 - background task and event loop -> freezing gui when running git utils
   - use TkCmd also for Cmd runners
-- black PEP8 support
-  - eg. run as external jobs
+  - 
 - refact for integration in other tools
 - filter git on 'changes' tab
 - rework logging
 - remove print statements
-- desktop integration
-  - open shell at repo path
-  - open file management too at repo path
-- 
+- automation / external jobs
+  - black PEP8 support
+  - desktop integration
+    - open shell at repo path
+    - open file management too at repo path
+- history of commit texts
+  - git log / show integration?
 
 
 # OPEN ISSUES

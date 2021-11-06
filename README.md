@@ -25,6 +25,10 @@ for open development tasks and limitations.
 
 todo - documentation pending
 
+# hokeys 
+
+press `ESC` key to minimize gitonic window.
+
 
 # platform
 
