@@ -63,8 +63,6 @@ def write_config():
     set_config()
 
 
-read_config()
-
 #
 
 tk_root = Tk()
@@ -603,9 +601,6 @@ def set_commits():
         gt("commit_long").set_val(commit_history[0]["long"])
 
 
-read_commit()
-
-
 def on_sel_commit(idx):
     print(idx)
     # gt("commit_short").set_val(commit_history[idx]["short"])
@@ -760,6 +755,11 @@ def set_changes():
                 }
                 changes.append(gst)
     gt("changes").set_values(changes)
+
+
+read_config()
+
+read_commit()
 
 
 # tracked_read()
