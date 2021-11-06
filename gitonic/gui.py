@@ -108,6 +108,7 @@ main = TileRows(
                             TileLabel(
                                 caption="refresh tracked git's on the next tab manually"
                             ),
+                            TileLabel(caption=""),
                             TileEntryInt(
                                 caption="max records in log history",
                                 idn="max_history",
