@@ -98,9 +98,7 @@ def gt(name):
 class Tile(TkMixin):
     def __init__(self, parent=None, idn=None, tk_root=None, **kwargs):
 
-        if tk_root:
-            self.init(tk_root)
-            # self.title("pyTile / tk")
+        self.init(tk_root)
 
         self.idn = idn
         if idn != None:
@@ -120,7 +118,6 @@ class Tile(TkMixin):
 
         self._container = None
 
-        # self._init_frame()
         self.__init__internal__()
 
     def __repr__(self):
@@ -185,8 +182,6 @@ class Tile(TkMixin):
         return self
 
     def _build(self):
-        # self._init_frame()
-
         el = self.create_element()
         self._add_frames(el)
 
