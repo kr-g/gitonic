@@ -23,7 +23,8 @@
   - 
 - background task and event loop -> freezing gui when running git utils
   - use TkCmd also for Cmd runners
-  - 
+  - status bar with running background tasks overview?
+  -
 - refact for integration in other tools
 - filter git on 'changes' tab
 - rework logging
