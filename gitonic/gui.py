@@ -336,7 +336,7 @@ main = TileRows(
                         ]
                     ),
                 ),
-                ("about", Tile()),
+                # ("about", Tile()),
             ],
         ),
         TileCols(
