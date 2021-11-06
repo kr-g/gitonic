@@ -15,7 +15,7 @@
   - ~~git exe configuration in settings~~
   - check for latest version of gitonic
   - 
-- config file for last known config
+- ~~config file for last known config~~
 - gui rework
   - theme support
   - resize behavior -> expand
