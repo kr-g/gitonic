@@ -34,6 +34,7 @@ git_exe = GIT
 follow = True
 auto_switch = True
 push_tags = False
+show_changes = False
 min_commit_length = 5
 
 
@@ -55,6 +56,8 @@ def set_config():
     auto_switch = bool(config().auto_switch)
     global push_tags
     push_tags = bool(config().push_tags)
+    global show_changes
+    show_changes = bool(config().show_changes)
 
     global min_commit_length
     min_commit_length = config().min_commit_length
@@ -71,6 +74,7 @@ def read_config():
     config().setdefault("follow", follow)
     config().setdefault("auto_switch", auto_switch)
     config().setdefault("push_tags", push_tags)
+    config().setdefault("show_changes", show_changes)
     config().setdefault("min_commit_length", min_commit_length)
 
     set_config()
@@ -85,6 +89,7 @@ def write_config():
     config().follow = bool(int(gt("follow").get_val()))
     config().auto_switch = bool(int(gt("auto_switch").get_val()))
     config().push_tags = bool(int(gt("push_tags").get_val()))
+    config().show_changes = bool(int(gt("show_changes").get_val()))
     config().min_commit_length = gt("min_commit_length").get_val()
 
     config.save()
@@ -139,6 +144,12 @@ main = TileRows(
                                 value=GIT,
                                 on_change=lambda o, n: write_config(),
                             ),
+                            TileCheckbutton(
+                                caption="always show changes tab on startup",
+                                idn="show_changes",
+                                on_click=lambda x: write_config(),
+                            ),
+                            #
                             TileLabelButton(
                                 caption="open gitonic config folder",
                                 on_click=lambda x: open_file_explorer(fconfigdir.name),
@@ -752,6 +763,7 @@ def startup_gui():
     gt("follow").set_val(follow)
     gt("auto_switch").set_val(auto_switch)
     gt("push_tags").set_val(push_tags)
+    gt("show_changes").set_val(show_changes)
 
-    if len(changes) > 0:
+    if show_changes or len(changes) > 0:
         gt("maintabs").select("tab_changes")
