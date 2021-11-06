@@ -31,9 +31,9 @@ frepo = FileStat("~/repo")
 max_history = 1000
 max_commit = 15
 git_exe = GIT
-follow = 1
-auto_switch = 1
-push_tags = 0
+follow = True
+auto_switch = True
+push_tags = False
 
 
 def set_config():
@@ -49,11 +49,11 @@ def set_config():
     set_git_exe(git_exe)
 
     global follow
-    follow = config().follow
+    follow = bool(config().follow)
     global auto_switch
-    auto_switch = config().auto_switch
+    auto_switch = bool(config().auto_switch)
     global push_tags
-    push_tags = config().push_tags
+    push_tags = bool(config().push_tags)
 
 
 def read_config():
@@ -77,9 +77,9 @@ def write_config():
     config().max_history = gt("max_history").get_val()
     config().max_commit = gt("max_commit").get_val()
     config().git_exe = gt("git_exe").get_val()
-    config().follow = gt("follow").get_val()
-    config().auto_switch = gt("auto_switch").get_val()
-    config().push_tags = gt("push_tags").get_val()
+    config().follow = bool(int(gt("follow").get_val()))
+    config().auto_switch = bool(int(gt("auto_switch").get_val()))
+    config().push_tags = bool(int(gt("push_tags").get_val()))
 
     config.save()
     set_config()
@@ -417,13 +417,13 @@ def do_log_max_history():
 
 
 def on_follow_log():
-    if int(gt("follow").get_val()) > 0:
+    if follow:
         gt("log").gotoline()
     do_log_max_history()
 
 
 def do_log_show(ignore_switch=False):
-    if not ignore_switch and int(gt("auto_switch").get_val()) > 0:
+    if not ignore_switch and auto_switch:
         gt("maintabs").select("tab_log")
 
 
