@@ -749,9 +749,9 @@ def startup_gui():
     read_commit()
     set_workspace(True)
 
-    if len(changes) > 0:
-        gt("maintabs").select("tab_changes")
-
     gt("follow").set_val(follow)
     gt("auto_switch").set_val(auto_switch)
     gt("push_tags").set_val(push_tags)
+
+    if len(changes) > 0:
+        gt("maintabs").select("tab_changes")
