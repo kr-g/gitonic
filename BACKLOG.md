@@ -50,6 +50,9 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
   - provided in version v0.0.2
 - difftool only works with unstaged files, no diff on already staged or 
  commited changes (same behavior as cmd-line `git difftool`)
--
+- git credentials basic support, 
+ you need to use https://git-scm.com/docs/git-credential-store.
+ no separate credit store provided.
+- 
  
 

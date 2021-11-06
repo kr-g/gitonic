@@ -55,6 +55,45 @@ tested on python3, and linux
 
     phyton3 -m pip install gitonic
 
+to use git difftool, and mergtool install a 3rd party tool like 
+[`meld merge`](https://meldmerge.org/)
+and configure like described below
+
+
+# git configuration
+
+add a `/home/benutzer/.git-credentials` file as described here 
+[`git-credentials`](https://git-scm.com/docs/git-credential-store#_storage_format)
+
+
+add a `.gitconfig` file as described here
+[`git-config`](https://git-scm.com/docs/git-config)
+and configure for diff and merge tools
+
+
+    [user]
+        name = your name
+        email = you@email.tld
+        
+    [credential]
+        helper = store
+
+    [diff]
+        tool = meld
+    [difftool]
+        prompt = false
+    [difftool "meld"]
+        cmd = meld "$LOCAL" "$REMOTE"
+
+    [merge]
+        tool = meld
+    [mergetool "meld"]
+        # Choose one of these 2 lines (not both!) 
+        # cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+        cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+
+
+
 
 # license
 
