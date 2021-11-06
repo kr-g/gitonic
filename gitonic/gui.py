@@ -3,6 +3,7 @@ from . import VERSION
 import os
 import time
 import json
+import webbrowser
 
 from pyjsoncfg import Config
 
@@ -17,6 +18,10 @@ from .gitutil import set_git_exe, GIT, GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
 from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
+#
+
+url_homepage = "https://github.com/kr-g/gitonic"
+url_sponsor = "https://github.com/sponsors/kr-g"
 
 # configuration
 
@@ -78,235 +83,264 @@ tkcmd = TkCmd().start(tk_root, _r, i=5)
 mainframe = Tile(tk_root=tk_root, idn="mainframe")
 
 
-main = TileTab(
-    idn="maintabs",
+main = TileRows(
     source=[
-        (
-            "settings",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileDirectorySelect(
-                        caption="select workspace",
-                        commandtext="...",
-                        idn="workspace",
-                        path=frepo.name,
-                        on_select=lambda x: write_config(),
-                    ),
-                    TileLabel(caption="refresh tracked git's on the next tab manually"),
-                    TileEntryInt(
-                        caption="max records in log history",
-                        idn="max_history",
-                        value=max_history,
-                        on_change=lambda o, n: write_config(),
-                    ),
-                    TileEntryInt(
-                        caption="max records in commit history",
-                        idn="max_commit",
-                        value=max_commit,
-                        on_change=lambda o, n: write_config(),
-                    ),
-                    TileEntry(
-                        caption="git executable",
-                        idn="git_exe",
-                        value=GIT,
-                        on_change=lambda o, n: write_config(),
-                    ),
-                    TileLabelButton(
-                        caption="open gitonic config folder",
-                        on_click=lambda x: open_file_explorer(fconfigdir.name),
-                    ),
-                ]
-            ),
-        ),
-        (
-            "tracked git's",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileEntryListbox(
-                        caption="",
-                        idn="gits",
-                        max_show=15,
-                        width=40,
-                        select_many=True,
-                        map_value=lambda x: os.path.basename(x),
-                        on_sel=lambda x: set_tracked_gits(),
-                    ),
-                    TileCols(
+        TileTab(
+            idn="maintabs",
+            source=[
+                (
+                    "settings",
+                    TileRows(
                         source=[
+                            TileLabel(caption=""),
+                            TileDirectorySelect(
+                                caption="select workspace",
+                                commandtext="...",
+                                idn="workspace",
+                                path=frepo.name,
+                                on_select=lambda x: write_config(),
+                            ),
+                            TileLabel(
+                                caption="refresh tracked git's on the next tab manually"
+                            ),
+                            TileEntryInt(
+                                caption="max records in log history",
+                                idn="max_history",
+                                value=max_history,
+                                on_change=lambda o, n: write_config(),
+                            ),
+                            TileEntryInt(
+                                caption="max records in commit history",
+                                idn="max_commit",
+                                value=max_commit,
+                                on_change=lambda o, n: write_config(),
+                            ),
+                            TileEntry(
+                                caption="git executable",
+                                idn="git_exe",
+                                value=GIT,
+                                on_change=lambda o, n: write_config(),
+                            ),
                             TileLabelButton(
-                                caption="workspace",
+                                caption="open gitonic config folder",
+                                on_click=lambda x: open_file_explorer(fconfigdir.name),
+                            ),
+                        ]
+                    ),
+                ),
+                (
+                    "tracked git's",
+                    TileRows(
+                        source=[
+                            TileLabel(caption=""),
+                            TileEntryListbox(
+                                caption="",
+                                idn="gits",
+                                max_show=15,
+                                width=40,
+                                select_many=True,
+                                map_value=lambda x: os.path.basename(x),
+                                on_sel=lambda x: set_tracked_gits(),
+                            ),
+                            TileCols(
+                                source=[
+                                    TileLabelButton(
+                                        caption="workspace",
+                                        commandtext="refresh",
+                                        command=lambda: set_workspace(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="all",
+                                        commandtext="select",
+                                        command=lambda: on_sel_all_gits(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="un-select",
+                                        command=lambda: on_unsel_all_gits(),
+                                    ),
+                                ]
+                            ),
+                            TileCols(
+                                source=[
+                                    TileLabelButton(
+                                        caption="pull",
+                                        commandtext="selected",
+                                        command=lambda: on_pull_tracked(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="all",
+                                        command=lambda: pull_all_workspace(),
+                                    ),
+                                ]
+                            ),
+                        ]
+                    ),
+                ),
+                (
+                    "changes",
+                    TileRows(
+                        source=[
+                            TileLabel(caption=""),
+                            TileTreeView(
+                                caption="",
+                                idn="changes",
+                                header=[
+                                    ("git", None),
+                                    ("file", None),
+                                    ("unstaged", None),
+                                    ("staged", None),
+                                    ("type", None),
+                                ],
+                                header_width=(150, 250, 100, 100, 100),
+                            ),
+                            TileLabelButton(
+                                caption="",
                                 commandtext="refresh",
-                                command=lambda: set_workspace(),
+                                command=lambda: set_changes(),
                             ),
-                            TileLabelButton(
-                                caption="all",
-                                commandtext="select",
-                                command=lambda: on_sel_all_gits(),
-                            ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="un-select",
-                                command=lambda: on_unsel_all_gits(),
+                            TileCols(
+                                source=[
+                                    # TileLabelButton(
+                                    #    caption="selected",
+                                    #    commandtext="run black",
+                                    #    command=lambda: on_black(),
+                                    # ),
+                                    TileLabelButton(
+                                        caption="selected",
+                                        commandtext="add",
+                                        command=lambda: on_add(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="unstage",
+                                        command=lambda: on_add_undo(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="diff",
+                                        command=lambda: on_diff(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="difftool",
+                                        command=lambda: on_difftool(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="all",
+                                        commandtext="select",
+                                        command=lambda: gt("changes").set_selection(-1),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="unselect",
+                                        command=lambda: gt("changes").clr_selection(),
+                                    ),
+                                ]
                             ),
                         ]
                     ),
-                    TileCols(
+                ),
+                (
+                    "commit",
+                    TileRows(
                         source=[
-                            TileLabelButton(
-                                caption="pull",
-                                commandtext="selected",
-                                command=lambda: on_pull_tracked(),
+                            TileLabel(caption=""),
+                            TileEntryCombo(
+                                caption="message:",
+                                idn="commit_short",
+                                width=50,
+                                on_select=lambda x, v: on_sel_commit(x),
                             ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="all",
-                                command=lambda: pull_all_workspace(),
+                            TileEntryText(
+                                caption="", idn="commit_long", width=80, height=10
+                            ),
+                            TileCols(
+                                source=[
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="commit",
+                                        command=lambda: on_commit(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="clear",
+                                        command=lambda: on_clr_commit(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="tracked git's",
+                                        commandtext="push",
+                                        command=lambda: on_push_tracked(),
+                                    ),
+                                    TileCheckbutton(
+                                        caption="push tags", idn="push_tags"
+                                    ),
+                                ]
                             ),
                         ]
                     ),
-                ]
-            ),
-        ),
-        (
-            "changes",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileTreeView(
-                        caption="",
-                        idn="changes",
-                        header=[
-                            ("git", None),
-                            ("file", None),
-                            ("unstaged", None),
-                            ("staged", None),
-                            ("type", None),
-                        ],
-                        header_width=(150, 250, 100, 100, 100),
-                    ),
-                    TileLabelButton(
-                        caption="",
-                        commandtext="refresh",
-                        command=lambda: set_changes(),
-                    ),
-                    TileCols(
+                ),
+                #         (
+                #             "tag",
+                #             TileRows(
+                #                 source=[
+                #                     TileLabel(caption=""),
+                #                     TileEntryButton(
+                #                         caption="new tag name",
+                #                         commandtext="tag",
+                #                         idn="tag_workspace",
+                #                     ),
+                #                 ]
+                #             ),
+                #         ),
+                (
+                    "log",
+                    TileRows(
                         source=[
-                            # TileLabelButton(
-                            #    caption="selected",
-                            #    commandtext="run black",
-                            #    command=lambda: on_black(),
-                            # ),
-                            TileLabelButton(
-                                caption="selected",
-                                commandtext="add",
-                                command=lambda: on_add(),
-                            ),
-                            TileLabelButton(
+                            TileLabel(caption=""),
+                            TileEntryText(
                                 caption="",
-                                commandtext="unstage",
-                                command=lambda: on_add_undo(),
+                                idn="log",
+                                height=20,
+                                width=80,
+                                readonly=True,
                             ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="diff",
-                                command=lambda: on_diff(),
-                            ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="difftool",
-                                command=lambda: on_difftool(),
-                            ),
-                            TileLabelButton(
-                                caption="all",
-                                commandtext="select",
-                                command=lambda: gt("changes").set_selection(-1),
-                            ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="unselect",
-                                command=lambda: gt("changes").clr_selection(),
+                            TileCols(
+                                source=[
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="clear",
+                                        command=lambda: on_log_clr(),
+                                    ),
+                                    TileCheckbutton(caption="follow log", idn="follow"),
+                                    TileCheckbutton(
+                                        caption="auto switch log", idn="auto_switch"
+                                    ),
+                                ]
                             ),
                         ]
                     ),
-                ]
-            ),
+                ),
+                ("about", Tile()),
+            ],
         ),
-        (
-            "commit",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileEntryCombo(
-                        caption="message:",
-                        idn="commit_short",
-                        width=50,
-                        on_select=lambda x, v: on_sel_commit(x),
-                    ),
-                    TileEntryText(caption="", idn="commit_long", width=80, height=10),
-                    TileCols(
-                        source=[
-                            TileLabelButton(
-                                caption="",
-                                commandtext="commit",
-                                command=lambda: on_commit(),
-                            ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="clear",
-                                command=lambda: on_clr_commit(),
-                            ),
-                            TileLabelButton(
-                                caption="tracked git's",
-                                commandtext="push",
-                                command=lambda: on_push_tracked(),
-                            ),
-                            TileCheckbutton(caption="push tags", idn="push_tags"),
-                        ]
-                    ),
-                ]
-            ),
+        TileCols(
+            source=[
+                TileLabelClick(
+                    caption=f"gitonic - {url_homepage}",
+                    on_click=lambda x: open_homepage(),
+                ),
+                TileLabel(
+                    caption=f"version: {VERSION}",
+                ),
+                TileLabelClick(
+                    caption=f"DONATE to gitonic - {url_sponsor}",
+                    on_click=lambda x: open_sponsor_page(),
+                ),
+            ]
         ),
-        #         (
-        #             "tag",
-        #             TileRows(
-        #                 source=[
-        #                     TileLabel(caption=""),
-        #                     TileEntryButton(
-        #                         caption="new tag name",
-        #                         commandtext="tag",
-        #                         idn="tag_workspace",
-        #                     ),
-        #                 ]
-        #             ),
-        #         ),
-        (
-            "log",
-            TileRows(
-                source=[
-                    TileLabel(caption=""),
-                    TileEntryText(
-                        caption="", idn="log", height=20, width=80, readonly=True
-                    ),
-                    TileCols(
-                        source=[
-                            TileLabelButton(
-                                caption="",
-                                commandtext="clear",
-                                command=lambda: on_log_clr(),
-                            ),
-                            TileCheckbutton(caption="follow log", idn="follow"),
-                            TileCheckbutton(
-                                caption="auto switch log", idn="auto_switch"
-                            ),
-                        ]
-                    ),
-                ]
-            ),
-        ),
-        ("about", Tile()),
-    ],
+    ]
 )
 
 
@@ -327,22 +361,6 @@ def minimize():
     tk_root.iconify()
 
 
-url_homepage = "https://github.com/kr-g/gitonic"
-url_sponsor = "https://github.com/sponsors/kr-g"
-
-
-def open_homepage():
-    import webbrowser
-
-    webbrowser.get().open(url_homepage, new=0)
-
-
-def open_sponsor_page():
-    import webbrowser
-
-    webbrowser.get().open(url_sponsor, new=0)
-
-
 main_content = TileRows(
     source=[
         TileCols(
@@ -354,21 +372,6 @@ main_content = TileRows(
             ]
         ),
         main,
-        TileCols(
-            source=[
-                TileLabelClick(
-                    caption=f"gitonic - {url_homepage}",
-                    on_click=lambda x: open_homepage(),
-                ),
-                TileLabel(
-                    caption=f"version: {VERSION}",
-                ),
-                TileLabelClick(
-                    caption=f"DONATE to gitonic - {url_sponsor}",
-                    on_click=lambda x: open_sponsor_page(),
-                ),
-            ]
-        ),
     ]
 )
 
@@ -382,6 +385,14 @@ mainframe.add(main_content)
 mainframe.layout()
 
 # gui handling
+
+
+def open_homepage():
+    webbrowser.get().open(url_homepage, new=0)
+
+
+def open_sponsor_page():
+    webbrowser.get().open(url_sponsor, new=0)
 
 
 def on_sel_all_gits():
@@ -762,8 +773,5 @@ gt("follow").set_val(1)
 gt("auto_switch").set_val(1)
 
 # end-of init
-
-print(tk_root.geometry())
-print(tk_root.winfo_reqwidth(), tk_root.winfo_reqheight())
 
 mainframe.mainloop()
