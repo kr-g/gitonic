@@ -34,7 +34,7 @@
   - desktop integration
     - open shell at repo path
     - open file management too at repo path
-- history of commit texts
+- ~~history of commit texts~~
   - ~~in combo box~~
   - git log / show integration?
 
