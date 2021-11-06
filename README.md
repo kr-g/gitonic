@@ -55,7 +55,7 @@ tested on python3, and linux
 
     phyton3 -m pip install gitonic
 
-to use git difftool, and mergtool install a 3rd party tool like 
+to use git difftool, and mergetool install a 3rd party tool like 
 [`meld merge`](https://meldmerge.org/)
 and configure like described below
 
