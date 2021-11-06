@@ -46,8 +46,8 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 
 # LIMITATIONS
 
-- currently the tracked workspace is fix located under `~/repo`
-  - provided in version v0.0.2
+- ~~currently the tracked workspace is fix located under `~/repo`
+  - provided in version v0.0.2~~
 - difftool only works with unstaged files, no diff on already staged or 
  commited changes (same behavior as cmd-line `git difftool`)
 - git credentials basic support, 
