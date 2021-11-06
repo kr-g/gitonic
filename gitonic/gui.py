@@ -21,9 +21,6 @@ from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 # global
 
-
-#
-
 url_homepage = "https://github.com/kr-g/gitonic"
 url_sponsor = "https://github.com/sponsors/kr-g"
 
