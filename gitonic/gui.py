@@ -455,7 +455,7 @@ tracked.makedirs()
 
 def tracked_write():
     with open(tracked.name, "w") as f:
-        f.write(json.dumps(tracked_gits))
+        f.write(json.dumps(tracked_gits, indent=4))
 
 
 def tracked_read():
