@@ -212,23 +212,3 @@ class GitWorkspace(object):
                 filter(lambda x: x.find(search_str) >= 0, self.gits),
             )
         )
-
-
-#
-
-if __name__ == "__main__":
-
-    frepo = FileStat("~/repo")
-
-    gws = GitWorkspace(frepo.name)
-    gws.refresh()
-    gws.refresh_status()
-
-    for path, git in gws.gits.items():
-
-        if len(git.status) > 0:
-            print("---status---", path)
-
-            for stat in git.status:
-                fs = git.stat(stat)
-                print(stat, "file" if fs.is_file() else "dir")
