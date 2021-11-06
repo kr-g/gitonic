@@ -1,3 +1,9 @@
+"""
+    (c)2021 K. Goger (k.r.goger@gmail.com)
+    legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
+"""
+
+
 class TkCmd(object):
     class Options(object):
         def __init__(self, opts):

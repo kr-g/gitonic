@@ -1,6 +1,6 @@
 """
     (c)2021 K. Goger (k.r.goger@gmail.com)
-    legal: https://github.com/kr-g/pygitonic/blob/main/LICENSE.md
+    legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
 """
 
 
