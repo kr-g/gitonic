@@ -12,7 +12,7 @@
 - workspace not fixed anymore to ~/repo
 - refactored 
 - commit history
-- documentation in reademe
+- documentation in readme
 - 
 
 

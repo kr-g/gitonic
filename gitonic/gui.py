@@ -593,10 +593,10 @@ def on_commit():
     head = gt("commit_short").get_val().strip()
     body = gt("commit_long").get_val().strip()
 
-    if len(head) < 5 or len(head) > 50:
+    if len(head) < 4 or len(head) > 50:
         tkinter.messagebox.showerror(
             "error",
-            f"length: 5 > message < 50\ncurrent: {len(head)}",
+            f"length: 4 > message < 50\ncurrent: {len(head)}",
         )
         return
 
