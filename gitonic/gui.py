@@ -20,6 +20,17 @@ frepo = FileStat("~/repo")
 
 tk_root = Tk()
 
+
+def _r(self):
+    print(self.opts.i)
+    self.opts.i -= 1
+    if self.opts.i < 0:
+        return 0
+
+
+tkcmd = TkCmd().start(tk_root, _r, i=5)
+
+
 mainframe = Tile(tk_root=tk_root, idn="mainframe")
 
 
@@ -587,8 +598,8 @@ def set_changes():
     gt("changes").set_values(changes)
 
 
-tracked_read()
-set_workspace()
+# tracked_read()
+set_workspace(True)
 
 
 if len(changes) > 0:

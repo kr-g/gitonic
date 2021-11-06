@@ -66,6 +66,44 @@ ON_UNSELECT = "on_unselect"
 ON_CHANGE = "on_change"
 
 
+class TkCmd(object):
+    class Options(object):
+        def __init__(self, opts):
+            self.__dict__.update(opts)
+
+    def start(
+        self,
+        parent,
+        command=None,
+        tout=1000,
+        **opts,
+    ):
+        self.parent = parent
+        self.tout = tout
+        self.rc = None
+        self._stop = None
+        self._cmd = command
+        self.opts = TkCmd.Options(opts) if opts and type(opts) == dict else opts
+        self.disp(True)
+        return self
+
+    def disp(self, schedule=False):
+        if schedule:
+            self.parent.after(self.tout, self.disp)
+            return
+        if self._stop:
+            self.rc = self._stop
+            return
+        self.rc = self.run()
+        if self.rc is None:
+            self.disp(True)
+
+    def run(self):
+        if self._cmd:
+            return self._cmd(self)
+        return 0
+
+
 class TkMixin(object):
     def init(self, root=None):
         self.tk = root
