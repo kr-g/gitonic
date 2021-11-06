@@ -32,7 +32,6 @@ def git_cmd(cmdline, callb=None):
 
 
 def with_git_cmd(repo, cmd, callb=None):
-    print(repo, cmd)
     with PushDir(repo) as pd:
         return git_cmd(cmd, callb=callb)
 
