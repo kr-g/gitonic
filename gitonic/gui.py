@@ -23,12 +23,14 @@ from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 fconfigdir = FileStat("~").join([".gitonic"])
 frepo = FileStat("~/repo")
 max_history = 1000
+max_commit = 15
 
 
 def set_config():
-    global frepo, max_history
+    global frepo, max_history, max_commit
     frepo = FileStat(config().workspace)
     max_history = config().max_history
+    max_commit = config().max_commit
 
 
 def read_config():
@@ -37,6 +39,7 @@ def read_config():
     config = Config(filename=fconfig)
     config().setdefault("workspace", frepo.name)
     config().setdefault("max_history", max_history)
+    config().setdefault("max_commit", max_commit)
     set_config()
 
 
@@ -44,6 +47,7 @@ def write_config():
     print("write_config")
     config().workspace = gt("workspace").get_val()
     config().max_history = gt("max_history").get_val()
+    config().max_commit = gt("max_commit").get_val()
     config.save()
     set_config()
 
@@ -88,6 +92,12 @@ main = TileTab(
                         caption="max records in log history",
                         idn="max_history",
                         value=max_history,
+                        on_change=lambda o, n: write_config(),
+                    ),
+                    TileEntryInt(
+                        caption="max records in commit history",
+                        idn="max_commit",
+                        value=max_commit,
                         on_change=lambda o, n: write_config(),
                     ),
                     TileLabelButton(
@@ -216,7 +226,12 @@ main = TileTab(
             TileRows(
                 source=[
                     TileLabel(caption=""),
-                    TileEntry(caption="message:", idn="commit_short", width=50),
+                    TileEntryCombo(
+                        caption="message:",
+                        idn="commit_short",
+                        width=50,
+                        on_select=lambda x, v: on_sel_commit(x),
+                    ),
                     TileEntryText(caption="", idn="commit_long", width=80, height=10),
                     TileCols(
                         source=[
@@ -516,6 +531,64 @@ def on_add_undo():
     on_sel_cmd("on_add", git_add_undo, True, True)
 
 
+fcommit = FileStat(fconfigdir.name).join(["commit.json"])
+commit_history = []
+
+
+def read_commit():
+    global commit_history
+    try:
+        with open(fcommit.name) as f:
+            cont = f.read()
+            commit_history = json.loads(cont)
+    except Exception as ex:
+        print(ex)
+    set_commits()
+
+
+def write_commit():
+    try:
+        with open(fcommit.name, "w") as f:
+            cont = json.dumps(commit_history, indent=4)
+            f.write(cont)
+    except Exception as ex:
+        print(ex)
+
+
+def add_commit_history(short, long):
+    global commit_history
+    commit = {"short": short, "long": long}
+    try:
+        commit_history.remove(commit)
+    except:
+        pass
+    commit_history.insert(0, commit)
+    if len(commit_history) > max_commit:
+        commit_history = commit_history[0:max_commit]
+    write_commit()
+    set_commits()
+
+
+def set_commits():
+    global commit_history
+    commits = gt("commit_short")
+    vals = list(map(lambda x: x["short"], commit_history))
+    print("*********vals", vals)
+    commits.set_values(vals)
+    if len(vals) > 0:
+        commits.set_index(0)
+        gt("commit_long").set_val(commit_history[0]["long"])
+
+
+read_commit()
+
+
+def on_sel_commit(idx):
+    print(idx)
+    # gt("commit_short").set_val(commit_history[idx]["short"])
+    gt("commit_long").set_val(commit_history[idx]["long"])
+
+
 def on_clr_commit():
     gt("commit_short").clr()
     gt("commit_long").clr()
@@ -536,6 +609,8 @@ def on_commit():
     message = head
     if len(body) > 0:
         message += "\n" * 2 + body
+
+    add_commit_history(head, body)
 
     for gnam in tracked_gits:
         try:

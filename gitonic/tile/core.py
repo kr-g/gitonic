@@ -374,6 +374,7 @@ class TileEntry(Tile):
     def _bind_focus(self, te):
         te.bind("<FocusIn>", self.on_focus_enter)
         te.bind("<FocusOut>", self.on_focus_leave)
+        self._old_val = None
 
     def get_val(self):
         return self._var.get()
@@ -528,11 +529,8 @@ class TileEntryCombo(TileEntry):
 
         vars = super().create_element()
 
-        self._values = list(self.pref(VALUES, []))
-
-        mf = self.pref(MAP_VALUE, lambda x: x)
-        self._map_values = list(map(mf, self._values))
-        self._combo[VALUES] = self._map_values
+        values = list(self.pref(VALUES, []))
+        self.set_values(values)
 
         sel_idx = self.pref("sel_idx", None)
         if sel_idx != None:
@@ -541,7 +539,8 @@ class TileEntryCombo(TileEntry):
         return vars
 
     def _create_entry(self):
-        self._combo = ttk.Combobox(self.frame, textvariable=self._var)
+        width = self.pref_int("width", 20)
+        self._combo = ttk.Combobox(self.frame, textvariable=self._var, width=width)
         self._combo.bind("<<ComboboxSelected>>", self._handler)
 
         self._bind_focus(self._combo)
@@ -549,9 +548,11 @@ class TileEntryCombo(TileEntry):
         return self._combo
 
     def _handler(self, event):
-        self.pref(ON_SELECT, self.on_select)()
+        idx = self.get_index()
+        val = self.get_val()
+        self.pref(ON_SELECT, self.on_select)(idx, val)
 
-    def on_select(self):
+    def on_select(self, ref_self, idx, val):
         print(self.__class__.__name__, ON_SELECT, self.get_select())
 
     def get_index(self):
@@ -560,11 +561,14 @@ class TileEntryCombo(TileEntry):
     def set_index(self, pos):
         self._combo.current(pos)
 
+    def set_values(self, values):
+        self._values = values
+        mf = self.pref(MAP_VALUE, lambda x: x)
+        self._map_values = list(map(mf, self._values))
+        self._combo[VALUES] = self._map_values
+
     def get_values(self):
         return self._combo[VALUES]
-
-    def get_val(self):
-        return get_select()
 
     def get_select(self):
         # todo refactor ?
