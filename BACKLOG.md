@@ -38,7 +38,7 @@
 
 # OPEN ISSUES
 
-- 
+refer to [issues](https://github.com/kr-g/gitonic/issues)
 
 
 # LIMITATIONS
