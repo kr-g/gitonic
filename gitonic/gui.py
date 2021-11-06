@@ -20,23 +20,28 @@ from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 # configuration
 
 frepo = FileStat("~/repo")
+max_history = 1000
 
 
 def set_config():
-    global frepo
+    global frepo, max_history
     frepo = FileStat(config().workspace)
+    max_history = config().max_history
 
 
 def read_config():
-    global config
+    global config, max_history
     fconfig = FileStat("~").join([".gitonic", "config.json"]).name
     config = Config(filename=fconfig)
     config().setdefault("workspace", frepo.name)
+    config().setdefault("max_history", max_history)
     set_config()
 
 
 def write_config():
+    print("write_config")
     config().workspace = gt("workspace").get_val()
+    config().max_history = gt("max_history").get_val()
     config.save()
     set_config()
 
@@ -77,6 +82,12 @@ main = TileTab(
                         on_select=lambda x: write_config(),
                     ),
                     TileLabel(caption="refresh tracked git's on the next tab manually"),
+                    TileEntryInt(
+                        caption="max records in log history",
+                        idn="max_history",
+                        value=max_history,
+                        on_change=lambda o, n: write_config(),
+                    ),
                 ]
             ),
         ),
@@ -379,9 +390,20 @@ def on_log_clr():
     gt("log").clr()
 
 
+def do_log_max_history():
+    print("do_log_max_history")
+    log = gt("log")
+    cnt = log.get_line_count()
+    print(cnt, max_history)
+    if cnt >= max_history:
+        to_del = float(cnt - max_history)
+        log.remove_lines(last=to_del)
+
+
 def on_follow_log():
     if int(gt("follow").get_val()) > 0:
         gt("log").gotoline()
+    do_log_max_history()
 
 
 def do_log_show(ignore_switch=False):

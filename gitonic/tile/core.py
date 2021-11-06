@@ -506,6 +506,14 @@ class TileEntryText(TileEntry):
             lineno = float(lineno)
         self._entry.yview_pickplace(lineno)
 
+    def get_line_count(self):
+        return int(float(self._entry.index("end-1c")))
+
+    def remove_lines(self, first="1.0", last="end"):
+        self._preserve_state()
+        self._entry.delete(first, last)
+        self._preserve_state(False)
+
 
 class TileEntryButton(TileEntry, TileButton):
     def create_element(self):
