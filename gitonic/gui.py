@@ -615,11 +615,9 @@ def set_changes():
         fs = FileStat(path, prefetch=True)
         if not fs.exists():
             continue
+        gitnam = fs.basename()
 
-        print(git)
         git = git[0]
-
-        rnam = fs.basename()
         git.refresh_status()
 
         if len(git.status) > 0:
@@ -627,7 +625,7 @@ def set_changes():
                 fs = git.stat(stat)
                 fs_ex = fs.exists()
                 gst = {
-                    "git": rnam,
+                    "git": gitnam,
                     "file": stat.file,
                     "unstaged": stat.mode,
                     "staged": stat.staged,
