@@ -29,6 +29,18 @@ todo - documentation pending
 
 press `ESC` key to minimize gitonic window.
 
+# file status staged / ustaged 
+
+| status | comment |
+|---|---|
+| M | modified |
+| A | added |
+| D | deleted |
+| R | renamed |
+| C | copied |
+| U | updated but unmerged |
+| ?? | not in git |
+
 
 # platform
 
