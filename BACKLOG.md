@@ -12,7 +12,7 @@
 - merge tool integration
 - settings tabs
   - check for installed git
-  - git exe configuration in settings
+  - ~~git exe configuration in settings~~
   - check for latest version of gitonic
   - 
 - config file for last known config
