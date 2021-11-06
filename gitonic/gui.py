@@ -400,7 +400,6 @@ def do_log_max_history():
     print("do_log_max_history")
     log = gt("log")
     cnt = log.get_line_count()
-    print(cnt, max_history)
     if cnt >= max_history:
         to_del = float(cnt - max_history)
         log.remove_lines(last=to_del)
