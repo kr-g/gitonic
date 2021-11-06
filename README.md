@@ -31,6 +31,10 @@ press `ESC` key to minimize gitonic window.
 
 # file status staged / ustaged 
 
+the file status is the same as when calling 
+[`git status --porcelain`](https://git-scm.com/docs/git-status)
+
+
 | status | comment |
 |---|---|
 | M | modified |
