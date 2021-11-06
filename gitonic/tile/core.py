@@ -841,7 +841,8 @@ class TileFileSelect(TileEntryButton):
         self._filetypes = self.pref("filetypes", self.file_types())
 
         path = self.pref(self.PATH, self.get_base())
-        self.set_val(self.fullpath(path))
+        self.path = self.fullpath(path)
+        self.set_val(self.path)
 
         self._bind_focus(self._entry)
 
@@ -871,8 +872,9 @@ class TileFileSelect(TileEntryButton):
 
     def _on_select_file(self):
         file = self.get_val()
-        print_t("selected", file)
-        self.pref(ON_SELECT, self.on_select)(file)
+        if self.path != file:
+            print_t("selected", file)
+            self.pref(ON_SELECT, self.on_select)(file)
 
     def on_select(self, file):
         print(ON_SELECT, file)
