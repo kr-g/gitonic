@@ -869,7 +869,13 @@ class TileFileSelect(TileEntryButton):
         path = self.pref(self.PATH, self.get_base())
         self.set_val(self.fullpath(path))
 
+        self._bind_focus(self._entry)
+
         return vars
+
+    def _bind_focus(self, te):
+        te.bind("<FocusIn>", self.on_focus_enter)
+        te.bind("<FocusOut>", self.on_focus_leave)
 
     def on_click(self, o):
 
@@ -880,8 +886,22 @@ class TileFileSelect(TileEntryButton):
         )
 
         if file:
-            print_t("selected", file)
             self.set_val(file)
+            self._on_select_file()
+
+    def on_focus_enter(self, ev):
+        pass
+
+    def on_focus_leave(self, ev):
+        self._on_select_file()
+
+    def _on_select_file(self):
+        file = self.get_val()
+        print_t("selected", file)
+        self.pref(ON_SELECT, self.on_select)(file)
+
+    def on_select(self, file):
+        print(ON_SELECT, file)
 
     def get_base(self):
         return os.getcwdb()
@@ -909,6 +929,7 @@ class TileDirectorySelect(TileFileSelect):
         if file:
             print_t("selected", file)
             self.set_val(file)
+            self.pref(ON_SELECT, self.on_select)(file)
 
 
 class TileCompositFlow(Tile):

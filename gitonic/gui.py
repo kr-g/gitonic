@@ -4,19 +4,46 @@ import os
 import time
 import json
 
-from .tile import *
+from pyjsoncfg import Config
 
 import tkinter
 from tkinter import Tk
 
+from .tile import *
 from .file import FileStat
+
 from .gitutil import GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
 from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
-#
+
+# configuration
 
 frepo = FileStat("~/repo")
+
+
+def set_config():
+    global frepo
+    frepo = FileStat(config().workspace)
+
+
+def read_config():
+    global config
+    fconfig = FileStat("~").join([".gitonic", "config.json"]).name
+    config = Config(filename=fconfig)
+    config().setdefault("workspace", frepo.name)
+    set_config()
+
+
+def write_config():
+    config().workspace = gt("workspace").get_val()
+    config.save()
+    set_config()
+
+
+read_config()
+
+#
 
 tk_root = Tk()
 
@@ -47,7 +74,9 @@ main = TileTab(
                         commandtext="...",
                         idn="workspace",
                         path=frepo.name,
+                        on_select=lambda x: write_config(),
                     ),
+                    TileLabel(caption="refresh tracked git's on the next tab manually"),
                 ]
             ),
         ),
@@ -232,6 +261,7 @@ main = TileTab(
                 ]
             ),
         ),
+        ("about", Tile()),
     ],
 )
 
@@ -254,12 +284,19 @@ def minimize():
 
 
 url_homepage = "https://github.com/kr-g/gitonic"
+url_sponsor = "https://github.com/sponsors/kr-g"
 
 
 def open_homepage():
     import webbrowser
 
     webbrowser.get().open(url_homepage, new=0)
+
+
+def open_sponsor_page():
+    import webbrowser
+
+    webbrowser.get().open(url_sponsor, new=0)
 
 
 main_content = TileRows(
@@ -281,6 +318,10 @@ main_content = TileRows(
                 ),
                 TileLabel(
                     caption=f"version: {VERSION}",
+                ),
+                TileLabelClick(
+                    caption=f"DONATE to gitonic - {url_sponsor}",
+                    on_click=lambda x: open_sponsor_page(),
                 ),
             ]
         ),
