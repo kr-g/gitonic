@@ -8,6 +8,7 @@
   - create
   - switch
 - git tag support
+- git stash support (list, show, push, pop/apply, drop, clear)
 - merge tool integration
 - settings tabs
   - check for installed git
