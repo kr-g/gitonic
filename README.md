@@ -29,7 +29,7 @@ todo - documentation pending
 
 press `ESC` key to minimize gitonic window.
 
-# file status staged / ustaged 
+# file status staged / unstaged 
 
 the file status is the same as when calling 
 [`git status --porcelain`](https://git-scm.com/docs/git-status#_output)
