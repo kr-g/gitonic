@@ -2,11 +2,11 @@
 # backlog
 
 - testcases
-- gui rework
+- gui rework (resize behavior -> expand)
 - background task and event loop -> freezing gui when running git utils
 - merge tool integration
 - black PEP8 support
-  - run external jobs
+  - eg. run as external jobs
 - config file for last known config
 - refact for integration in other tools
 - git exe configuration in settings
