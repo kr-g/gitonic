@@ -19,7 +19,7 @@ from .gitutil import run_black, git_add, git_add_undo, git_commit
 from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
 
-tk_root = Tk()
+# global
 
 
 #
@@ -723,9 +723,11 @@ def startup_gui():
 
 # main
 
+tk_root = Tk()
+
 
 def quit_all(frame):
-    def quit():
+    def quit_():
         print("quit_all")
         # removes all, including threads
         # sys.exit()
@@ -733,7 +735,7 @@ def quit_all(frame):
         # download_stop()
         frame.quit()
 
-    return quit
+    return quit_
 
 
 def minimize():

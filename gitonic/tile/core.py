@@ -100,7 +100,7 @@ class Tile(TkMixin):
 
         if tk_root:
             self.init(tk_root)
-            self.title("pyTile / tk")
+            # self.title("pyTile / tk")
 
         self.idn = idn
         if idn != None:
@@ -120,7 +120,7 @@ class Tile(TkMixin):
 
         self._container = None
 
-        self._init_frame()
+        # self._init_frame()
         self.__init__internal__()
 
     def __repr__(self):
