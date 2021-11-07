@@ -2,9 +2,10 @@
 # Changelog
 
 
-## next version v0.0.4 - 
+## version v0.0.4 - 20211107
 
 - fix find git repo in workspace (with similar starting letters)
+- hopefully all childhood diseases are gone for now
 - 
 
 
