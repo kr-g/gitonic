@@ -209,6 +209,6 @@ class GitWorkspace(object):
         return list(
             map(
                 lambda x: self.gits[x],
-                filter(lambda x: x.find(search_str) >= 0, self.gits),
+                filter(lambda x: x == search_str, self.gits),
             )
         )
