@@ -53,6 +53,9 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 - git credentials basic support, 
  you need to use https://git-scm.com/docs/git-credential-store.
  no separate credit store provided.
+- only existing git repo's under the workspace are supported,
+ as of now so support to create a new git repo. 
+ use `git init`, or `git clone` manually from cmd-line
 - 
  
 
