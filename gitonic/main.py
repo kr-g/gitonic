@@ -1,8 +1,15 @@
 import tkinter
 from tkinter import Tk
 
-from gitonic.gui import TkCmd, Tile, TileRows, TileCols, TileLabelButton
-from gitonic.gui import startup_gui, main
+from .gui import TkCmd, Tile, TileRows, TileCols, TileLabelButton
+from .gui import startup_gui, main, fconfigdir
+
+from .file import FileStat
+from .singleinstance import (
+    check_instance,
+    check_and_bring_to_front,
+    create_client_socket,
+)
 
 # main
 
@@ -26,7 +33,41 @@ def minimize():
     tk_root.iconify()
 
 
+# single instance handling
+
+pnam = FileStat(fconfigdir.name).join(["socket"])
+sock = None
+
+
+def try_switch_app():
+    global sock
+    # set up server if possible
+    sock, port = check_instance(pnam.name)
+    if sock is None:
+        # open connection to server, and quit
+        sock = create_client_socket(port)
+        return sock
+
+
+def do_serv_socket(self):
+    rc = check_and_bring_to_front(sock, tk_root)
+    if rc is not None:
+        print("bring to front client request")
+
+
+tkcmd = None
+
+# end-of single instance
+
+
 def main_func():
+
+    if try_switch_app():
+        print("switched to server instance")
+        return
+
+    global tkcmd
+    tkcmd = TkCmd().start(tk_root, command=do_serv_socket)
 
     mainframe = Tile(tk_root=tk_root, idn="mainframe")
 
