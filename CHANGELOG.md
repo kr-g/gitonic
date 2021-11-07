@@ -1,9 +1,16 @@
 
 # Changelog
 
-## next version v0.0.3 - 20211107
 
-- thonny-gitonic puglic support
+## next version v0.0.4 - 
+
+- fix find git repo in workspace (with similar staring letters)
+- 
+
+
+## version v0.0.3 - 20211107
+
+- thonny-gitonic plugin support
 - 
 
 
