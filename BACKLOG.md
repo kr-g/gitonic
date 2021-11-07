@@ -46,15 +46,15 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 
 # LIMITATIONS
 
-- ~~currently the tracked workspace is fix located under `~/repo`
-  - provided in version v0.0.2~~
+- ~~currently the tracked workspace is fix located under `~/repo`~~
+  - ~~provided in version v0.0.2~~
 - difftool only works with unstaged files, no diff on already staged or 
  commited changes (same behavior as cmd-line `git difftool`)
 - git credentials basic support, 
  you need to use https://git-scm.com/docs/git-credential-store.
  no separate credit store provided.
 - only existing git repo's under the workspace are supported,
- as of now so support to create a new git repo. 
+ as of now no support to create a new git repo. 
  use `git init`, or `git clone` manually from cmd-line
 - 
  
