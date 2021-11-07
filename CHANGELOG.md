@@ -1,8 +1,9 @@
 
 # Changelog
 
-## next version v0.0.3 - 
+## next version v0.0.3 - 20211107
 
+- thonny-gitonic puglic support
 - 
 
 
