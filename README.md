@@ -2,7 +2,7 @@
 
 # gitonic 
 
-gitonic simplifies the daily work with multiple git repositories.
+gitonic simplifies working with multiple git repositories.
 
 gitonic comes with an easy to use Tkinter GUI.
 
