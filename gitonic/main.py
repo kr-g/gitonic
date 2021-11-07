@@ -26,21 +26,6 @@ def minimize():
     tk_root.iconify()
 
 
-# sample
-
-
-def _r(self):
-    print(self.opts.i, self._info)
-    self.opts.i -= 1
-    if self.opts.i < 0:
-        return 0
-
-
-tkcmd = TkCmd().start(tk_root, _r, i=5)
-
-# end-of sample
-
-
 def main_func():
 
     mainframe = Tile(tk_root=tk_root, idn="mainframe")
@@ -73,4 +58,5 @@ def main_func():
     mainframe.layout()
 
     startup_gui()
+
     mainframe.mainloop()
