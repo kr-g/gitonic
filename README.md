@@ -65,7 +65,7 @@ and configure like described below
 
 # git configuration
 
-add a `/home/benutzer/.git-credentials` file as described here 
+add a `.git-credentials` file as described here 
 [`git-credentials`](https://git-scm.com/docs/git-credential-store#_storage_format)
 
 
