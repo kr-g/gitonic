@@ -4,7 +4,7 @@
 
 ## next version v0.0.4 - 
 
-- fix find git repo in workspace (with similar staring letters)
+- fix find git repo in workspace (with similar starting letters)
 - 
 
 
