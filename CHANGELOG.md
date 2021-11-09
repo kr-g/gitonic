@@ -3,6 +3,7 @@
 
 ## next version v0.0.5 - 
 
+- rework ui layout
 - 
 
 
