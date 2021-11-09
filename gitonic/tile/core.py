@@ -65,6 +65,9 @@ ON_UNSELECT = "on_unselect"
 
 ON_CHANGE = "on_change"
 
+WIDTH = "width"
+CAPTION_WIDTH = "caption_width"
+
 
 class TkMixin(object):
     def init(self, root=None):
@@ -245,11 +248,21 @@ class Tile(TkMixin):
     def set_pref(self, name, val):
         self._kwargs[name] = val
 
-    def pref_int(self, name, defval):
-        return int(self._kwargs.get(name, defval))
+    def pref_int(self, name, defval=None, none_ok=False):
+        val = self.pref(name, defval)
+        if val is None:
+            if not none_ok:
+                raise Exception("None val")
+            return None
+        return int(val)
 
-    def pref_float(self, name, defval):
-        return float(self._kwargs.get(name, defval))
+    def pref_float(self, name, defval=None, none_ok=False):
+        val = self.pref(name, defval)
+        if val is None:
+            if not none_ok:
+                raise Exception("None val")
+            return None
+        return float(val)
 
     def get_caption(self):
         return self.pref(CAPTION, "... caption not-set" + str(self))
@@ -257,8 +270,9 @@ class Tile(TkMixin):
 
 class TileLabel(Tile):
     def create_element(self):
+        width = self.pref_int(CAPTION_WIDTH, none_ok=True)
         self._var = StringVar()
-        self._lbl = ttk.Label(self.frame, textvariable=self._var)
+        self._lbl = ttk.Label(self.frame, textvariable=self._var, width=width)
         self.text(self.get_caption())
         return self._lbl
 
@@ -343,7 +357,8 @@ class TileLabelButton(TileLabel, TileButton):
 
 class TileEntry(Tile):
     def create_element(self):
-        self._lbl = ttk.Label(self.frame, text=self.get_caption())
+        width = self.pref_int(CAPTION_WIDTH, none_ok=True)
+        self._lbl = ttk.Label(self.frame, text=self.get_caption(), width=width)
         self._var = self._create_var()
         self._entry = self._create_entry()
 

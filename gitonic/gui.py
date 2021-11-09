@@ -98,6 +98,8 @@ def write_config():
 
 #
 
+PREFS_CAP_W = 25
+PREFS_ENTRY_W = 5
 
 main = TileRows(
     source=[
@@ -112,6 +114,7 @@ main = TileRows(
                             TileDirectorySelect(
                                 caption="select workspace",
                                 commandtext="...",
+                                width=30,
                                 idn="workspace",
                                 path=frepo.name,
                                 on_select=lambda x: write_config(),
@@ -122,24 +125,31 @@ main = TileRows(
                             TileLabel(caption=""),
                             TileEntryInt(
                                 caption="minimum commit text length",
+                                caption_width=PREFS_CAP_W,
+                                width=PREFS_ENTRY_W,
                                 idn="min_commit_length",
                                 value=min_commit_length,
                                 on_change=lambda o, n: write_config(),
                             ),
                             TileEntryInt(
                                 caption="max records in log history",
+                                caption_width=PREFS_CAP_W,
+                                width=PREFS_ENTRY_W,
                                 idn="max_history",
                                 value=max_history,
                                 on_change=lambda o, n: write_config(),
                             ),
                             TileEntryInt(
                                 caption="max records in commit history",
+                                caption_width=PREFS_CAP_W,
+                                width=PREFS_ENTRY_W,
                                 idn="max_commit",
                                 value=max_commit,
                                 on_change=lambda o, n: write_config(),
                             ),
                             TileEntry(
                                 caption="git executable",
+                                caption_width=PREFS_CAP_W,
                                 idn="git_exe",
                                 value=GIT,
                                 on_change=lambda o, n: write_config(),
@@ -224,10 +234,24 @@ main = TileRows(
                                 ],
                                 header_width=(150, 250, 100, 100, 100),
                             ),
-                            TileLabelButton(
-                                caption="",
-                                commandtext="refresh",
-                                command=lambda: set_changes(),
+                            TileCols(
+                                source=[
+                                    TileLabelButton(
+                                        caption="changes",
+                                        commandtext="refresh",
+                                        command=lambda: set_changes(),
+                                    ),
+                                    TileLabelButton(
+                                        caption="all",
+                                        commandtext="select",
+                                        command=lambda: gt("changes").set_selection(-1),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="unselect",
+                                        command=lambda: gt("changes").clr_selection(),
+                                    ),
+                                ]
                             ),
                             TileCols(
                                 source=[
@@ -256,16 +280,6 @@ main = TileRows(
                                         commandtext="difftool",
                                         command=lambda: on_difftool(),
                                     ),
-                                    TileLabelButton(
-                                        caption="all",
-                                        commandtext="select",
-                                        command=lambda: gt("changes").set_selection(-1),
-                                    ),
-                                    TileLabelButton(
-                                        caption="",
-                                        commandtext="unselect",
-                                        command=lambda: gt("changes").clr_selection(),
-                                    ),
                                 ]
                             ),
                         ]
@@ -276,11 +290,20 @@ main = TileRows(
                     TileRows(
                         source=[
                             TileLabel(caption=""),
-                            TileEntryCombo(
-                                caption="message:",
-                                idn="commit_short",
-                                width=50,
-                                on_select=lambda x, v: on_sel_commit(x),
+                            TileCols(
+                                source=[
+                                    TileEntryCombo(
+                                        caption="message:",
+                                        idn="commit_short",
+                                        width=50,
+                                        on_select=lambda x, v: on_sel_commit(x),
+                                    ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="clear",
+                                        command=lambda: on_clr_commit(),
+                                    ),
+                                ]
                             ),
                             TileEntryText(
                                 caption="", idn="commit_long", width=80, height=10
@@ -288,17 +311,12 @@ main = TileRows(
                             TileCols(
                                 source=[
                                     TileLabelButton(
-                                        caption="",
+                                        caption="tracked git's",
                                         commandtext="commit",
                                         command=lambda: on_commit(),
                                     ),
                                     TileLabelButton(
                                         caption="",
-                                        commandtext="clear",
-                                        command=lambda: on_clr_commit(),
-                                    ),
-                                    TileLabelButton(
-                                        caption="tracked git's",
                                         commandtext="push",
                                         command=lambda: on_push_tracked(),
                                     ),
