@@ -595,6 +595,7 @@ class TileEntryListbox(TileEntry):
 
         self._lastsel = None
 
+        self._show_scrollb = self.pref("show_scroll", False)
         self._auto_scrollb = int(self.pref("max_show", 5))
         vals = self.pref(VALUES, [])
         self._values = list(vals if vals else [])
@@ -667,8 +668,9 @@ class TileEntryListbox(TileEntry):
 
         self._scrollb_y_pack()
 
-        if not self._scrollable:
-            self._scrollb_y.forget()
+        if not self._show_scrollb:
+            if not self._scrollable:
+                self._scrollb_y.forget()
 
         self._listb_wg.pack(anchor=CENTER, side="left", padx=0, pady=0)
         self._listb_wg_parent.pack(anchor=CENTER, side="left", padx=0, pady=0)
