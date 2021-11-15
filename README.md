@@ -26,7 +26,7 @@ for open development tasks and limitations.
 
 # recommended readings prior using gitonic
 
-ań introduction on how git works in general can be found in the official git documentation in section
+an introduction on how git works in general can be found in the official git documentation in section
 [`Git-Basics`](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
 
 
