@@ -4,6 +4,7 @@
 ## next version v0.0.5 - 
 
 - rework ui layout
+- use subprocess popen to capture stdout, and stderr
 - 
 
 

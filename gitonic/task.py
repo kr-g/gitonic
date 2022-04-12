@@ -4,6 +4,7 @@
 """
 
 import os
+import subprocess
 import threading
 from queue import Queue
 
@@ -58,16 +59,20 @@ class Cmd(object):
     def run(self):
         try:
             rc = 0
-            with os.popen(self._cmd) as f:
-                while True:
-                    if self._stop_req:
-                        return self._stop_req
-                    line = f.readline()
-                    if len(line) == 0:
-                        break
-                    line = line.rstrip()
-                    if self._callb:
-                        self._callb(line)
+            proc = subprocess.Popen(
+                self._cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True
+            )
+            # with os.popen(self._cmd) as f:
+            while True:
+                if self._stop_req:
+                    return self._stop_req
+                # line = f.readline()
+                line = proc.stdout.readline().decode()
+                if len(line) == 0:
+                    break
+                line = line.rstrip()
+                if self._callb:
+                    self._callb(line)
         except Exception as ex:
             rc = ex
         return rc
