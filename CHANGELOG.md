@@ -1,7 +1,7 @@
 
 # Changelog
 
-## next version v0.0.5 - ???
+## next version v0.0.6 - ???
 
 - 
 
