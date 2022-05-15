@@ -1,9 +1,0 @@
-name: Publish Python 🐍 distributions 📦 to PyPI and TestPyPI
-
-on: push
-
-jobs:
-  build-and-publish:
-    uses: kr-g/github-actions/.github/workflows/publish-to-test-pypi.yml@main
-    secrets: inherit
-
