@@ -1,7 +1,12 @@
 
 # Changelog
 
-## next version v0.0.5 - 
+## next version v0.0.5 - ???
+
+- 
+
+
+## version v0.0.5 - 20220515
 
 - rework ui layout
 - use subprocess popen to capture stdout, and stderr
