@@ -320,6 +320,11 @@ main = TileRows(
                                         commandtext="push",
                                         command=lambda: on_push_tracked(),
                                     ),
+                                    TileLabelButton(
+                                        caption="",
+                                        commandtext="commit + push",
+                                        command=lambda: on_commit_push_tracked(),
+                                    ),
                                     TileCheckbutton(
                                         caption="push tags",
                                         idn="push_tags",
@@ -696,6 +701,11 @@ def on_push_tracked():
         cmd_,
         tracked_gits,
     )
+
+
+def on_commit_push_tracked():
+    on_commit()
+    on_push_tracked()
 
 
 def on_push_all_workspace():

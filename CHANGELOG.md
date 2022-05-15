@@ -5,6 +5,7 @@
 
 - rework ui layout
 - use subprocess popen to capture stdout, and stderr
+- added "commit + push" button 
 - 
 
 
