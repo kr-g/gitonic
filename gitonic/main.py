@@ -2,7 +2,7 @@ import tkinter
 from tkinter import Tk
 
 from .gui import TkCmd, Tile, TileRows, TileCols, TileLabelButton
-from .gui import startup_gui, main, fconfigdir
+from .gui import startup_gui, get_main, fconfigdir
 
 from .file import FileStat
 from .singleinstance import (
@@ -70,6 +70,8 @@ def main_func():
     tkcmd = TkCmd().start(tk_root, command=do_serv_socket)
 
     mainframe = Tile(tk_root=tk_root, idn="mainframe")
+
+    main = get_main()
 
     main_content = TileRows(
         source=[
