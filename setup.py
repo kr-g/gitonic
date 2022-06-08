@@ -31,7 +31,7 @@ projectname = find_projectname()
 setuptools.setup(
     name=projectname,
     version=version,
-    author="k.r. goger",
+    author="k. goger",
     author_email=f"k.r.goger+{projectname}@gmail.com",
     description="manage a multi git workspace",
     long_description=long_description,

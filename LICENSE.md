@@ -1,10 +1,6 @@
 ---
 
-Copyright (c) 2021 k.r. goger - https://github.com/kr-g
-email: k.r.goger@gmail.com
-
-project homepage:
-https://github.com/kr-g/gitonic
+Copyright (c) 2022 k. goger - https://github.com/kr-g
 
 ---
 
@@ -675,4 +671,6 @@ For more information on this, and how to apply and follow the GNU AGPL, see
 <http://www.gnu.org/licenses/>.
 
 https://www.gnu.org/licenses/agpl-3.0.de.html
+
+
 
