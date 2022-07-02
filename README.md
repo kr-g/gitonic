@@ -112,6 +112,14 @@ and configure for diff and merge tools
         cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 
 
+# additional notes 
+
+the following tools are part of the standard git distribution 
+
+- [`gitk`](https://git-scm.com/docs/gitk)
+  - git history browser
+- [`git-gui`](https://git-scm.com/docs/git-gui/)
+  - a git front end
 
 
 # license
