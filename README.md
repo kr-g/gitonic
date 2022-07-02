@@ -117,9 +117,9 @@ and configure for diff and merge tools
 the following tools are part of the standard git distribution 
 
 - [`gitk`](https://git-scm.com/docs/gitk)
-  - git history browser
+git history browser
 - [`git-gui`](https://git-scm.com/docs/git-gui/)
-  - a git front end
+a git front end
 
 
 # license
