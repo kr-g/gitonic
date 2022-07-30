@@ -13,6 +13,7 @@
   [`pytkfaicons`](https://github.com/kr-g/pytkfaicons)
 - added tooltips
 - added hotkeys
+- BUG fix: search only in first level of workspace folder for git folder
 - 
 
 

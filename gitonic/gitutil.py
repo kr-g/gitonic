@@ -200,7 +200,7 @@ class GitWorkspace(object):
 
     def refresh(self):
         self.gits.clear()
-        gits = self.base_repo_dir.iglob("**/.git", True)
+        gits = self.base_repo_dir.iglob("*/.git", True)
         for g in gits:
             path = g.dirname()
             git = GitRepo(path)
