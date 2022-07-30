@@ -1099,6 +1099,7 @@ class TileTreeView(Tile):
 
         header = self.pref("header", [])
         header_width = self.pref("header_width", [])
+        height = self.pref("height", None)
 
         self.header_name = []
         self.header_title = []
@@ -1112,7 +1113,10 @@ class TileTreeView(Tile):
         self._cont = ttk.Frame(self.frame)
 
         self._treeview = ttk.Treeview(
-            self._cont, columns=self.header_name, show="headings"
+            self._cont,
+            columns=self.header_name,
+            show="headings",
+            height=height,
         )
         self._treeview.bind("<<TreeviewSelect>>", self._select_handler)
 

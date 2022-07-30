@@ -333,6 +333,7 @@ def get_main():
                                         ("type", None),
                                     ],
                                     header_width=(150, 250, 100, 100, 100),
+                                    height=13,
                                 ),
                                 TileCols(
                                     source=[
