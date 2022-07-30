@@ -54,7 +54,7 @@ class Cmd(object):
         return self
 
     def start(self):
-        self.run()
+        pass
 
     def run(self):
         try:
@@ -73,6 +73,8 @@ class Cmd(object):
                 line = line.rstrip()
                 if self._callb:
                     self._callb(line)
+            if proc.returncode:
+                rc = proc.returncode
         except Exception as ex:
             rc = ex
         return rc
@@ -83,6 +85,7 @@ class CmdTask(Cmd, Task):
         if self._callb is None:
             self.set_callb(self._append_rc)
         Task.start(self)
+        Cmd.start(self)
 
     def run(self):
         Task.run(self)
