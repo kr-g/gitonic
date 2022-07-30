@@ -1,4 +1,4 @@
-from . import VERSION
+from .const import VERSION
 
 import os
 import time
@@ -650,7 +650,7 @@ def on_sel_commit(idx):
 
 
 def on_clr_commit():
-    gt("commit_short").clr()
+    gt("commit_short").clr().focus()
     gt("commit_long").clr()
 
 

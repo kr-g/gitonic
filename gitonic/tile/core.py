@@ -241,6 +241,12 @@ class Tile(TkMixin):
 
     #
 
+    def focus(self):
+        if self.frame:
+            self.frame.focus_set()
+
+    #
+
     def pref(self, name, defval=None):
         v = self._kwargs.setdefault(name, defval)
         return v
@@ -386,15 +392,22 @@ class TileEntry(Tile):
         te.bind("<FocusOut>", self.on_focus_leave)
         self._old_val = None
 
+    def focus(self):
+        if self._entry:
+            self._entry.focus_set()
+        return self
+
     def get_val(self):
         return self._var.get()
 
     def clr(self):
         self.set_val("")
+        return self
 
     def set_val(self, val=None):
         self._val = val
         self._var.set(val)
+        return self
 
     def on_focus_enter(self, ev):
         self._old_val = self.get_val()
