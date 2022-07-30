@@ -81,14 +81,14 @@ def main_func():
                 source=[
                     TileLabelButton(
                         caption="close app",
-                        commandtext="bye",
+                        commandtext="good bye",
                         icon=get_icon("right-from-bracket"),
                         hotkey="<Control-x>",
                         command=quit_all(mainframe),
                     ),
                     TileLabelButton(
                         caption="minimize",
-                        commandtext="app",
+                        commandtext="minimize me",
                         icon=get_icon("minimize"),
                         hotkey="<Escape>",
                         command=minimize,
