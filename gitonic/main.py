@@ -83,7 +83,6 @@ def main_func():
                         caption="close app",
                         commandtext="good bye",
                         icon=get_icon("right-from-bracket"),
-                        hotkey="<Control-x>",
                         command=quit_all(mainframe),
                     ),
                     TileLabelButton(

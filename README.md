@@ -50,7 +50,6 @@ following list contains all hotkeys:
 
 | key | action |
 |---|---|
-| Control-x | quit |
 | Esc | minimize |
 | Control-p | pull all tracked gits |
 | F1 | refresh all in changed files view |

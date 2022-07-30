@@ -1,9 +1,11 @@
 
 # Changelog
 
-## next version v0.0.7 - ???
+## next version v0.0.7 - 20220729
 
 - changes view height
+- bug fix, due to corrupted local env
+- bug fix, removed control-x hotkey
 - 
 
 
