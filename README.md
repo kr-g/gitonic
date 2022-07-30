@@ -46,6 +46,8 @@ this is not a bug; moreover it is intened to be like that.
 
 # hotkeys 
 
+following list contains all hotkeys:
+
 | key | action |
 |---|---|
 | Control-x | quit |
