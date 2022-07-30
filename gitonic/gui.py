@@ -36,12 +36,43 @@ auto_switch = True
 push_tags = False
 show_changes = False
 min_commit_length = 5
+dev_mode = False
+dev_follow = True
+dev_follow_max = 10000
+
+
+def doutpr(*s):
+    # print(*s)
+    if dev_mode:
+        gt("expert_log").append("\t".join([str(x) for x in s]))
+        on_follow_expert()
+
+
+def do_expert_max_history():
+    log = gt("expert_log")
+    cnt = log.get_line_count()
+    if cnt >= dev_follow_max:
+        to_del = float(cnt - dev_follow_max)
+        log.remove_lines(last=to_del)
+
+
+def on_follow_expert():
+    if dev_follow:
+        gt("expert_log").gotoline()
+    do_expert_max_history()
+
+
+def on_expert_clr():
+    el = gt("expert_log")
+    if el:
+        el.clr()
+    doutpr("on_expert_clr")
 
 
 def set_config():
     global config
 
-    print(config.__dict__)
+    doutpr("set-config", config.__dict__)
 
     global frepo
     frepo = FileStat(config().workspace)
@@ -66,6 +97,13 @@ def set_config():
     global min_commit_length
     min_commit_length = config().min_commit_length
 
+    global dev_mode
+    dev_mode = config().dev_mode
+    global dev_follow
+    dev_follow = config().dev_follow
+    global dev_follow_max
+    dev_follow_max = config().dev_follow_max
+
 
 def read_config(autocfg=True):
     global config
@@ -80,13 +118,16 @@ def read_config(autocfg=True):
     config().setdefault("push_tags", push_tags)
     config().setdefault("show_changes", show_changes)
     config().setdefault("min_commit_length", min_commit_length)
+    config().setdefault("dev_mode", dev_mode)
+    config().setdefault("dev_follow", dev_follow)
+    config().setdefault("dev_follow_max", dev_follow_max)
 
     if autocfg:
         set_config()
 
 
 def write_config():
-    print("write_config")
+    doutpr("write_config")
     global config
     config().workspace = gt("workspace").get_val()
     config().max_history = int(gt("max_history").get_val())
@@ -97,8 +138,12 @@ def write_config():
     config().push_tags = bool(int(gt("push_tags").get_val()))
     config().show_changes = bool(int(gt("show_changes").get_val()))
     config().min_commit_length = int(gt("min_commit_length").get_val())
+    config().dev_mode = bool(int(gt("dev_mode").get_val()))
+    if dev_mode:
+        config().dev_follow = bool(int(gt("dev_follow").get_val()))
+        config().dev_follow_max = int(gt("dev_follow_max").get_val())
 
-    print(config.__dict__)
+    doutpr("write-config", config.__dict__)
 
     config.save()
     set_config()
@@ -106,8 +151,8 @@ def write_config():
 
 #
 
-PREFS_CAP_W = 25
-PREFS_ENTRY_W = 5
+PREFS_CAP_W = 27
+PREFS_ENTRY_W = 7
 
 
 def get_main():
@@ -171,6 +216,19 @@ def get_main():
                                     caption="always show changes tab on startup",
                                     idn="show_changes",
                                     on_click=lambda x: write_config(),
+                                ),
+                                TileCheckbutton(
+                                    caption="expert mode. shows debug logging in extra tab (requires restart of gitonic)",
+                                    idn="dev_mode",
+                                    on_click=lambda x: write_config(),
+                                ),
+                                TileEntryInt(
+                                    caption="max records in expert log history",
+                                    caption_width=PREFS_CAP_W,
+                                    width=PREFS_ENTRY_W,
+                                    idn="dev_follow_max",
+                                    value=dev_follow_max,
+                                    on_change=lambda o, n: write_config(),
                                 ),
                                 #
                                 TileLabelButton(
@@ -401,6 +459,36 @@ def get_main():
                             ]
                         ),
                     ),
+                    (
+                        "expert",
+                        TileRows(
+                            source=[
+                                TileLabel(caption=""),
+                                TileEntryText(
+                                    caption="",
+                                    idn="expert_log",
+                                    height=20,
+                                    width=80,
+                                    readonly=True,
+                                ),
+                                TileCols(
+                                    source=[
+                                        TileLabelButton(
+                                            caption="",
+                                            commandtext="clear",
+                                            command=lambda: on_expert_clr(),
+                                        ),
+                                        TileCheckbutton(
+                                            caption="follow log",
+                                            idn="dev_follow",
+                                            on_click=lambda x: write_config(),
+                                        ),
+                                    ]
+                                ),
+                            ]
+                        ),
+                        dev_mode,
+                    ),
                     # ("about", Tile()),
                 ],
             ),
@@ -436,28 +524,28 @@ def open_sponsor_page():
 
 
 def on_sel_all_gits():
-    print("on_sel_all_gits")
+    doutpr("on_sel_all_gits")
     gt("gits").set_selection(-1)
     set_tracked_gits()
 
 
 def on_unsel_all_gits():
-    print("on_sel_all_gits")
+    doutpr("on_sel_all_gits")
     gt("gits").clr_selection()
     set_tracked_gits()
 
 
-def on_cmd_diff(info, diff_):
-    print(info)
+def on_cmd_diff(info, diff_, ignore_switch=False):
+    doutpr(info)
     sel = gt("changes").get_selection_values()
     for rec in sel:
         if rec["type"] == "file":
             pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
             git = gws.find(pg)[0]
             rc = diff_(git.path, rec["file"])
-            print(f"--- {git}")
-            [print(x) for x in rc]
-            do_log_time(info)
+            doutpr(f"--- {git}")
+            [doutpr(x) for x in rc]
+            do_log_time(info, ignore_switch=ignore_switch)
             do_logs(rc)
 
 
@@ -466,16 +554,16 @@ def on_diff():
 
 
 def on_difftool():
-    on_cmd_diff("on_difftool", git_difftool)
+    on_cmd_diff("on_difftool", git_difftool, True)
 
 
 def on_log_clr():
-    print("on_log_clr")
     gt("log").clr()
+    doutpr("on_log_clr")
 
 
 def do_log_max_history():
-    print("do_log_max_history")
+    doutpr("do_log_max_history")
     log = gt("log")
     cnt = log.get_line_count()
     if cnt >= max_history:
@@ -495,7 +583,7 @@ def do_log_show(ignore_switch=False):
 
 
 def do_log_time(x, ignore_switch=False):
-    print("do_log_time", x)
+    doutpr("do_log_time", x)
     do_log_show(ignore_switch)
     log = gt("log")
     ts = time.asctime(time.localtime(time.time()))
@@ -504,13 +592,13 @@ def do_log_time(x, ignore_switch=False):
 
 
 def do_log(x=""):
-    print("do_log", x)
+    doutpr("do_log", x)
     gt("log").append(x)
     on_follow_log()
 
 
 def do_logs(x):
-    print("do_logs", x)
+    doutpr("do_logs", x)
     gt("log").extend(x)
     on_follow_log()
 
@@ -532,10 +620,10 @@ def tracked_read():
             cont = f.read()
             global tracked_gits
             tracked_gits = json.loads(cont)
-            print(tracked, "->", tracked_gits)
+            doutpr(tracked, "->", tracked_gits)
             sel_tracked()
     except Exception as ex:
-        print(ex)
+        doutpr(ex)
 
 
 def sel_tracked():
@@ -548,25 +636,25 @@ def on_gits_cmd(info, selcmd_, gits, ignore_switch=False, update_change=False):
         pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
         git = gws.find(pg)[0]
         rc = selcmd_(git.path, [rec["file"]])
-        print(f"--- {git}")
-        [print(x) for x in rc]
+        doutpr(f"--- {git}")
+        [doutpr(x) for x in rc]
         do_logs(rc)
     if update_change:
         set_changes()
 
 
 def pull_gits(gits):
-    print("on_pull_gits")
+    doutpr("on_pull_gits")
     for gnam in gits:
         try:
             git = gws.find(gnam)[0]
             rc = git_pull(git.path)
-            print(f"--- {git}")
-            [print(x) for x in rc]
+            doutpr(f"--- {git}")
+            [doutpr(x) for x in rc]
             do_log_time(f"pull: {git.path}")
             do_logs(rc)
         except Exception as ex:
-            print(ex)
+            doutpr(ex)
     set_changes()
 
 
@@ -579,7 +667,7 @@ def pull_all_workspace():
 
 
 def on_sel_cmd(info, selcmd_, ignore_switch=False, update_change=False):
-    print(info)
+    doutpr(info)
     gits = gt("changes").get_selection_values()
     on_gits_cmd(
         info, selcmd_, gits, ignore_switch=ignore_switch, update_change=update_change
@@ -605,7 +693,7 @@ def read_commit():
             cont = f.read()
             commit_history = json.loads(cont)
     except Exception as ex:
-        print(ex)
+        doutpr(ex)
     set_commits()
 
 
@@ -615,7 +703,7 @@ def write_commit():
             cont = json.dumps(commit_history, indent=4)
             f.write(cont)
     except Exception as ex:
-        print(ex)
+        doutpr(ex)
 
 
 def add_commit_history(short, long):
@@ -636,7 +724,7 @@ def set_commits():
     global commit_history
     commits = gt("commit_short")
     vals = list(map(lambda x: x["short"], commit_history))
-    print("*********vals", vals)
+    doutpr("*********vals", vals)
     commits.set_values(vals)
     if len(vals) > 0:
         commits.set_index(0)
@@ -644,7 +732,7 @@ def set_commits():
 
 
 def on_sel_commit(idx):
-    print(idx)
+    doutpr(idx)
     # gt("commit_short").set_val(commit_history[idx]["short"])
     gt("commit_long").set_val(commit_history[idx]["long"])
 
@@ -655,7 +743,7 @@ def on_clr_commit():
 
 
 def on_commit():
-    print("on_commit")
+    doutpr("on_commit")
     head = gt("commit_short").get_val().strip()
     body = gt("commit_long").get_val().strip()
 
@@ -674,26 +762,26 @@ def on_commit():
 
     for gnam in tracked_gits:
         try:
-            print("use", gnam)
+            doutpr("use", gnam)
             git = gws.find(gnam)[0]
             do_log_time(f"commit: {git.path} '{message}'")
             if git.has_staged():
                 rc = git_commit(git.path, message)
-                print(f"--- {git}")
-                [print(x) for x in rc]
+                doutpr(f"--- {git}")
+                [doutpr(x) for x in rc]
                 do_logs(rc)
                 do_log("commited staged files")
             else:
                 do_log("nothing staged")
 
         except Exception as ex:
-            print(ex)
+            doutpr(ex)
 
     set_changes()
 
 
 def on_cmd_push(info, push_, gits):
-    print(info)
+    doutpr(info)
     sel = gt("changes").get_selection_values()
     do_log_time(info)
     for pg in gits:
@@ -701,20 +789,20 @@ def on_cmd_push(info, push_, gits):
         rc = push_(
             git.path,
         )
-        [print(x) for x in rc]
+        [doutpr(x) for x in rc]
         do_log()
         do_log(f"--- push: {git}")
         do_logs(rc)
         if push_tags:
             rc = git_push_tags(git.path)
-            [print(x) for x in rc]
+            [doutpr(x) for x in rc]
             do_log()
             do_log(f"--- push tags: {git}")
             do_logs(rc)
 
 
 def on_push_tracked():
-    print("on_push_tracked")
+    doutpr("on_push_tracked")
     cmd_ = git_push
     on_cmd_push(
         "on_push_tracked",
@@ -729,7 +817,7 @@ def on_commit_push_tracked():
 
 
 def on_push_all_workspace():
-    print("on_push_all_workspace")
+    doutpr("on_push_all_workspace")
     cmd_ = git_push
     on_cmd_push(
         "on_push_all_workspace",
@@ -742,12 +830,12 @@ def on_push_all_workspace():
 
 
 def set_workspace(update=True):
-    print("refresh_workspace")
+    doutpr("refresh_workspace")
     global gws
     gws = GitWorkspace(frepo.name)
     gws.refresh()
     gt("gits").set_values(sorted(gws.gits.keys()))
-    print("gws", gws)
+    doutpr("gws", gws)
     # gws.refresh_status()
     if update:
         tracked_read()
@@ -755,28 +843,28 @@ def set_workspace(update=True):
 
 
 def set_tracked_gits(update=True):
-    print("set_tracked_gits")
+    doutpr("set_tracked_gits")
     global tracked_gits
     tracked_gits = gt("gits").get_selection_values()
     tracked_gits = list(map(lambda x: x[1], tracked_gits))
-    print("tracked_gits", tracked_gits)
+    doutpr("tracked_gits", tracked_gits)
     tracked_write()
     if update:
         set_changes()
 
 
 def set_changes():
-    print("set_changes")
+    doutpr("set_changes")
     global changes
     changes = []
 
     gits = list(map(lambda x: (x, gws.find(x)), tracked_gits))
-    print(gits)
+    doutpr(gits)
 
     for path_git in gits:
         path, git = path_git
 
-        print(path, git)
+        doutpr(path, git)
 
         fs = FileStat(path, prefetch=True)
         if not fs.exists():
@@ -812,6 +900,10 @@ def startup_gui():
     gt("auto_switch").set_val(auto_switch)
     gt("push_tags").set_val(push_tags)
     gt("show_changes").set_val(show_changes)
+    gt("dev_mode").set_val(dev_mode)
+    if dev_mode:
+        gt("dev_follow").set_val(dev_follow)
+        gt("dev_follow_max").set_val(dev_follow_max)
 
     if show_changes or len(changes) > 0:
         gt("maintabs").select("tab_changes")

@@ -5,6 +5,8 @@
 
 - fix save settings 
 - set focus on commit entry after clearing fields
+- expert (dev-mode) logging tab
+- calling diff-tool will not switch to log tab
 - 
 
 

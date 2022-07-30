@@ -1002,17 +1002,20 @@ class TileTab(Tile):
                     caption, idn = caption
                 else:
                     idn = "tab_" + caption
-                el = el[1]
-
-            el.set_parent(self.frame)
-            el.layout()
-            self._elem.append(el)
+                if len(el) > 2:
+                    # visible or not
+                    self._tabs_show[idn] = el[2]
 
             if idn not in self._tabs_show:
                 self._tabs_show[idn] = True
 
             if self._tabs_show[idn]:
-                self._tab.add(el.frame, text=caption)
+                elem = el[1]
+                elem.set_parent(self.frame)
+                elem.layout()
+                self._elem.append(elem)
+
+                self._tab.add(elem.frame, text=caption)
 
                 idx = str(len(self._tab.tabs()) - 1)
                 self._tabs[idn] = idx
