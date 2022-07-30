@@ -1,5 +1,5 @@
 """
-    (c)2021 K. Goger (k.r.goger@gmail.com)
+    (c)2021 K. Goger - https://github.com/kr-g
     legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
 """
 
