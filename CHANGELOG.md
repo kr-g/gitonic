@@ -3,7 +3,8 @@
 
 ## next version v0.0.7 - ???
 
--
+- changes view height
+- 
 
 
 ## version v0.0.6 - 20220729
