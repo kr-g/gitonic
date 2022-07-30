@@ -88,6 +88,11 @@ the file status is the same as when calling
 tested on python3, and linux
 
 
+# development status
+
+alpha state, use on your own risk!!!
+
+
 # installation
 
     phyton3 -m pip install gitonic
