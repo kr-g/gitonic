@@ -1,7 +1,13 @@
 
 # Changelog
 
-## next version v0.0.7 - 20220729
+
+# version v0.0.8 - v0.0.8
+
+- bug fix, due to corrupted local env
+- 
+
+## version v0.0.7 - 20220729
 
 - changes view height
 - bug fix, due to corrupted local env
