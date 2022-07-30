@@ -1,7 +1,12 @@
 
 # Changelog
 
-## next version v0.0.6 - ???
+## next version v0.0.7 - ???
+
+-
+
+
+## version v0.0.6 - 20220729
 
 - fix save settings 
 - set focus on commit entry after clearing fields

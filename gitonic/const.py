@@ -1,1 +1,1 @@
-VERSION = "v0.0.6c"
+VERSION = "v0.0.6"
