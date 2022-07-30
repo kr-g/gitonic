@@ -28,7 +28,8 @@
 - refact for integration in other tools
 - filter git on 'changes' tab
 - rework logging
-- remove print statements
+- ~~remove print statements in main~~
+- remove print statements in tile.core
 - automation / external jobs
   - black PEP8 support
   - desktop integration
