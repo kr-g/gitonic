@@ -4,6 +4,7 @@
 ## next version v0.0.6 - ???
 
 - fix save settings 
+- set focus on commit entry after clearing fields
 - 
 
 
