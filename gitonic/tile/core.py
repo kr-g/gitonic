@@ -93,6 +93,14 @@ class TkMixin(object):
 
 
 _global_reg = {}
+_global_hotkey = set()
+
+
+def _add_hotkey(key):
+    global _global_hotkey
+    if key in _global_hotkey:
+        raise Exception("already registered", key)
+    _global_hotkey.add(key)
 
 
 def gt(name):
@@ -339,6 +347,7 @@ class TileButton(Tile, ClickHandlerMixIn):
             ToolTip(self._button, msg=text)
 
         if hotkey:
+            _add_hotkey(hotkey)
             root = self.get_root()
             root.bind(hotkey, lambda x: command())
 
