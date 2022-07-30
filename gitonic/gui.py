@@ -752,7 +752,7 @@ def on_commit():
             "error",
             f"length: {min_commit_length} >= message < 50\ncurrent: {len(head)}",
         )
-        return
+        return False
 
     message = head
     if len(body) > 0:
@@ -778,6 +778,8 @@ def on_commit():
             dgb_pr(ex)
 
     set_changes()
+
+    return True
 
 
 def on_cmd_push(info, push_, gits):
@@ -812,8 +814,8 @@ def on_push_tracked():
 
 
 def on_commit_push_tracked():
-    on_commit()
-    on_push_tracked()
+    if on_commit():
+        on_push_tracked()
 
 
 def on_push_all_workspace():
