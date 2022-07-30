@@ -64,6 +64,9 @@ following list contains all hotkeys:
 | Alt-s | push git(s) |
 | Alt-e | commit and push git(s), like pressing Alt-x and Alt-s |
 
+HINT:
+
+if not responding to a hotkey, make sure that CapsLock is disabled
 
 
 # file status staged / unstaged 
