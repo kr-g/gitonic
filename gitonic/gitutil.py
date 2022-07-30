@@ -16,6 +16,10 @@ BLACK = "black"
 
 join_wait = True
 
+def set_wait_mode(mode=True):
+    global join_wait
+    join_wait = mode
+    
 
 def set_git_exe(git_exe):
     global GIT
