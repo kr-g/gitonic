@@ -10,6 +10,8 @@ from pyjsoncfg import Config
 import tkinter
 from tkinter import Tk
 
+from .icons import get_icon
+
 from .tile import *
 from .file import FileStat
 from .sysutil import open_file_explorer
@@ -39,6 +41,23 @@ min_commit_length = 5
 dev_mode = False
 dev_follow = True
 dev_follow_max = 10000
+
+#
+
+ICO_TRASH = "trash"
+ICO_FOLDER_OPEN = "folder-open"
+ICO_REFRESH = "rotate"
+ICO_SEL_ALL = "check-double"
+ICO_CLR_ALL = "xmark"
+ICO_CLR = "xmark"
+ICO_PULL = "angle-down"
+ICO_PULL_ALL = "angles-down"
+ICO_FILE_ADD = "file-circle-plus"
+ICO_FILE_SUB = "file-circle-minus"
+ICO_FILE_DIFF = "file-waveform"
+ICO_FILE_DIFFTOOL = "code-compare"
+
+#
 
 
 def dgb_pr(*s):
@@ -172,6 +191,7 @@ def get_main():
                                 TileDirectorySelect(
                                     caption="select workspace",
                                     commandtext="...",
+                                    icon=get_icon(ICO_FOLDER_OPEN),
                                     width=30,
                                     idn="workspace",
                                     path=frepo.name,
@@ -233,6 +253,7 @@ def get_main():
                                 #
                                 TileLabelButton(
                                     caption="open gitonic config folder",
+                                    icon=get_icon(ICO_FOLDER_OPEN),
                                     on_click=lambda x: open_file_explorer(
                                         fconfigdir.name
                                     ),
@@ -259,16 +280,19 @@ def get_main():
                                         TileLabelButton(
                                             caption="workspace",
                                             commandtext="refresh",
+                                            icon=get_icon(ICO_REFRESH),
                                             command=lambda: set_workspace(),
                                         ),
                                         TileLabelButton(
                                             caption="all",
                                             commandtext="select",
+                                            icon=get_icon(ICO_SEL_ALL),
                                             command=lambda: on_sel_all_gits(),
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="un-select",
+                                            icon=get_icon(ICO_CLR_ALL),
                                             command=lambda: on_unsel_all_gits(),
                                         ),
                                     ]
@@ -278,11 +302,14 @@ def get_main():
                                         TileLabelButton(
                                             caption="pull",
                                             commandtext="selected",
+                                            icon=get_icon(ICO_PULL),
                                             command=lambda: on_pull_tracked(),
+                                            hotkey="<Control-Key-p>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="all",
+                                            icon=get_icon(ICO_PULL_ALL),
                                             command=lambda: pull_all_workspace(),
                                         ),
                                     ]
@@ -312,21 +339,27 @@ def get_main():
                                         TileLabelButton(
                                             caption="changes",
                                             commandtext="refresh",
+                                            icon=get_icon(ICO_REFRESH),
                                             command=lambda: set_changes(),
+                                            hotkey="<F1>",
                                         ),
                                         TileLabelButton(
                                             caption="all",
                                             commandtext="select",
+                                            icon=get_icon(ICO_SEL_ALL),
                                             command=lambda: gt("changes").set_selection(
                                                 -1
                                             ),
+                                            hotkey="<F2>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="unselect",
+                                            icon=get_icon(ICO_CLR_ALL),
                                             command=lambda: gt(
                                                 "changes"
                                             ).clr_selection(),
+                                            hotkey="<F3>",
                                         ),
                                     ]
                                 ),
@@ -340,22 +373,30 @@ def get_main():
                                         TileLabelButton(
                                             caption="selected",
                                             commandtext="add",
+                                            icon=get_icon(ICO_FILE_ADD),
                                             command=lambda: on_add(),
+                                            hotkey="<Control-Key-1>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="unstage",
+                                            icon=get_icon(ICO_FILE_SUB),
                                             command=lambda: on_add_undo(),
+                                            hotkey="<Control-Key-2>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="diff",
+                                            icon=get_icon(ICO_FILE_DIFF),
                                             command=lambda: on_diff(),
+                                            hotkey="<Control-Key-3>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="difftool",
+                                            icon=get_icon(ICO_FILE_DIFFTOOL),
                                             command=lambda: on_difftool(),
+                                            hotkey="<Alt-Key-d>",
                                         ),
                                     ]
                                 ),
@@ -378,6 +419,7 @@ def get_main():
                                         TileLabelButton(
                                             caption="",
                                             commandtext="clear",
+                                            icon=get_icon(ICO_CLR),
                                             command=lambda: on_clr_commit(),
                                         ),
                                     ]
@@ -390,17 +432,23 @@ def get_main():
                                         TileLabelButton(
                                             caption="tracked git's",
                                             commandtext="commit",
+                                            icon=get_icon("file-signature"),
                                             command=lambda: on_commit(),
+                                            hotkey="<Alt-Key-x>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="push",
+                                            icon=get_icon("upload"),
                                             command=lambda: on_push_tracked(),
+                                            hotkey="<Alt-Key-s>",
                                         ),
                                         TileLabelButton(
                                             caption="",
                                             commandtext="commit + push",
+                                            icon=get_icon("wand-magic-sparkles"),
                                             command=lambda: on_commit_push_tracked(),
+                                            hotkey="<Alt-Key-e>",
                                         ),
                                         TileCheckbutton(
                                             caption="push tags",
@@ -442,6 +490,7 @@ def get_main():
                                         TileLabelButton(
                                             caption="",
                                             commandtext="clear",
+                                            icon=get_icon(ICO_TRASH),
                                             command=lambda: on_log_clr(),
                                         ),
                                         TileCheckbutton(
@@ -476,6 +525,7 @@ def get_main():
                                         TileLabelButton(
                                             caption="",
                                             commandtext="clear",
+                                            icon=get_icon(ICO_TRASH),
                                             command=lambda: on_expert_clr(),
                                         ),
                                         TileCheckbutton(

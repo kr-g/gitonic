@@ -7,6 +7,12 @@
 - set focus on commit entry after clearing fields
 - expert (dev-mode) logging tab
 - calling diff-tool will not switch to log tab
+- icon support with 
+  [`fontawesome`](https://github.com/FortAwesome/Font-Awesome)
+  and 
+  [`pytkfaicons`](https://github.com/kr-g/pytkfaicons)
+- added tooltips
+- added hotkeys
 - 
 
 

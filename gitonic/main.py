@@ -4,6 +4,8 @@ from tkinter import Tk
 from .gui import TkCmd, Tile, TileRows, TileCols, TileLabelButton
 from .gui import startup_gui, get_main, fconfigdir
 
+from .icons import get_icon
+
 from .file import FileStat
 from .singleinstance import (
     check_instance,
@@ -80,10 +82,16 @@ def main_func():
                     TileLabelButton(
                         caption="close app",
                         commandtext="bye",
+                        icon=get_icon("right-from-bracket"),
+                        hotkey="<Control-x>",
                         command=quit_all(mainframe),
                     ),
                     TileLabelButton(
-                        caption="", commandtext="minimize", command=minimize
+                        caption="minimize",
+                        commandtext="app",
+                        icon=get_icon("minimize"),
+                        hotkey="<Escape>",
+                        command=minimize,
                     ),
                 ]
             ),
@@ -92,7 +100,6 @@ def main_func():
     )
 
     mainframe.tk.protocol("WM_DELETE_WINDOW", quit_all(mainframe))
-    mainframe.tk.bind("<Escape>", lambda e: minimize())
 
     mainframe.title("gitonic")
     mainframe.resize_grip()

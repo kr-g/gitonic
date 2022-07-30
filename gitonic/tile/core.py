@@ -46,6 +46,7 @@ def print_e(*args):
 #
 
 from tkinter import *
+from tktooltip import ToolTip
 
 from tkinter import Tk, ttk, filedialog, scrolledtext
 
@@ -134,6 +135,17 @@ class Tile(TkMixin):
 
     def parent_frame(self):
         return self._parent.frame if type(self._parent) == Tile else self._parent
+
+    def get_root(self):
+        root = self
+        while True:
+            if isinstance(root, Tile):
+                root = self._parent
+            else:
+                if root.master is None:
+                    break
+                root = root.master
+        return root
 
     def unregister_idn(self):
         for el in [self, *self._elems, *self._frame]:
@@ -308,11 +320,28 @@ class TileLabelClick(TileLabel, ClickHandlerMixIn):
 
 class TileButton(Tile, ClickHandlerMixIn):
     def create_element(self):
+
+        text = self.pref("commandtext", "...")
+        image = self.pref("icon", None)
+        hotkey = self.pref("hotkey", None)
+        command = self.pref("command", self._click_handler)
+
         self._button = ttk.Button(
             self.frame,
-            text=self.pref("commandtext", "..."),
-            command=self.pref("command", self._click_handler),
+            text=text,
+            image=image,
+            command=command,
         )
+
+        if image:
+            if hotkey:
+                text = text + " / " + hotkey
+            ToolTip(self._button, msg=text)
+
+        if hotkey:
+            root = self.get_root()
+            root.bind(hotkey, lambda x: command())
+
         return self._button
 
 
