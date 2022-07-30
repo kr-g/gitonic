@@ -44,9 +44,25 @@ a following commit command is executed on all repositories in the tracked list w
 this is not a bug; moreover it is intened to be like that.
 
 
-# hokeys 
+# hotkeys 
 
-press `ESC` key to minimize gitonic window.
+| key | action |
+|---|---|
+| Control-x | quit |
+| Esc | minimize |
+| Control-p | pull all tracked gits |
+| F1 | refresh all in changed files view |
+| F2 | select all in changed files view |
+| F3 | un-select all in changed files view |
+| Alt-a | stage file(s) in git |
+| Alt-q | un-stage file(s) in git |
+| Alt-w | diff file(s) |
+| Alt-d | difftool file(s) |
+| Alt-x | commit file(s) |
+| Alt-s | push git(s) |
+| Alt-e | commit and push git(s), like pressing Alt-x and Alt-s |
+
+
 
 # file status staged / unstaged 
 
