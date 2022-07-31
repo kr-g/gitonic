@@ -1,3 +1,4 @@
+import sys
 import tkinter
 from tkinter import Tk
 
@@ -18,6 +19,8 @@ from .singleinstance import (
 tk_root = Tk()
 
 
+debug = False
+
 def quit_all(frame):
     def quit_():
         print("quit_all")
@@ -26,6 +29,8 @@ def quit_all(frame):
         # soft, state remains
         # download_stop()
         frame.quit()
+        if not debug:
+            sys.exit()
 
     return quit_
 
@@ -62,7 +67,10 @@ tkcmd = None
 # end-of single instance
 
 
-def main_func():
+def main_func(debug_=False):
+    
+    global debug
+    debug = debug_
 
     if try_switch_app():
         print("switched to server instance")

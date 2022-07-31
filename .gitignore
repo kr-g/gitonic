@@ -9,3 +9,6 @@ share/
 **/__pycache__/
 *.egg-info
 pyvenv.cfg
+.venv/
+.eggs/
+
