@@ -3,7 +3,8 @@ import sys
 import os
 import importlib
 import re
-import setuptools
+
+# import setuptools
 
 
 def find_version(fnam, version="VERSION"):

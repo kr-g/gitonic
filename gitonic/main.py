@@ -14,9 +14,9 @@ from .singleinstance import (
     create_client_socket,
 )
 
-# main
+from gitonic import set_tk_root, get_tk_root
 
-tk_root = Tk()
+# main
 
 
 debug = False
@@ -38,7 +38,7 @@ def quit_all(frame):
 
 def minimize():
     print("minimize")
-    tk_root.iconify()
+    get_tk_root().iconify()
 
 
 # single instance handling
@@ -58,7 +58,7 @@ def try_switch_app():
 
 
 def do_serv_socket(self):
-    rc = check_and_bring_to_front(sock, tk_root)
+    rc = check_and_bring_to_front(sock, get_tk_root())
     if rc is not None:
         print("bring to front client request")
 
@@ -72,6 +72,8 @@ def main_func(debug_=False):
 
     global debug
     debug = debug_
+
+    tk_root = set_tk_root(Tk())
 
     if try_switch_app():
         print("switched to server instance")

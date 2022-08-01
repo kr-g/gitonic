@@ -1,4 +1,7 @@
-from .main import main_func
+try:
+    from .main import main_func
+except:
+    from main import main_func
 
 # from .main import main_func as gui_func
 
