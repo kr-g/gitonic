@@ -21,6 +21,7 @@ tk_root = Tk()
 
 debug = False
 
+
 def quit_all(frame):
     def quit_():
         print("quit_all")
@@ -68,7 +69,7 @@ tkcmd = None
 
 
 def main_func(debug_=False):
-    
+
     global debug
     debug = debug_
 

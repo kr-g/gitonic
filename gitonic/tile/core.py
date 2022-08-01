@@ -1119,6 +1119,7 @@ class TileTreeView(Tile):
             height=height,
         )
         self._treeview.bind("<<TreeviewSelect>>", self._select_handler)
+        self._treeview.bind("<Double-1>", self._on_double_handler)
 
         self._yscroll = ttk.Scrollbar(
             self._cont, orient="vertical", command=self._treeview.yview
@@ -1142,6 +1143,14 @@ class TileTreeView(Tile):
         self.set_values(values)
 
         return self._cont
+
+    def _on_double_handler(self, event):
+        print("_on_double_handler", event)
+        self.pref(ON_DOUBLE_CLICK, self.on_double)(self)
+
+    def on_double(self, ref_self):
+        val = self.get_selection_values()
+        print_t(self.__class__.__name__, ON_DOUBLE_CLICK, val)
 
     def _select_handler(self, event):
         print("_select_handler", event)

@@ -2,10 +2,12 @@
 # Changelog
 
 
-# version v0.0.8 - v0.0.8
+# version v0.0.8 - ???
 
 - bug fix, due to corrupted local env
+- double click in changes view will stage/ unstage a file
 - 
+
 
 ## version v0.0.7 - 20220729
 

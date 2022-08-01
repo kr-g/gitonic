@@ -334,6 +334,7 @@ def get_main():
                                     ],
                                     header_width=(150, 250, 100, 100, 100),
                                     height=13,
+                                    on_double_click=lambda x: on_add_or_undo(x),
                                 ),
                                 TileCols(
                                     source=[
@@ -731,6 +732,15 @@ def on_add():
 
 def on_add_undo():
     on_sel_cmd("on_add", git_add_undo, True, True)
+
+
+def on_add_or_undo(cntrl):
+    vals = cntrl.get_selection_values()
+    file = vals[0]
+    if file["unstaged"] != "":
+        on_add()
+    else:
+        on_add_undo()
 
 
 fcommit = FileStat(fconfigdir.name).join(["commit.json"])
