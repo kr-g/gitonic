@@ -50,6 +50,7 @@ def get_scripts(projectname):
             ]
     except:
         print("no scripts found", file=sys.stderr)
+        raise Exception()
 
     entry_points = {
         "console_scripts": console_scripts,
