@@ -10,6 +10,7 @@
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
 - merge tool integration
+- diff-tool blocks main screen
 - settings tabs
   - check for installed git
   - ~~git exe configuration in settings~~
