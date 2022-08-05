@@ -2,6 +2,12 @@
 # Changelog
 
 
+# version v0.0.9 - ???
+
+- git current branch in changes tab
+-
+
+
 # version v0.0.8 - 20220802
 
 - bug fix, due to corrupted local env

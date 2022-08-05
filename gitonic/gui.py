@@ -327,12 +327,13 @@ def get_main():
                                     idn="changes",
                                     header=[
                                         ("git", None),
+                                        ("branch", None),
                                         ("file", None),
                                         ("unstaged", None),
                                         ("staged", None),
                                         ("type", None),
                                     ],
-                                    header_width=(150, 250, 100, 100, 100),
+                                    header_width=(150, 100, 250, 100, 100, 100),
                                     height=13,
                                     on_double_click=lambda x: on_add_or_undo(x),
                                 ),
@@ -943,6 +944,7 @@ def set_changes():
                 fs_ex = fs.exists()
                 gst = {
                     "git": gitnam,
+                    "branch": git.current_branch.bnam,
                     "file": stat.file,
                     "unstaged": stat.mode,
                     "staged": stat.staged,

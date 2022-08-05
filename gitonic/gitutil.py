@@ -105,7 +105,11 @@ git_checkout = lambda repo, files, callb=None: with_git_cmd(
 git_checkout_ref = lambda repo, ref, callb=None: git_checkout(repo, [ref], callb=callb)
 
 git_tags = lambda repo, callb=None: with_git_cmd(repo, "tag", callb=callb)
-git_branches = lambda repo, callb=None: with_git_cmd(repo, "branch --all", callb=callb)
+
+git_branch = lambda repo, callb=None: with_git_cmd(repo, "branch", callb=callb)
+git_branch_all = lambda repo, callb=None: with_git_cmd(
+    repo, "branch --all", callb=callb
+)
 git_curbranch = lambda repo, callb=None: with_git_cmd(
     repo, "branch --show-current", callb=callb
 )
@@ -116,6 +120,26 @@ git_make_tag = lambda repo, tag, callb=None: with_git_cmd(
 git_make_branch = lambda repo, branch, callb=None: with_git_cmd(
     repo, f"branch {branch}", callb=callb
 )
+
+
+class GitBranch(object):
+    def __init__(self, current=None, bnam=None):
+        self.set(current, bnam)
+
+    def set(self, current, bnam):
+        self.current = current
+        self.bnam = bnam
+
+        return self
+
+    def from_str(self, s):
+        current = s[0] == "*"
+        bnam = s[2:].strip()
+        self.set(current, bnam)
+        return self
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{ self.current }', '{ str(self.bnam) }' )"
 
 
 class GitStatus(object):
@@ -169,16 +193,29 @@ class GitRepo(object):
     def __init__(self, repo):
         self.path = FileStat(repo).name
         self.status = []
+        self.branch = []
+        self.current_branch = None
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{ self.path }')"
 
     def refresh_status(self):
+
         file_status = git_stat(self.path)
         self.status.clear()
         for stat in file_status:
             gfs = GitStatus().from_str(stat)
             self.status.append(gfs)
+
+        self.current_branch = None
+        branches = git_branch(self.path)
+        self.branch.clear()
+        for branch in branches:
+            gb = GitBranch().from_str(branch)
+            self.branch.append(gb)
+            if gb.current:
+                self.current_branch = gb
+
         return self
 
     def stat(self, status):
