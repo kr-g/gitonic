@@ -112,7 +112,9 @@ add a `.git-credentials` file as described here
 
 add a `.gitconfig` file as described here
 [`git-config`](https://git-scm.com/docs/git-config)
-and configure for diff and merge tools
+and configure for diff and merge tools. 
+NOTE: you need to install [`meld merge`](https://meldmerge.org/) manually, 
+if meld is not installed pressing the button will have no effect.
 
 
     [user]
