@@ -108,29 +108,36 @@ def gt(name):
 
 
 class Tile(TkMixin):
-    def __init__(self, parent=None, idn=None, tk_root=None, **kwargs):
+    def __init__(self, *a, **kw):
+        self.__init__tile__(*a, **kw)
 
-        self.init(tk_root)
-
-        self.idn = idn
-        if idn != None:
-            if gt(idn) != None:
-                print_t("already defined", idn)
-            _global_reg[idn] = self
+    def __init__tile__(self, parent=None, idn=None, tk_root=None, **kwargs):
 
         self._kwargs = kwargs
+        self.init(tk_root)
+        self.set_parent(parent)
+        self._set_idn(idn)
+
+        self.__init__core__()
+        self.__init__internal__()
+
+    def __init__core__(self):
 
         self.frame = None
         self._elems = []
         self._frame = []
 
         self._visible = self.pref("visible", True)
-
-        self.set_parent(parent)
+        self._enabled = self.pref("enabled", True)
 
         self._container = None
 
-        self.__init__internal__()
+    def _set_idn(self, idn):
+        self.idn = idn
+        if idn != None:
+            if gt(idn) != None:
+                print_t("already defined", idn)
+            _global_reg[idn] = self
 
     def __repr__(self):
         return self.__class__.__name__ + " " + (self.idn if self.idn else hex(id(self)))
@@ -202,6 +209,8 @@ class Tile(TkMixin):
             self._pack_elems()
             self._pack_frame()
 
+            self._render_state()
+
         return self
 
     def _build(self):
@@ -264,6 +273,24 @@ class Tile(TkMixin):
     def focus(self):
         if self.frame:
             self.frame.focus_set()
+        return self
+
+    #
+
+    def set_visible(self, en=True):
+        self._visible = en
+        self.layout()
+
+    def set_enabled(self, en=True):
+        self._enabled = en
+        self._render_state()
+        return self
+
+    def _render_state(self):
+        pass
+
+    def _set_state(self, w):
+        w["state"] = "normal" if self._enabled else "disabled"
 
     #
 
@@ -353,6 +380,9 @@ class TileButton(Tile, ClickHandlerMixIn):
 
         return self._button
 
+    def _render_state(self):
+        self._set_state(self._button)
+
 
 class TileCheckbutton(Tile):
     def create_element(self):
@@ -397,6 +427,9 @@ class TileLabelButton(TileLabel, TileButton):
         TileLabel.create_element(self)
         TileButton.create_element(self)
         return [self._lbl, self._button]
+
+    def _render_state(self):
+        TileButton._render_state(self)
 
 
 class TileEntry(Tile):

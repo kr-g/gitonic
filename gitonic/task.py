@@ -19,6 +19,7 @@ def run_proc(
     callb=None,
     loopcallb=None,
     shell=False,
+    env=-1,
 ):
 
     try:
@@ -29,6 +30,8 @@ def run_proc(
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT if combine_stderr else None,
             shell=shell,
+            # todo
+            env=os.environ if env == -1 else env,
         )
 
         if proc:

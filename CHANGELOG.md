@@ -5,7 +5,8 @@
 # version v0.0.9 - ???
 
 - git current branch in changes tab
--
+- support for black
+- 
 
 
 # version v0.0.8 - 20220802

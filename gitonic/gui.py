@@ -20,6 +20,9 @@ from .gitutil import set_git_exe, GIT, GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
 from .gitutil import git_pull, git_push, git_push_tags, git_push_all
 
+from .gitutil import with_cmd
+from .task import run_proc
+
 
 # global
 
@@ -56,6 +59,7 @@ ICO_FILE_ADD = "file-circle-plus"
 ICO_FILE_SUB = "file-circle-minus"
 ICO_FILE_DIFF = "file-waveform"
 ICO_FILE_DIFFTOOL = "code-compare"
+ICO_FILE_FORMATSOURCE = "indent"
 
 #
 
@@ -402,6 +406,14 @@ def get_main():
                                             command=lambda: on_difftool(),
                                             hotkey="<Alt-Key-d>",
                                         ),
+                                        TileLabelButton(
+                                            idn="black",
+                                            caption="",
+                                            commandtext="autoformat source",
+                                            icon=get_icon(ICO_FILE_FORMATSOURCE),
+                                            command=lambda: on_black(),
+                                            hotkey="<Alt-Key-b>",
+                                        ),
                                     ]
                                 ),
                             ]
@@ -609,6 +621,40 @@ def on_diff():
 
 def on_difftool():
     on_cmd_diff("on_difftool", git_difftool, True)
+
+
+def strip_non_ascii(s):
+    import string
+
+    rc = ""
+    for c in s:
+        if c in string.printable:
+            rc += c
+    return rc
+
+
+def on_black():
+    dgb_pr("on_black")
+    sel = gt("changes").get_selection_values()
+
+    s = []
+
+    def adder(st):
+        # todo tkinter cant handle all utf-8 chars
+        s.append(strip_non_ascii(st))
+
+    for rec in sel:
+        repo = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        fnam = rec["file"]
+        p = FileStat(repo).join([fnam]).name
+
+        # todo tkinter cant handle all utf-8 chars
+        s.append("---checking---")
+        s.append(p)
+        rc = run_proc(["black", p], callb=adder)
+
+    do_log_time("running black", ignore_switch=False)
+    do_logs(s)
 
 
 def on_log_clr():
@@ -961,6 +1007,9 @@ def startup_gui():
     # read_config()
     read_commit()
     set_workspace(True)
+
+    #     gt("difftool").set_enabled(False)
+    #     gt("black").set_enabled(False)
 
     gt("follow").set_val(follow)
     gt("auto_switch").set_val(auto_switch)
