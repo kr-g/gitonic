@@ -412,7 +412,7 @@ def get_main():
                                             commandtext="autoformat source",
                                             icon=get_icon(ICO_FILE_FORMATSOURCE),
                                             command=lambda: on_black(),
-                                            hotkey="<Alt-Key-b>",
+                                            hotkey="<Alt-Key-f>",
                                         ),
                                     ]
                                 ),
