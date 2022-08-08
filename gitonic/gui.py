@@ -395,6 +395,7 @@ def get_main():
                                             hotkey="<Alt-Key-w>",
                                         ),
                                         TileLabelButton(
+                                            idn="difftool",
                                             caption="",
                                             commandtext="difftool",
                                             icon=get_icon(ICO_FILE_DIFFTOOL),

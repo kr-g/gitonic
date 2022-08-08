@@ -9,6 +9,63 @@ import threading
 from queue import Queue
 
 
+def run_proc(
+    cmd,
+    stdin=None,
+    readline=True,
+    read_blk=5,
+    decode=True,
+    combine_stderr=True,
+    callb=None,
+    loopcallb=None,
+    shell=False,
+):
+
+    try:
+        rc = None
+        proc = subprocess.Popen(
+            cmd,
+            stdin=stdin,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT if combine_stderr else None,
+            shell=shell,
+        )
+
+        if proc:
+            while True:
+
+                if loopcallb:
+                    if loopcallb(proc):
+                        break
+
+                recv = None
+
+                if readline:
+                    recv = proc.stdout.readline()
+                else:
+                    recv = proc.stdout.read(read_blk)
+                if len(recv) == 0:
+                    break
+                if decode:
+                    recv = recv.decode()
+                if callb:
+                    callb(recv)
+
+            proc.wait()
+
+            if proc.returncode == 0:
+                return
+            return proc.returncode
+
+        else:
+            rc = 1
+
+    except Exception as ex:
+        rc = ex
+
+    return rc
+
+
 class Task(threading.Thread):
     def start(self):
         self.qu = Queue()
@@ -56,27 +113,12 @@ class Cmd(object):
     def start(self):
         pass
 
+    def _loopcb(self, p):
+        if self._stop_req:
+            return self._stop_req
+
     def run(self):
-        try:
-            rc = 0
-            proc = subprocess.Popen(
-                self._cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True
-            )
-            # with os.popen(self._cmd) as f:
-            while True:
-                if self._stop_req:
-                    return self._stop_req
-                # line = f.readline()
-                line = proc.stdout.readline().decode()
-                if len(line) == 0:
-                    break
-                line = line.rstrip()
-                if self._callb:
-                    self._callb(line)
-            if proc.returncode:
-                rc = proc.returncode
-        except Exception as ex:
-            rc = ex
+        rc = run_proc(self._cmd, callb=self._callb, loopcallb=self._loopcb, shell=True)
         return rc
 
 
