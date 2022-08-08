@@ -646,7 +646,14 @@ def on_black():
     for rec in sel:
         repo = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
         fnam = rec["file"]
-        p = FileStat(repo).join([fnam]).name
+        p = FileStat(repo).join([fnam])
+
+        if p.splitext()[1] not in [".py"]:
+            s.append("---skipping non python file---")
+            s.append(p.name)
+            continue
+
+        p = p.name
 
         # todo tkinter cant handle all utf-8 chars
         s.append("---checking---")
