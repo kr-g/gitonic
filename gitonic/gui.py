@@ -399,20 +399,20 @@ def get_main():
                                             hotkey="<Alt-Key-w>",
                                         ),
                                         TileLabelButton(
-                                            idn="difftool",
-                                            caption="",
-                                            commandtext="difftool",
-                                            icon=get_icon(ICO_FILE_DIFFTOOL),
-                                            command=lambda: on_difftool(),
-                                            hotkey="<Alt-Key-d>",
-                                        ),
-                                        TileLabelButton(
                                             idn="black",
                                             caption="",
                                             commandtext="autoformat source",
                                             icon=get_icon(ICO_FILE_FORMATSOURCE),
                                             command=lambda: on_black(),
                                             hotkey="<Alt-Key-f>",
+                                        ),
+                                        TileLabelButton(
+                                            idn="difftool",
+                                            caption="",
+                                            commandtext="difftool",
+                                            icon=get_icon(ICO_FILE_DIFFTOOL),
+                                            command=lambda: on_difftool(),
+                                            hotkey="<Alt-Key-d>",
                                         ),
                                     ]
                                 ),
