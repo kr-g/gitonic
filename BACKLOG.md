@@ -20,7 +20,7 @@
 - gui rework
   - theme support
   - resize behavior -> expand
-  - icons
+  - ~~icons~~
   - 
 - background task and event loop -> freezing gui when running git utils
   - use TkCmd also for Cmd runners
