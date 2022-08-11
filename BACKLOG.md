@@ -21,7 +21,8 @@
   - theme support
   - resize behavior -> expand
   - ~~icons~~
-  - 
+  - grid layout / less floating 
+  -
 - background task and event loop -> freezing gui when running git utils
   - use TkCmd also for Cmd runners
   - status bar with running background tasks overview?
