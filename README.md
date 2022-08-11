@@ -150,7 +150,25 @@ git history browser
 a git front end
 
 
+# internals
+
+following files are used:
+
+|file|description|
+|---|---|
+|~/.gitonic/commit.json|the last commit messages show in the combo box|
+|~/.gitonic/tracked.json|tracked git repositories|
+|~/.gitonic/config.json|configuration settings|
+|~/.gitonic/socket|internal use|
+
+
+HINT:
+crash after configuration change can be resolved by changing the setting manually in `config.json`, or delete the config file to fall back to the defaults
+
+
 # license
 
 gitonic is released under the following
 [`LICENSE`](https://github.com/kr-g/gitonic/blob/main/LICENSE.md)
+
+

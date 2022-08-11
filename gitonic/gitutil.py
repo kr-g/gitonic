@@ -9,8 +9,9 @@ import glob
 
 from .file import FileStat, PushDir
 from .task import Cmd, CmdTask
+from .sysutil import platform_windows
 
-GIT = "git"
+GIT = "git.exe" if platform_windows() else "git"
 BLACK = "black"
 
 

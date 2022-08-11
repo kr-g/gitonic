@@ -9,3 +9,15 @@ def open_file_explorer(d):
         subprocess.Popen(["open", d])
     else:
         subprocess.Popen(["xdg-open", d])
+
+
+def platform_windows():
+    return sys.platform == "win32"
+
+
+def platform_mac_os():
+    return sys.platform == "darwin"
+
+
+def platform_linux():
+    return sys.platform == "linux"
