@@ -25,6 +25,12 @@ Check
 [`BACKLOG`](https://github.com/kr-g/gitonic/blob/main/BACKLOG.md)
 for open development tasks and limitations.
 
+IMPORTANT:
+
+`gitonic` interacts with `git` just like starting in bash / commandline.
+at the present time there is _no_additional_ error checking. 
+this must be done by checking the log tab manually where all cmdline output goes.
+
 
 # recommended readings prior using gitonic
 

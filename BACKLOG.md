@@ -40,7 +40,8 @@
 - ~~history of commit texts~~
   - ~~in combo box~~
   - git log / show integration?
-
+- git error handling
+- 
 
 # OPEN ISSUES
 
@@ -59,6 +60,9 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 - only existing git repo's under the workspace are supported,
  as of now no support to create a new git repo. 
  use `git init`, or `git clone` manually from cmd-line
-- 
+- `gitonic` interacts with `git` just like starting in bash / commandline.
+at the present time there is _no_additional_ error checking. 
+this must be done by checking the log tab manually where all cmdline output goes.
+
  
 
