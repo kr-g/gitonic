@@ -111,6 +111,14 @@ to use git difftool, and mergetool install a 3rd party tool like
 and configure like described below
 
 
+## installation on raspberry pi
+
+here it might be required (in some cases) to install imagetk in addtion
+
+    sudo apt-get install python3-pil python3-pil.imagetk
+
+
+
 # git configuration
 
 add a `.git-credentials` file as described here 
