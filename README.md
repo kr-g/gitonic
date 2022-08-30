@@ -111,12 +111,20 @@ to use git difftool, and mergetool install a 3rd party tool like
 and configure like described below
 
 
-## installation on raspberry pi
+## installation on raspberry pi, or fedora
 
-here it might be required (in some cases) to install imagetk in addtion
+when during startup an error is thrown, such as:
 
+    from PIL import Image, ImageTk, ImageDraw, ImageFont
+    ImportError: cannot import name 'ImageTk' from 'PIL' (/usr/lib64/python3.10/site-packages/PIL/__init__.py)
+
+here it is required to install imagetk in addtion 
+
+    # debian ubuntu etc
     sudo apt-get install python3-pil python3-pil.imagetk
 
+    # fedora
+    sudo yum install python3-pillow python3-pillow-tk
 
 
 # git configuration
