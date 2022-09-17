@@ -171,6 +171,8 @@ git history browser
 - [`git-gui`](https://git-scm.com/docs/git-gui/)
 a git front end
 
+other git-clients are listed on [`git-scm`](https://git-scm.com/downloads/guis)
+
 
 # internals
 
