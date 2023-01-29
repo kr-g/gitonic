@@ -204,9 +204,11 @@ class GitRepo(object):
 
         file_status = git_stat(self.path)
         self.status.clear()
+
         for stat in file_status:
             gfs = GitStatus().from_str(stat)
             self.status.append(gfs)
+        self.status.sort(key=lambda x: x.file)
 
         self.current_branch = None
         branches = git_branch(self.path)
