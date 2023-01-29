@@ -4,7 +4,8 @@
 
 # version v0.0.10 - ???
 
--
+- sort files in changes tab
+- 
 
 
 # version v0.0.9 - 20221008
