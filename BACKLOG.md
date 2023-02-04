@@ -22,6 +22,7 @@
   - resize behavior -> expand
   - ~~icons~~
   - grid layout / less floating 
+  - freezing ui -> see background tasks
   -
 - background task and event loop -> freezing gui when running git utils
   - use TkCmd also for Cmd runners
@@ -33,7 +34,7 @@
 - ~~remove print statements in main~~
 - remove print statements in tile.core
 - automation / external jobs
-  - black PEP8 support
+  - ~~black PEP8 support~~
   - desktop integration
     - open shell at repo path
     - open file management too at repo path
