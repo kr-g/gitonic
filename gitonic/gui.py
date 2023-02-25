@@ -27,7 +27,7 @@ from .task import run_proc
 # global
 
 url_homepage = "https://github.com/kr-g/gitonic"
-url_sponsor = "https://github.com/sponsors/kr-g"
+# url_sponsor = "https://github.com/sponsors/kr-g"
 
 # configuration
 
@@ -567,10 +567,10 @@ def get_main():
                     TileLabel(
                         caption=f"version: {VERSION}",
                     ),
-                    TileLabelClick(
-                        caption=f"DONATE to gitonic - {url_sponsor}",
-                        on_click=lambda x: open_sponsor_page(),
-                    ),
+                    #                     TileLabelClick(
+                    #                         caption=f"DONATE to gitonic - {url_sponsor}",
+                    #                         on_click=lambda x: open_sponsor_page(),
+                    #                     ),
                 ]
             ),
         ]
