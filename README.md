@@ -4,10 +4,17 @@
 
 gitonic simplifies working with multiple git repositories.
 
+
 gitonic comes with an easy to use Tkinter GUI.
 
 there is also a plugin for thonny 
 [`thonny-gitonic`](https://github.com/kr-g/thonny-gitonic) 
+
+
+# background 
+
+where software components/ artefacts are stored in multiple repositories 
+separately gitonic helps to keep track
 
 
 # what's new ?
