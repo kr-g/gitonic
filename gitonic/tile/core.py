@@ -112,7 +112,6 @@ class Tile(TkMixin):
         self.__init__tile__(*a, **kw)
 
     def __init__tile__(self, parent=None, idn=None, tk_root=None, **kwargs):
-
         self._kwargs = kwargs
         self.init(tk_root)
         self.set_parent(parent)
@@ -122,7 +121,6 @@ class Tile(TkMixin):
         self.__init__internal__()
 
     def __init__core__(self):
-
         self.frame = None
         self._elems = []
         self._frame = []
@@ -355,7 +353,6 @@ class TileLabelClick(TileLabel, ClickHandlerMixIn):
 
 class TileButton(Tile, ClickHandlerMixIn):
     def create_element(self):
-
         text = self.pref("commandtext", "...")
         image = self.pref("icon", None)
         hotkey = self.pref("hotkey", None)
@@ -542,7 +539,6 @@ class TileEntryInt(TileEntry):
 
 class TileEntryText(TileEntry):
     def _create_entry(self):
-
         width = self.pref_int("width", 40)
         height = self.pref_int("height", 15)
 
@@ -620,7 +616,6 @@ class TileEntryButton(TileEntry, TileButton):
 
 class TileEntryCombo(TileEntry):
     def create_element(self):
-
         vars = super().create_element()
 
         values = list(self.pref(VALUES, []))
@@ -715,7 +710,6 @@ class TileEntryListbox(TileEntry):
         self._var.set(self._map_values)
 
     def create_element(self):
-
         self._listb_wg_parent = ttk.Frame(self.frame)
         self._listb_wg = ttk.Frame(self._listb_wg_parent)
 
@@ -777,7 +771,6 @@ class TileEntryListbox(TileEntry):
         return h
 
     def _create_entry(self):
-
         h = self._scroll_height()
 
         self._listb = Listbox(
@@ -890,7 +883,6 @@ class TileEntryListbox(TileEntry):
 
 class TileEntrySpinbox(TileEntry):
     def create_element(self):
-
         vars = super().create_element()
 
         self._values = list(self.pref(VALUES, []))
@@ -927,7 +919,6 @@ class TileEntrySpinbox(TileEntry):
 
 
 class TileFileSelect(TileEntryButton):
-
     PATH = "path"
     """path: always add os.sep at the end"""
 
@@ -949,7 +940,6 @@ class TileFileSelect(TileEntryButton):
         te.bind("<FocusOut>", self.on_focus_leave)
 
     def on_click(self, o):
-
         basedir = os.path.dirname(self.get_val())
 
         file = filedialog.askopenfilename(
@@ -990,7 +980,6 @@ class TileFileSelect(TileEntryButton):
 
 class TileDirectorySelect(TileFileSelect):
     def on_click(self, o):
-
         basedir = self.get_val()
 
         file = filedialog.askdirectory(
@@ -1009,7 +998,6 @@ class TileCompositFlow(Tile):
         # print("create_element", self.__class__)
         vars = []
         for el in self.pref(SOURCE, []):
-
             if el == None:
                 continue
 
@@ -1060,7 +1048,6 @@ class TileTab(Tile):
         self._tabs_show = {}
 
     def create_element(self):
-
         self._tab = ttk.Notebook(self.frame)
         self._elem = []
         self._tabs.clear()
@@ -1129,7 +1116,6 @@ class TileTab(Tile):
 
 class TileTreeView(Tile):
     def create_element(self):
-
         header = self.pref("header", [])
         header_width = self.pref("header_width", [])
         height = self.pref("height", None)
@@ -1257,3 +1243,10 @@ class TileTreeView(Tile):
                 print("not found", iid)
 
         return vals
+
+    def set_index(self, idx=0):
+        raise Exception("untested")
+        self.clr_selection()
+        iid = self._iid[idx]
+        self._treeview.selection_add(iid)
+        self._treeview.see(iid)
