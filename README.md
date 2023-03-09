@@ -33,7 +33,7 @@ for open development tasks and limitations.
 IMPORTANT:
 
 `gitonic` interacts with `git` just like starting in bash / commandline.
-at the present time there is _no_additional_ error checking. 
+at the present time there is **no additional** error checking. 
 this must be done by checking the log tab manually where all cmdline output goes.
 
 
