@@ -84,7 +84,7 @@ if not responding to a hotkey, make sure that CapsLock is disabled
 
 the file status is the same as when calling 
 [`git status --porcelain`](https://git-scm.com/docs/git-status#_options).
-see also under [git status output](https://git-scm.com/docs/git-status#_output).
+see also under [`git status output`](https://git-scm.com/docs/git-status#_output).
 
 
 | status | comment |
