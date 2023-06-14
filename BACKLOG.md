@@ -7,6 +7,8 @@
 - git branch support
   - create
   - switch
+- git diff rework
+  - support also git diff --staged. 
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
 - merge tool integration
