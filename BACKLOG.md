@@ -11,6 +11,8 @@
   - support also git diff --staged. 
 - git commit 
   - support also git commit --amend 
+- undo support for unstaged files
+  - git restore <file>
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
 - merge tool integration
