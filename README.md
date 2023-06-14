@@ -85,7 +85,6 @@ if not responding to a hotkey, make sure that CapsLock is disabled
 the file status is the same as when calling 
 [`git status --porcelain`](https://git-scm.com/docs/git-status#_options).
 see also under [`git status output`](https://git-scm.com/docs/git-status#_output).
-`gitonic` use porcelain format version 1.
 
 | status | comment |
 |---|---|
@@ -96,6 +95,9 @@ see also under [`git status output`](https://git-scm.com/docs/git-status#_output
 | C | copied |
 | U | updated but unmerged |
 | ?? | not in git |
+
+NOTE:
+`gitonic` use porcelain format version 1.
 
 
 # platform
