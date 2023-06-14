@@ -51,7 +51,7 @@ todo - documentation pending
 ## working with mutiple git repositories
 
 when adding a git repo to the tracked list, and staging files (from different repositories)
-a following commit command is executed on all repositories in the tracked list with the same commit message.
+a following commit command is executed on **all** repositories in the tracked list with the same commit message.
 this is not a bug; moreover it is intened to be like that.
 
 
