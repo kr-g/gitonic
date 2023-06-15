@@ -4,6 +4,8 @@
 - documentation
 - testcases?
 - revert changes / git checkout support
+  - undo support for unstaged files
+    - git restore <file>
 - git branch support
   - create
   - switch
@@ -11,11 +13,11 @@
   - support also git diff --staged. 
 - git commit 
   - support also git commit --amend 
-- undo support for unstaged files
-  - git restore <file>
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
 - merge tool integration
+- support verbose output in expert mode
+  - support flags -v and -vv where applicable
 - diff-tool blocks main screen
 - settings tabs
   - check for installed git
