@@ -6,8 +6,8 @@
 - revert changes / git checkout support
   - undo support for unstaged files
     - git restore <file>
-- ~~git fetch / merge  support
-  - currently gitonic supports only pull~~
+- ~~git fetch / merge  support~~
+  - ~~currently gitonic supports only pull~~
 - git branch support
   - create
   - switch
