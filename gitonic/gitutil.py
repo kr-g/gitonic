@@ -62,6 +62,8 @@ run_black = lambda repo, files, callb=None: with_cmd(
 
 git_version = lambda callb=None: git_cmd(f"--version", callb=callb)[0].split()[2]
 
+git_fetch = lambda repo, callb=None: with_git_cmd(repo, f"fetch", callb=callb)
+
 git_pull = lambda repo, callb=None: with_git_cmd(repo, f"pull", callb=callb)
 
 git_stat = lambda repo, callb=None: with_git_cmd(

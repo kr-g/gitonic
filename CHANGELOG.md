@@ -4,7 +4,10 @@
 
 # next version v0.0.11 - ???
 
--
+- fixed logging
+- fix no branch crash when no branch is set up 
+- added fetch buttons
+- 
 
 
 # version v0.0.10 - 20230225

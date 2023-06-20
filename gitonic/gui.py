@@ -18,7 +18,7 @@ from .sysutil import open_file_explorer
 
 from .gitutil import set_git_exe, GIT, GitWorkspace, git_diff, git_difftool
 from .gitutil import run_black, git_add, git_add_undo, git_commit
-from .gitutil import git_pull, git_push, git_push_tags, git_push_all
+from .gitutil import git_fetch, git_pull, git_push, git_push_tags, git_push_all
 
 from .gitutil import with_cmd
 from .task import run_proc
@@ -55,6 +55,8 @@ ICO_CLR_ALL = "xmark"
 ICO_CLR = "xmark"
 ICO_PULL = "angle-down"
 ICO_PULL_ALL = "angles-down"
+ICO_FETCH = "angle-down"
+ICO_FETCH_ALL = "angles-down"
 ICO_FILE_ADD = "file-circle-plus"
 ICO_FILE_SUB = "file-circle-minus"
 ICO_FILE_DIFF = "file-waveform"
@@ -65,7 +67,8 @@ ICO_FILE_FORMATSOURCE = "indent"
 
 
 def dgb_pr(*s):
-    # print(*s)
+    if not True:
+        print(s)
     if dev_mode:
         gt("expert_log").append("\t".join([str(x) for x in s]))
         on_follow_expert()
@@ -315,6 +318,19 @@ def get_main():
                                             commandtext="all",
                                             icon=get_icon(ICO_PULL_ALL),
                                             command=lambda: pull_all_workspace(),
+                                        ),
+                                        TileLabelButton(
+                                            caption="fetch",
+                                            commandtext="selected",
+                                            icon=get_icon(ICO_FETCH),
+                                            command=lambda: on_fetch_tracked(),
+                                            hotkey="<Control-Key-P>",
+                                        ),
+                                        TileLabelButton(
+                                            caption="",
+                                            commandtext="all",
+                                            icon=get_icon(ICO_FETCH_ALL),
+                                            command=lambda: fetch_all_workspace(),
                                         ),
                                     ]
                                 ),
@@ -608,11 +624,13 @@ def on_cmd_diff(info, diff_, ignore_switch=False):
         if rec["type"] == "file":
             pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
             git = gws.find(pg)[0]
-            rc = diff_(git.path, rec["file"])
+            logs = []
+            rc = diff_(git.path, rec["file"], callb=logs.append)
             dgb_pr(f"--- {git}")
             [dgb_pr(x) for x in rc]
             do_log_time(info, ignore_switch=ignore_switch)
             do_logs(rc)
+            do_logs_opt(logs)
 
 
 def on_diff():
@@ -710,6 +728,14 @@ def do_logs(x):
     on_follow_log()
 
 
+def do_logs_opt(x):
+    if x and len(x) > 0:
+        dgb_pr("do_logs", x)
+        gt("log").extend(x)
+        on_follow_log()
+        do_log_show()
+
+
 tracked = FileStat(fconfigdir.name).join(["tracked.json"])
 tracked.makedirs()
 
@@ -742,27 +768,47 @@ def on_gits_cmd(info, selcmd_, gits, ignore_switch=False, update_change=False):
     for rec in gits:
         pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
         git = gws.find(pg)[0]
-        rc = selcmd_(git.path, [rec["file"]])
+        logs = []
+        rc = selcmd_(git.path, [rec["file"]], callb=logs.append)
         dgb_pr(f"--- {git}")
         [dgb_pr(x) for x in rc]
         do_logs(rc)
+        do_logs_opt(logs)
     if update_change:
         set_changes()
 
 
-def pull_gits(gits):
-    dgb_pr("on_pull_gits")
+def call_mult_gits(gits, gitfunc, msgtxt):
+    dgb_pr("on_", msgtxt)
     for gnam in gits:
         try:
             git = gws.find(gnam)[0]
-            rc = git_pull(git.path)
+            logs = []
+            rc = gitfunc(git.path, callb=logs.append)
             dgb_pr(f"--- {git}")
             [dgb_pr(x) for x in rc]
-            do_log_time(f"pull: {git.path}")
+            do_log_time(f"{msgtxt}: {git.path}")
             do_logs(rc)
+            do_logs_opt(logs)
         except Exception as ex:
             dgb_pr(ex)
     set_changes()
+
+
+def fetch_gits(gits):
+    call_mult_gits(gits, git_fetch, "fetch")
+
+
+def pull_gits(gits):
+    call_mult_gits(gits, git_pull, "pull")
+
+
+def on_fetch_tracked():
+    fetch_gits(tracked_gits)
+
+
+def fetch_all_workspace():
+    fetch_gits(sorted(gws.gits.keys()))
 
 
 def on_pull_tracked():
@@ -786,7 +832,7 @@ def on_add():
 
 
 def on_add_undo():
-    on_sel_cmd("on_add", git_add_undo, True, True)
+    on_sel_cmd("on_add_undo", git_add_undo, True, True)
 
 
 def on_add_or_undo(cntrl):
@@ -882,10 +928,12 @@ def on_commit():
             git = gws.find(gnam)[0]
             do_log_time(f"commit: {git.path} '{message}'")
             if git.has_staged():
-                rc = git_commit(git.path, message)
+                logs = []
+                rc = git_commit(git.path, message, callb=logs.append)
                 dgb_pr(f"--- {git}")
                 [dgb_pr(x) for x in rc]
                 do_logs(rc)
+                do_logs_opt(logs)
                 do_log("commited staged files")
             else:
                 do_log("nothing staged")
@@ -904,19 +952,21 @@ def on_cmd_push(info, push_, gits):
     do_log_time(info)
     for pg in gits:
         git = gws.find(pg)[0]
-        rc = push_(
-            git.path,
-        )
+        logs = []
+        rc = push_(git.path, callb=logs.append)
         [dgb_pr(x) for x in rc]
         do_log()
         do_log(f"--- push: {git}")
         do_logs(rc)
+        do_logs_opt(logs)
         if push_tags:
-            rc = git_push_tags(git.path)
+            logs = []
+            rc = git_push_tags(git.path, callb=logs.append)
             [dgb_pr(x) for x in rc]
             do_log()
             do_log(f"--- push tags: {git}")
             do_logs(rc)
+            do_logs_opt(logs)
 
 
 def on_push_tracked():
@@ -996,9 +1046,12 @@ def set_changes():
             for stat in git.status:
                 fs = git.stat(stat)
                 fs_ex = fs.exists()
+
+                bnam = git.current_branch.bnam if git.current_branch else ""
+
                 gst = {
                     "git": gitnam,
-                    "branch": git.current_branch.bnam,
+                    "branch": bnam,
                     "file": stat.file,
                     "unstaged": stat.mode,
                     "staged": stat.staged,
