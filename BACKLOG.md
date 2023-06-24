@@ -13,20 +13,24 @@
   - switch
 - git diff rework
   - support also git diff --staged. 
-- git commit 
+  - support merge-base, refer to 
+    - git difftool master...contrib
+      - git merge-base contrib master 
+      - git merge-base contrib master --name-only
+- merge tool integration
+  - git commit 
   - support also git commit --amend 
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
-- merge tool integration
 - support verbose output in expert mode
   - support flags -v and -vv where applicable
-- diff-tool blocks main screen
 - settings tabs
   - check for installed git
   - ~~git exe configuration in settings~~
   - check for latest version of gitonic
   - 
 - ~~config file for last known config~~
+- diff-tool blocks main screen (see next)
 - gui rework
   - theme support
   - resize behavior -> expand
