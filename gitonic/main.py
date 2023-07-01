@@ -1,4 +1,5 @@
 import sys
+import time
 import tkinter
 from tkinter import Tk
 
@@ -20,6 +21,35 @@ from gitonic import set_tk_root, get_tk_root
 
 
 debug = False
+
+_last_esc_hit = None
+_cancel_task = None
+
+
+def double_esc_check_and_quit_all(frame):
+    print("double esc check installed")
+
+    def _check():
+        print("got esc")
+
+        global _last_esc_hit, _cancel_task
+
+        now = time.time_ns()
+        if _last_esc_hit:
+            delta = now - _last_esc_hit
+            delta /= 1000 * 1000
+            delta = int(delta)
+            print("delta", delta)
+            if delta < 450:
+                print("good bye.")
+                frame.quit()
+                sys.exit()
+
+        _last_esc_hit = now
+        _cancel_task = get_tk_root().after(500, minimize)
+        print("wait for next esc, or minimize")
+
+    return _check
 
 
 def quit_all(frame):
@@ -69,10 +99,10 @@ tkcmd = None
 
 
 def main_func(debug_=False):
-
     global debug
     debug = debug_
 
+    global tk_root
     tk_root = set_tk_root(Tk())
 
     if try_switch_app():
@@ -101,7 +131,7 @@ def main_func(debug_=False):
                         commandtext="minimize me",
                         icon=get_icon("minimize"),
                         hotkey="<Escape>",
-                        command=minimize,
+                        command=double_esc_check_and_quit_all(mainframe),
                     ),
                 ]
             ),
