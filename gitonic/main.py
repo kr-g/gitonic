@@ -122,7 +122,7 @@ def main_func(debug_=False):
                 source=[
                     TileLabelButton(
                         caption="close app",
-                        commandtext="good bye",
+                        commandtext="good bye - click button or 2x ESC (quickly)",
                         icon=get_icon("right-from-bracket"),
                         command=quit_all(mainframe),
                     ),
