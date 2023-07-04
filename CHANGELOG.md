@@ -8,6 +8,7 @@
 - fix no branch crash when no branch is set up 
 - added fetch buttons
 - double ESC will exit gitonic
+- new hotkey Alt-c to go directly to commit tab
 - 
 
 

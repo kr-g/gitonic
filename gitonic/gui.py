@@ -453,6 +453,7 @@ def get_main():
                                             commandtext="clear",
                                             icon=get_icon(ICO_CLR),
                                             command=lambda: on_clr_commit(),
+                                            hotkey="<Alt-Key-c>",
                                         ),
                                     ]
                                 ),
@@ -900,6 +901,8 @@ def on_sel_commit(idx):
 
 
 def on_clr_commit():
+    # todo bring tab top front
+    gt("maintabs").select("tab_commit")
     gt("commit_short").clr().focus()
     gt("commit_long").clr()
 

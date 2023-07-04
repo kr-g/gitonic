@@ -71,6 +71,7 @@ following list contains all hotkeys:
 | Alt-w | diff file(s) |
 | Alt-d | difftool file(s) |
 | Alt-f | auto format file(s) with `black` PEP08 |
+| Alt-c | go to commit tab and clear commit message field(s) |
 | Alt-x | commit file(s) |
 | Alt-s | push git(s) |
 | Alt-e | commit and push git(s), like pressing Alt-x and Alt-s |
