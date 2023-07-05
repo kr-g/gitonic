@@ -182,7 +182,6 @@ PREFS_ENTRY_W = 7
 
 
 def get_main():
-
     read_config()
 
     main = TileRows(
@@ -388,11 +387,6 @@ def get_main():
                                 ),
                                 TileCols(
                                     source=[
-                                        # TileLabelButton(
-                                        #    caption="selected",
-                                        #    commandtext="run black",
-                                        #    command=lambda: on_black(),
-                                        # ),
                                         TileLabelButton(
                                             caption="selected",
                                             commandtext="add",
@@ -419,7 +413,7 @@ def get_main():
                                             caption="",
                                             commandtext="autoformat source",
                                             icon=get_icon(ICO_FILE_FORMATSOURCE),
-                                            command=lambda: on_black(),
+                                            command=lambda: on_formatter(),
                                             hotkey="<Alt-Key-f>",
                                         ),
                                         TileLabelButton(
@@ -652,8 +646,25 @@ def strip_non_ascii(s):
     return rc
 
 
-def on_black():
-    dgb_pr("on_black")
+def read_formatter_settings():
+    frmt_cfg = FileStat(fconfigdir.name).join(["formatter.json"])
+    if frmt_cfg.exists() is False:
+        print("no formatter config file")
+        return None
+    print("found formatter config file")
+    with open(frmt_cfg.name) as f:
+        c = f.read()
+        cfg = json.loads(c)
+    normdict = {}
+    for k, v in cfg.items():
+        lower_k = k.lower()
+        # todo check for double entries
+        normdict[k.lower()] = v
+    return normdict
+
+
+def on_formatter():
+    dgb_pr("on_formatter")
     sel = gt("changes").get_selection_values()
 
     s = []
@@ -662,24 +673,39 @@ def on_black():
         # todo tkinter cant handle all utf-8 chars
         s.append(strip_non_ascii(st))
 
+    cfg = read_formatter_settings()
+    if cfg is None:
+        cfg = {".py": {"cmd": "black", "para": ["%file"]}}
+
     for rec in sel:
         repo = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
         fnam = rec["file"]
         p = FileStat(repo).join([fnam])
 
-        if p.splitext()[1] not in [".py"]:
-            s.append("---skipping non python file---")
+        fext = p.splitext()[1].lower()
+        if fext not in cfg.keys():
+            s.append("---skipping file. no formatter found---")
             s.append(p.name)
             continue
 
         p = p.name
 
-        # todo tkinter cant handle all utf-8 chars
-        s.append("---checking---")
+        s.append("---run formatter---")
         s.append(p)
-        rc = run_proc(["black", p], callb=adder)
+        frmt_cmd = cfg[fext]["cmd"]
+        frmt_para = cfg[fext]["para"]
 
-    do_log_time("running black", ignore_switch=False)
+        if type(frmt_para) != list:
+            frmt_para = [frmt_para]
+
+        frmt_para = map(lambda x: x.replace("%file", p), frmt_para)
+
+        cmd = [frmt_cmd, *frmt_para]
+        s.append(str(cmd))
+
+        rc = run_proc(cmd, callb=adder)
+
+    do_log_time("running formatter", ignore_switch=False)
     do_logs(s)
 
 

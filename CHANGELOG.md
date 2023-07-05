@@ -10,7 +10,9 @@
 - double ESC will exit gitonic
 - new hotkey Alt-c to go directly to commit tab
 - added F5, F6 hotkeys for changing the active tabs
-- 
+- custom formatter support
+  - defined under settings `formatter.json`
+    - if no file is found it defaults to `{".py": {"cmd": "black", "para": "%f"}}`
 
 
 # version v0.0.10 - 20230225

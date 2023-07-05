@@ -105,6 +105,41 @@ NOTE:
 `gitonic` use porcelain format version 1.
 
 
+# file formatter 
+
+it is possible to configure external formatter tools depending on the file extension.
+
+`gitonic` will use the configuration file `~/.gitonic/formatter.json`.
+
+if no formatter json is found it defaults to:
+
+    {
+      ".py": {
+        "cmd": "black",
+        "para": [
+          "%file"
+        ]
+      }
+    }
+
+the general structure is:
+
+    {
+      ".file-ext": {
+        "cmd": "full-path-to-command",
+        "para": [
+          "%file"
+        ]
+      }
+    }
+
+here `para` is an array of cmd-line options passed to the formatter command
+where `%file` is a placeholder and replaced by the file name
+
+for different file extensions `gitonic` will call the formatter accordingly 
+even if the selected files are of different types (extensions)
+
+
 # platform
 
 tested on python3, and linux
@@ -196,6 +231,7 @@ following files are used:
 |~/.gitonic/commit.json|the last commit messages show in the combo box|
 |~/.gitonic/tracked.json|tracked git repositories|
 |~/.gitonic/config.json|configuration settings|
+|~/.gitonic/formatter.json|configuration for external formatter tools|
 |~/.gitonic/socket|internal use|
 
 
