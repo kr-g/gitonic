@@ -9,6 +9,7 @@
 - added fetch buttons
 - double ESC will exit gitonic
 - new hotkey Alt-c to go directly to commit tab
+- added F5, F6 hotkeys for changing the active tabs
 - 
 
 

@@ -61,11 +61,15 @@ following list contains all hotkeys:
 
 | key | action |
 |---|---|
-| Esc | minimize |
+| Esc | minimize the app window |
+| Esc Esc | press quickly Esc twice to close the app |
 | Control-p | pull all tracked gits |
+| Control-Shift-p | fetch all tracked gits |
 | F1 | refresh all in changed files view |
 | F2 | select all in changed files view |
 | F3 | un-select all in changed files view |
+| F5 | select previous tab |
+| F6 | select next tab |
 | Alt-a | stage file(s) in git |
 | Alt-q | un-stage file(s) in git |
 | Alt-w | diff file(s) |

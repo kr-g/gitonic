@@ -273,6 +273,9 @@ class Tile(TkMixin):
             self.frame.focus_set()
         return self
 
+    def can_receive_focus(self):
+        return True
+
     #
 
     def set_visible(self, en=True):
@@ -330,6 +333,9 @@ class TileLabel(Tile):
     def text(self, t):
         self._var.set(t)
 
+    def can_receive_focus(self):
+        return False
+
 
 class ClickHandlerMixIn(object):
     def _click_handler(self):
@@ -380,6 +386,10 @@ class TileButton(Tile, ClickHandlerMixIn):
     def _render_state(self):
         self._set_state(self._button)
 
+    def focus(self):
+        self._button.focus_set()
+        return self
+
 
 class TileCheckbutton(Tile):
     def create_element(self):
@@ -416,6 +426,10 @@ class TileCheckbutton(Tile):
     def on_click(self, ref_self):
         print_t(ON_CLICK, self.get_val())
 
+    def focus(self):
+        self._checkbutton.focus_set()
+        return self
+
 
 class TileLabelButton(TileLabel, TileButton):
     def create_element(
@@ -427,6 +441,10 @@ class TileLabelButton(TileLabel, TileButton):
 
     def _render_state(self):
         TileButton._render_state(self)
+
+    def focus(self):
+        self._button.focus_set()
+        return self
 
 
 class TileEntry(Tile):
@@ -613,6 +631,10 @@ class TileEntryButton(TileEntry, TileButton):
         vars.append(self._button)
         return vars
 
+    def focus(self):
+        self._entry.focus_set()
+        return self
+
 
 class TileEntryCombo(TileEntry):
     def create_element(self):
@@ -665,6 +687,10 @@ class TileEntryCombo(TileEntry):
         if idx < 0:
             return
         return self._values[idx]
+
+    def focus(self):
+        self._combo.focus_set()
+        return self
 
 
 class TileEntryListbox(TileEntry):
@@ -880,6 +906,10 @@ class TileEntryListbox(TileEntry):
             self.set_index(idx)
             self._lastsel = self.get_index()
 
+    def focus(self):
+        self._listb.focus_set()
+        return self
+
 
 class TileEntrySpinbox(TileEntry):
     def create_element(self):
@@ -916,6 +946,10 @@ class TileEntrySpinbox(TileEntry):
 
     def set_val(self, val):
         self._spinb.set(val)
+
+    def focus(self):
+        self._spinb.focus_set()
+        return self
 
 
 class TileFileSelect(TileEntryButton):
@@ -994,9 +1028,17 @@ class TileDirectorySelect(TileFileSelect):
 
 
 class TileCompositFlow(Tile):
+    def focus(self):
+        for e in self.__elem:
+            if e.can_receive_focus():
+                print_t("focus", e)
+                e.focus()
+                break
+        return self
+
     def create_element(self):
         # print("create_element", self.__class__)
-        vars = []
+        self.__elem = []
         for el in self.pref(SOURCE, []):
             if el == None:
                 continue
@@ -1008,7 +1050,7 @@ class TileCompositFlow(Tile):
             if opts:
                 el.frame.pack(**opts)
 
-            vars.append(el)
+            self.__elem.append(el)
 
         return []
 
@@ -1098,6 +1140,13 @@ class TileTab(Tile):
     def get_index(self):
         return self._tab.index(self._tab.select())
 
+    def set_index(self, idx):
+        self._tab.select(idx)
+        self._tab_handler(None)
+
+    def keys(self):
+        return self._tabs.keys()
+
     def select(self, nam):
         print_t("select", self._tabs)
         idx = self._tabs[nam]
@@ -1112,6 +1161,11 @@ class TileTab(Tile):
         # todo
         raise Exception("untested")
         self.show_tab(idn, False)
+
+    def focus_first_active_tab(self):
+        print_t("cur sel tab", self._tab_sel)
+        el = self._elem[self._tab_sel]
+        el.focus()
 
 
 class TileTreeView(Tile):
@@ -1250,3 +1304,8 @@ class TileTreeView(Tile):
         iid = self._iid[idx]
         self._treeview.selection_add(iid)
         self._treeview.see(iid)
+
+    def focus(self):
+        print("***TREEVIEW FOCUS")
+        self._treeview.focus_set()
+        return self

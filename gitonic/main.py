@@ -5,6 +5,7 @@ from tkinter import Tk
 
 from .gui import TkCmd, Tile, TileRows, TileCols, TileLabelButton
 from .gui import startup_gui, get_main, fconfigdir
+from .gui import gt
 
 from .icons import get_icon
 
@@ -16,6 +17,7 @@ from .singleinstance import (
 )
 
 from gitonic import set_tk_root, get_tk_root
+
 
 # main
 
@@ -69,6 +71,26 @@ def quit_all(frame):
 def minimize():
     print("minimize")
     get_tk_root().iconify()
+
+
+def _move_tab_focus(direction=1):
+    mt = gt("maintabs")
+    l = len(mt.keys())
+    pos = mt.get_index()
+    pos += direction
+    pos %= l
+    mt.set_index(pos)
+    mt.focus_first_active_tab()
+
+
+def f5_handler(ev):
+    print("f5", ev)
+    _move_tab_focus(-1)
+
+
+def f6_handler(ev):
+    print("f5", ev)
+    _move_tab_focus()
 
 
 # single instance handling
@@ -146,6 +168,9 @@ def main_func(debug_=False):
 
     mainframe.add(main_content)
     mainframe.layout()
+
+    tk_root.bind("<F5>", f5_handler)
+    tk_root.bind("<F6>", f6_handler)
 
     startup_gui()
 
