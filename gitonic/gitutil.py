@@ -203,7 +203,6 @@ class GitRepo(object):
         return f"{self.__class__.__name__}('{ self.path }')"
 
     def refresh_status(self):
-
         file_status = git_stat(self.path)
         self.status.clear()
 

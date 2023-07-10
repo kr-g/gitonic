@@ -54,7 +54,6 @@ class PushDir(object):
 
 
 class FileStat(object):
-
     Time = namedtuple("Time", ["ctime", "atime", "mtime"])
 
     def __init__(self, name=".", expand=True, prefetch=False):

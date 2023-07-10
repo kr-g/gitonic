@@ -21,7 +21,6 @@ def run_proc(
     shell=False,
     env=-1,
 ):
-
     try:
         rc = None
         proc = subprocess.Popen(
@@ -36,7 +35,6 @@ def run_proc(
 
         if proc:
             while True:
-
                 if loopcallb:
                     if loopcallb(proc):
                         break

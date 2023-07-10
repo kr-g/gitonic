@@ -8,7 +8,6 @@ from .tile import TkCmd
 
 
 def create_socket(port=0):
-
     serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
@@ -26,7 +25,6 @@ def create_socket(port=0):
 
 
 def create_client_socket(port=0):
-
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(("", port))
     try:
@@ -59,7 +57,6 @@ def check_and_bring_to_front(sock, wndw, accept_and_close=True):
 
 
 def check_instance(pnam):
-
     port = 0
     try:
         print_t("reading last known socket", pnam)

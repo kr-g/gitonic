@@ -2,7 +2,7 @@
 # Changelog
 
 
-# next version v0.0.11 - ???
+# version v0.0.11 - 20230710
 
 - fixed logging
 - fix no branch crash when no branch is set up 
