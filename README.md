@@ -42,6 +42,13 @@ this must be done by checking the log tab manually where all cmdline output goes
 an introduction on how git works in general can be found in the official git documentation in section
 [`Git-Basics`](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository).
 
+another very good book 
+[`progit2`](https://github.com/progit/progit2)
+can be downloaded from the official github project page.
+
+under [`releases`](https://github.com/progit/progit2/releases) 
+are different formats such as pdf, epub ...
+
 
 # how to use
 
