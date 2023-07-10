@@ -45,7 +45,6 @@ an introduction on how git works in general can be found in the official git doc
 another very good book 
 [`progit2`](https://github.com/progit/progit2)
 can be downloaded from the official github project page.
-
 under [`releases`](https://github.com/progit/progit2/releases) 
 are different formats such as pdf, epub ...
 
