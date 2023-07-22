@@ -17,6 +17,7 @@
     - git difftool master...contrib
       - git merge-base contrib master 
       - git merge-base contrib master --name-only
+  - diff on base of single file history
 - merge tool integration
   - git commit 
   - support also git commit --amend 
