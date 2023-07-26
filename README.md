@@ -158,7 +158,7 @@ pycodestyle is an official tool from python's code quality authority.
 
 black is also an offical python tool, but resolves not fully to issues reported by pycodestyle.
 there might be some rework required (from case to case). 
-result is quite similar to autopep08 beside the list reported by pycodestyle (after formatting) 
+result is quite similar to autopep8 beside the list reported by pycodestyle (after formatting) 
 is a bit longer comparing to autopep8 what does a better job here.
 
     {
