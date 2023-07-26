@@ -9,5 +9,5 @@ python3 -m venv .venv
 # activate virtual environment (on linux)
 source .venv/bin/activate
 
-# install gitonic
-pip install gitonic
+# install gitonic with all extras
+pip install gitonic[PEP08, MELD]

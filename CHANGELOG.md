@@ -4,11 +4,14 @@
 
 # version v0.0.12 - ???
 
-- support for more code formatters (included in standard installation)
+- support for more code formatters (included in standard installation as extras)
+  - pycodestyle
   - autopep8
   - black
   - yapf 
-- support for meld (included in standard installation)
+    - install with pip install gitonic[PEP08]
+- support for meld (included in standard installation as extra)
+  - install with pip install gitonic[MELD]
 - installation script (linux) for using within a virtual environment 
 - 
 

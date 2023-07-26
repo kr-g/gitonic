@@ -217,12 +217,18 @@ the following script will install gitonic in your home directory (linux).
     # activate virtual environment (on linux)
     source .venv/bin/activate
 
-    # install gitonic
-    pip install gitonic
+    # install gitonic with all extras
+    pip install gitonic[PEP08, MELD]
 
 
 this script can be found here
 [`install_linux.sh`](install_linux.sh)
+
+to install just `gitonic` without the extras replace with
+
+    # install gitonic 
+    pip install gitonic
+
 
 
 to run gitonic use the script from the virtual environment directly 
