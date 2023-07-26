@@ -136,7 +136,8 @@ even if the selected files are of different types (extensions)
 
 ## templates for python pep08 formatters
 
-all of the following tools are part of `gitonic` standard installation.
+all of the following tools are part of `gitonic` standard installation
+(available as extra, see below under installation). 
 choose the one what fits best for your needs.
 
 
@@ -245,14 +246,15 @@ add the following line at the end of `.bash_aliases`
 
 ## other installation dependencies
 
-to use git difftool, and mergetool install a 3rd party tool like 
+to use git difftool, and mergetool download and install a 3rd party tool like 
 [`meld merge`](https://meldmerge.org/)
 and configure like described below.
 
 note: 
 
 with gitonic >= v0.12.0 meld is already included in standard installation
-and download is obsolete. you just need to configure git.
+(as extra, see also under installation) and download is obsolete when 
+instaled as part of gitonic. you just need to configure git then.
 
 
 ## installation on raspberry pi, or fedora
