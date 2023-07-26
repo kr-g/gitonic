@@ -231,7 +231,8 @@ to run gitonic use the script from the virtual environment directly
     ~/gitonic/.venv/bin/gitonic
     
  
-it is recommented to create an alias in `.bash_aliases` add the following
+it is recommented to create an alias in `.bash_aliases`. 
+add the following line at the end of `.bash_aliases`
 
     alias gitonic=~/gitonic/.venv/bin/gitonic
     
