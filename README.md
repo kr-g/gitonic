@@ -136,6 +136,10 @@ even if the selected files are of different types (extensions)
 
 ## templates for python pep08 formatters
 
+all of the following tools are part of `gitonic` standard installation.
+choose the one what fits best for your needs.
+
+
 ### autopep8
 
 [autopep8](https://github.com/hhatto/autopep8)
