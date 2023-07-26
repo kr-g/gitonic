@@ -225,7 +225,8 @@ this script can be found here
 [`install_linux.sh`](install_linux.sh)
 
 
-to run gitonic use the script from the virtual environment directly
+to run gitonic use the script from the virtual environment directly 
+(no prior venv activation required)
 
     ~/gitonic/.venv/bin/gitonic
     
