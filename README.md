@@ -136,10 +136,11 @@ even if the selected files are of different types (extensions)
 
 ## templates for python pep08 formatters
 
+### autopep8
+
 [autopep8](https://github.com/hhatto/autopep8)
 what fixes problems reported by 
 [pycodestyle](https://github.com/PyCQA/pycodestyle).
-
 pycodestyle is an official tool from python's code quality authority.
 
     {
@@ -152,6 +153,8 @@ pycodestyle is an official tool from python's code quality authority.
       }
     }
 
+
+### black
 
 black is also an offical python tool, but resolves not fully to issues reported by pycodestyle.
 there might be some rework required (from case to case). 
@@ -167,6 +170,8 @@ is a bit longer comparing to autopep8 what does a better job here.
       }
     }
 
+
+### yapf 
 
 yapf (google) is slow comparing the former tools, and re-arranges code so 
 that it is reported as error by pycodestyle after formatting. 
