@@ -256,6 +256,11 @@ with gitonic >= v0.12.0 meld is already included in standard installation
 (as extra, see also under installation) and download is obsolete when 
 installed as part of gitonic. you just need to configure git then.
 
+in case meld installation fails install into the virtual environment 
+
+    pip install PyGObject
+
+
 
 ## installation on raspberry pi, or fedora
 
