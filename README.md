@@ -231,6 +231,8 @@ it is recommented to create an alias in `.bash_aliases` add the following
     alias gitonic=~/gitonic/.venv/bin/gitonic
     
 
+## other installation dependencies
+
 to use git difftool, and mergetool install a 3rd party tool like 
 [`meld merge`](https://meldmerge.org/)
 and configure like described below.
