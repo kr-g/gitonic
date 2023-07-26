@@ -2,3 +2,8 @@ pyjsoncfg
 pytkfaicons
 tkinter-tooltip
 black
+autopep8
+flake8
+pycodestyle
+yapf
+meld

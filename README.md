@@ -1,4 +1,3 @@
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # gitonic 
 
@@ -117,17 +116,6 @@ it is possible to configure external formatter tools depending on the file exten
 
 `gitonic` will use the configuration file `~/.gitonic/formatter.json`.
 
-if no formatter json is found it defaults to:
-
-    {
-      ".py": {
-        "cmd": "black",
-        "para": [
-          "%file"
-        ]
-      }
-    }
-
 the general structure is:
 
     {
@@ -146,6 +134,56 @@ for different file extensions `gitonic` will call the formatter accordingly
 even if the selected files are of different types (extensions)
 
 
+## templates for python pep08 formatters
+
+[autopep8](https://github.com/hhatto/autopep8)
+what fixes problems reported by 
+[pycodestyle](https://github.com/PyCQA/pycodestyle).
+
+pycodestyle is an official tool from python's code quality authority.
+
+    {
+      ".py": {
+        "cmd": "autopep8",
+        "para": [
+          "-i",
+          "%file"
+        ]
+      }
+    }
+
+
+black is also an offical python tool, but resolves not fully to issues reported by pycodestyle.
+there might be some rework required (from case to case). 
+result is quite similar to autopep08 beside the list reported by pycodestyle (after formatting) 
+is a bit longer comparing to autopep8 what does a better job here.
+
+    {
+      ".py": {
+        "cmd": "black",
+        "para": [
+          "%file"
+        ]
+      }
+    }
+
+
+yapf (google) is slow comparing the former tools, and re-arranges code so 
+that it is reported as error by pycodestyle after formatting. 
+
+    {
+      ".py": {
+        "cmd": "yapf",
+        "para": [
+          "-i",
+          "%file"
+        ]
+      }
+    }
+
+
+
+
 # platform
 
 tested on python3, and linux
@@ -158,27 +196,50 @@ alpha state, use on your own risk!!!
 
 # installation
 
-    phyton3 -m pip install gitonic
+it is recommented to install gitonic into a virtual environment.
+the following script will install gitonic in your home directory (linux).
+
+    # create virtual environment 
+    cd ~
+    mkdir gitonic
+    cd gitonic
+    python3 -m venv .venv
+    
+    # activate virtual environment (on linux)
+    source .venv/bin/activate
+
+    # install gitonic
+    pip install gitonic
+
+
+this script can be found here
+[`install_linux.sh`](install_linux.sh)
+
+
+to run gitonic use the script from the virtual environment directly
+
+    ~/gitonic/.venv/bin/gitonic
+    
+ 
+it is recommented to create an alias in `.bash_aliases` add the following
+
+    alias gitonic=~/gitonic/.venv/bin/gitonic
+    
 
 to use git difftool, and mergetool install a 3rd party tool like 
 [`meld merge`](https://meldmerge.org/)
-and configure like described below
+and configure like described below.
+
+note: 
+
+with gitonic >= v0.12.0 meld is already included in standard installation
+and download is obsolete. you just need to configure git.
 
 
 ## installation on raspberry pi, or fedora
 
-when during startup an error is thrown, such as:
-
-    from PIL import Image, ImageTk, ImageDraw, ImageFont
-    ImportError: cannot import name 'ImageTk' from 'PIL' (/usr/lib64/python3.10/site-packages/PIL/__init__.py)
-
-here it is required to install imagetk in addtion 
-
-    # debian ubuntu etc
-    sudo apt-get install python3-pil python3-pil.imagetk
-
-    # fedora
-    sudo yum install python3-pillow python3-pillow-tk
+when during startup an error is thrown, refer to 
+[installation on raspberry, fedorra](https://github.com/kr-g/gitonic/issues/6)
 
 
 # git configuration

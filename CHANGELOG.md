@@ -4,7 +4,13 @@
 
 # version v0.0.12 - ???
 
--
+- support for more code formatters (included in standard installation)
+  - autopep8
+  - black
+  - yapf 
+- support for meld (included in standard installation)
+- installation script (linux) for using within a virtual environment 
+- 
 
 
 # version v0.0.11 - 20230710
