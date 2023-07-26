@@ -139,7 +139,7 @@ even if the selected files are of different types (extensions)
 ### autopep8
 
 [autopep8](https://github.com/hhatto/autopep8)
-what fixes problems reported by 
+is a python formatter what fixes problems reported by 
 [pycodestyle](https://github.com/PyCQA/pycodestyle).
 pycodestyle is an official tool from python's code quality authority.
 
@@ -173,7 +173,7 @@ is a bit longer comparing to autopep8 what does a better job here.
 
 ### yapf 
 
-yapf (google) is slow comparing the former tools, and re-arranges code so 
+yapf (google python code formmater) is slow comparing the former tools, and re-arranges code so 
 that it is reported as error by pycodestyle after formatting. 
 
     {
