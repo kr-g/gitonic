@@ -1,8 +1,7 @@
 [![PEP-08](https://img.shields.io/badge/code%20style-PEP08-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 
-you are reading VERSION = "v0.0.12-rc0", 
-read latest version [DOCS](https://github.com/kr-g/gitonic/blob/v0.0.11/README.md) 
+you are reading VERSION = "v0.0.12-develop"
 
 
 # gitonic 
