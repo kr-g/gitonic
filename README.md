@@ -2,7 +2,7 @@
 
 
 you are reading VERSION = "v0.0.12-rc0", 
-read latest stable [DOCS](https://github.com/kr-g/gitonic/blob/v0.0.11/README.md) 
+read latest version [DOCS](https://github.com/kr-g/gitonic/blob/v0.0.11/README.md) 
 
 
 # gitonic 
