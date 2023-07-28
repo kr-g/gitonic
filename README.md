@@ -232,13 +232,13 @@ to install just `gitonic` without the extras replace with
 to run gitonic use the script from the virtual environment directly 
 (no prior venv activation required)
 
-    ~/gitonic/.venv/bin/gitonic
+    ~/gitonic/bin/gitonic
     
  
 it is recommented to create an alias in `.bash_aliases`. 
 add the following line at the end of `.bash_aliases`
 
-    alias gitonic=~/gitonic/.venv/bin/gitonic
+    alias gitonic=~/gitonic/bin/gitonic
     
 
 ## other installation dependencies
