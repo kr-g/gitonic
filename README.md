@@ -1,3 +1,5 @@
+[![PEP-08](https://img.shields.io/badge/code%20style-PEP08-green.svg)](https://www.python.org/dev/peps/pep-0008/)
+
 
 # gitonic 
 
@@ -277,7 +279,8 @@ add a `.git-credentials` file as described here
 add a `.gitconfig` file as described here
 [`git-config`](https://git-scm.com/docs/git-config)
 and configure for diff and merge tools. 
-NOTE: you need to install the diff-tool e.g. [`meld merge`](https://meldmerge.org/) manually, 
+NOTE: you need to install the diff-tool e.g. 
+[`meld merge`](https://meldmerge.org/) manually, 
 if meld is not installed pressing the button will have no effect.
 
 
@@ -329,7 +332,8 @@ following files are used:
 
 
 HINT:
-crash after configuration change can be resolved by changing the setting manually in `config.json`, or delete the config file to fall back to the defaults
+crash after configuration change can be resolved by changing the setting manually 
+in `config.json`, or delete the config file to fall back to the defaults
 
 
 # license
