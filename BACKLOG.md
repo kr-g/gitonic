@@ -57,7 +57,9 @@
   - ~~in combo box~~
   - git log / show integration?
 - git error handling
+- switch to log tab after pull
 - 
+
 
 # OPEN ISSUES
 
