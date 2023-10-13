@@ -211,7 +211,8 @@ alpha state, use on your own risk!!!
 
 # installation
 
-it is recommented to install gitonic into a virtual environment.
+it is recommented to install gitonic into a 
+[virtual environment](https://docs.python.org/3/library/venv.html).
 the following script will install gitonic in your home directory (linux).
 
     # create virtual environment 
