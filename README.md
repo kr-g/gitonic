@@ -259,7 +259,8 @@ installed as part of gitonic. you just need to configure git then.
 
 in case meld installation fails install into the virtual environment 
 
-    pip install PyGObject
+    cd ~
+    ~/gitonic/bin/pip install PyGObject
 
 
 
