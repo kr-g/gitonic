@@ -13,6 +13,7 @@
 - support for meld (included in standard installation as extra)
   - install with `pip install gitonic[MELD]`
 - installation script (linux) for using within a virtual environment 
+- added more installation options
 - 
 
 
