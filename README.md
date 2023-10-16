@@ -270,7 +270,7 @@ in case meld installation fails install into the virtual environment
 options can be combined by `|`.
 use 
 
-   ~/gitonic/bin/pip install gitonic[*options*] 
+    ~/gitonic/bin/pip install gitonic[*options*] 
 
 
 |option|included packages|
