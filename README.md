@@ -219,8 +219,10 @@ the following script will install gitonic in your home directory (linux).
     cd ~
     python3 -m venv gitonic
 
-    # install gitonic with all extras
+    # install gitonic with recommended extras
     ~/gitonic/bin/pip install gitonic[PEP08,MELD]
+    or
+    ~/gitonic/bin/pip install gitonic[DEFAULT]
 
 
 this script can be found here
@@ -247,7 +249,7 @@ add the following line at the end of `.bash_aliases`
 
 ## other installation dependencies
 
-to use git difftool, and mergetool download and install a 3rd party tool like 
+to use git difftool, and mergetool, download and install a 3rd party tool like 
 [`meld merge`](https://meldmerge.org/)
 and configure like described below.
 
@@ -262,6 +264,18 @@ in case meld installation fails install into the virtual environment
     cd ~
     ~/gitonic/bin/pip install PyGObject
 
+
+### all installation options
+
+options can be combined by `|`.
+
+|option|included packages|
+|---|---|
+| PEP08 | pycodestyle, flake8, autopep8 |
+| PEP08_BLACK | pycodestyle, flake8, black |
+| PEP08_FULL | pycodestyle, flake8, autopep8, black, yapf |
+| MELD | meld |
+| DEFAULT | pycodestyle, flake8, autopep8, meld |
 
 
 ## installation on raspberry pi, or fedora
