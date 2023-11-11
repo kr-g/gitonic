@@ -58,6 +58,7 @@
   - git log / show integration?
 - git error handling
 - switch to log tab after pull
+- logging, use python logger for expert mode output
 - 
 
 
