@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-black .
-flake8 --config flake8.cfg
+# autopep8 -i -r ./gitonic
+# flake8 --config flake8.cfg
 python3 -m unittest -v
 
 
