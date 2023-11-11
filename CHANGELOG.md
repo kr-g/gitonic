@@ -2,7 +2,7 @@
 # Changelog
 
 
-# version v0.0.12 - ???
+# version v0.0.12 - 20231111
 
 - support for more code formatters (included in standard installation as extras)
   - install with `pip install gitonic[PEP08]`
