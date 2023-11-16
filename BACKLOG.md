@@ -62,6 +62,7 @@
 - support for .gitignore 
   - adding single files 
   - open .gitignore for editing
+- execute git operations in parallel where possible
 - 
 
 
