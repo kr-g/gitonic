@@ -56,71 +56,103 @@ def join_files(files, sep=" "):
     return sep.join(map(lambda x: "'" + x + "'", files))
 
 
-run_black = lambda repo, files, callb=None: with_cmd(
+def run_black(repo, files, callb=None): return with_cmd(
     repo, f"{BLACK} {join_files(files)}", callb=callb
 )
 
-git_version = lambda callb=None: git_cmd(f"--version", callb=callb)[0].split()[2]
 
-git_fetch = lambda repo, callb=None: with_git_cmd(repo, f"fetch", callb=callb)
+def git_version(callb=None): return git_cmd(
+    f"--version", callb=callb)[0].split()[2]
 
-git_pull = lambda repo, callb=None: with_git_cmd(repo, f"pull", callb=callb)
 
-git_stat = lambda repo, callb=None: with_git_cmd(
-    repo, f"status --porcelain", callb=callb
+def git_fetch(repo, callb=None): return with_git_cmd(
+    repo, f"fetch", callb=callb)
+
+
+def git_pull(repo, callb=None): return with_git_cmd(repo, f"pull", callb=callb)
+
+
+def git_stat(repo, callb=None): return with_git_cmd(
+    repo, f"status -u --porcelain", callb=callb
 )
 
-git_diff = lambda repo, file, callb=None: with_git_cmd(
+
+def git_diff(repo, file, callb=None): return with_git_cmd(
     repo, f"diff {file}", callb=callb
 )
-git_difftool = lambda repo, file, callb=None: with_git_cmd(
+
+
+def git_difftool(repo, file, callb=None): return with_git_cmd(
     repo, f"difftool {file}", callb=callb
 )
 
-git_add = lambda repo, files, callb=None: with_git_cmd(
+
+def git_add(repo, files, callb=None): return with_git_cmd(
     repo, f"add {join_files(files)}", callb=callb
 )
 
-git_commit = lambda repo, comment, callb=None: with_git_cmd(
+
+def git_commit(repo, comment, callb=None): return with_git_cmd(
     repo, f"commit -m '{comment}'", callb=callb
 )
-git_commit_porcelain = lambda repo, comment, callb=None: with_git_cmd(
+
+
+def git_commit_porcelain(repo, comment, callb=None): return with_git_cmd(
     repo, f"commit --porcelain -m '{comment}'", callb=callb
 )
 
-git_push = lambda repo, callb=None: with_git_cmd(repo, f"push --porcelain", callb=callb)
-git_push_tags = lambda repo, callb=None: with_git_cmd(
+
+def git_push(repo, callb=None): return with_git_cmd(
+    repo, f"push --porcelain", callb=callb)
+
+
+def git_push_tags(repo, callb=None): return with_git_cmd(
     repo, f"push --porcelain --tags", callb=callb
 )
+
+
 git_push_all = (
     lambda repo, callb=None: git_push(repo, callb=callb)
     + ["---"]
     + git_push_tags(repo, callb=callb)
 )
 
-git_add_undo = lambda repo, files, callb=None: with_git_cmd(
+
+def git_add_undo(repo, files, callb=None): return with_git_cmd(
     repo, f"restore --staged {join_files(files)}", callb=callb
 )
 
-git_checkout = lambda repo, files, callb=None: with_git_cmd(
+
+def git_checkout(repo, files, callb=None): return with_git_cmd(
     repo, f"checkout {join_files(files)}", callb=callb
 )
-git_checkout_ref = lambda repo, ref, callb=None: git_checkout(repo, [ref], callb=callb)
+def git_checkout_ref(repo, ref, callb=None): return git_checkout(
+    repo, [ref], callb=callb)
 
-git_tags = lambda repo, callb=None: with_git_cmd(repo, "tag", callb=callb)
 
-git_branch = lambda repo, callb=None: with_git_cmd(repo, "branch", callb=callb)
-git_branch_all = lambda repo, callb=None: with_git_cmd(
+def git_tags(repo, callb=None): return with_git_cmd(repo, "tag", callb=callb)
+
+
+def git_branch(repo, callb=None): return with_git_cmd(
+    repo, "branch", callb=callb)
+
+
+def git_branch_all(repo, callb=None): return with_git_cmd(
     repo, "branch --all", callb=callb
 )
-git_curbranch = lambda repo, callb=None: with_git_cmd(
+
+
+def git_curbranch(repo, callb=None): return with_git_cmd(
     repo, "branch --show-current", callb=callb
 )
 
-git_make_tag = lambda repo, tag, callb=None: with_git_cmd(
+
+def git_make_tag(repo, tag, callb=None): return with_git_cmd(
     repo, f"tag {tag}", callb=callb
 )
-git_make_branch = lambda repo, branch, callb=None: with_git_cmd(
+
+
+def git_make_branch(repo, branch, callb=None): return with_git_cmd(
     repo, f"branch {branch}", callb=callb
 )
 

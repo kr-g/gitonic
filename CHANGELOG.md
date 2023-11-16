@@ -4,7 +4,8 @@
 
 # next version v0.0.13 - ???
 
--
+- show all untracked files on changes tab (not only the folder)
+- 
 
 
 # version v0.0.12 - 20231111

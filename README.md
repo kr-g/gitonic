@@ -109,7 +109,7 @@ see also under [`git status output`](https://git-scm.com/docs/git-status#_output
 | R | renamed |
 | C | copied |
 | U | updated but unmerged |
-| ?? | not in git |
+| ?? | not in git. untracked |
 
 NOTE:
 `gitonic` use porcelain format version 1.
