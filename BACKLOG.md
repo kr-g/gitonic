@@ -59,6 +59,9 @@
 - git error handling
 - switch to log tab after pull
 - logging, use python logger for expert mode output
+- support for .gitignore 
+  - adding single files 
+  - open .gitignore for editing
 - 
 
 
