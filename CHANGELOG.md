@@ -2,7 +2,7 @@
 # Changelog
 
 
-# next version v0.0.13 - ???
+# next version v0.0.13 - 20231125
 
 - show all untracked files on changes tab (not only the folder)
 - 
