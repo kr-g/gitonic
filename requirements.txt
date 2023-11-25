@@ -1,4 +1,4 @@
-pyjsoncfg
+#pyjsoncfg
 pytkfaicons
 tkinter-tooltip
 #black

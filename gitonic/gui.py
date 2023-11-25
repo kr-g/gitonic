@@ -5,7 +5,7 @@ import time
 import json
 import webbrowser
 
-from pyjsoncfg import Config
+from .pyjsoncfg import Config
 
 import tkinter
 from tkinter import Tk
