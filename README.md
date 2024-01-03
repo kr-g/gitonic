@@ -132,7 +132,11 @@ the general structure is:
       }
     }
 
-here `para` is an array of cmd-line options passed to the formatter command
+where `.file-ext` is a simple file extension such as `.py`, 
+or a comma separated list of extensions `.c,.h,.cpp`.
+wild-cards are not supported.
+
+where `para` is an array of cmd-line options passed to the formatter command
 where `%file` is a placeholder and replaced by the file name
 
 for different file extensions `gitonic` will call the formatter accordingly 
@@ -204,7 +208,7 @@ all of the following tools are NOT part of `gitonic` standard installation.
 
 ### uncrustify
 
-[uncrustify](https://github.com/uncrustify/uncrustify) 
+[`uncrustify`](https://github.com/uncrustify/uncrustify) 
 is a code formatter for c, c++ (and other languages).
 
 here in this config sample it is configured for extensions `.c`, `.h`, and `.cpp`.
