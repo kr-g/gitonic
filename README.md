@@ -167,6 +167,20 @@ pycodestyle is an official tool from python's code quality authority.
       }
     }
 
+to use the same code formatter also for 
+[`cython's`](https://github.com/cython/cython) 
+files with extension `.pyx` change the setting to
+
+    {
+      ".py,.pyx": {
+        "cmd": "autopep8",
+        "para": [
+          "-i",
+          "%file"
+        ]
+      }
+    }
+
 
 ### black
 
