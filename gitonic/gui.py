@@ -686,7 +686,7 @@ def expand_all_vars(v):
     for keypath, val, setr in elements_iter(v):
         org_val = str(val)
         val = os.path.expanduser(val)
-        val = os.path.expandvars(val)
+        # val = os.path.expandvars(val)
         setr(val)
 
         # todo logging
