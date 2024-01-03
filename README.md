@@ -213,10 +213,10 @@ is a code formatter for c, c++ (and other languages).
 
 here in this config sample it is configured for extensions `.c`, `.h`, and `.cpp`.
 
-IMPORTANT: `uncrustify` requires an additional config file, a sample can be found
+IMPORTANT: `uncrustify` requires an additional config file, a sample can be found here
 [`uncrustify.cfg`](https://github.com/uncrustify/uncrustify/blob/master/forUncrustifySources.cfg)
 
-here the `uncrustify` config file is placed in path `~/.gitonic/uncrustify.cfg`.
+here in the sample the `uncrustify` config file is placed in path `~/.gitonic/uncrustify.cfg`.
 make sure that it is there.
 
 
