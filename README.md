@@ -197,6 +197,37 @@ that it is reported as error by pycodestyle after formatting.
     }
 
 
+## templates for c, c++ formatters
+
+all of the following tools are NOT part of `gitonic` standard installation. 
+
+
+### uncrustify
+
+[uncrustify](https://github.com/uncrustify/uncrustify) 
+is a code formatter for c, c++ (and other languages).
+
+here in this config sample it is configured for extensions `.c`, `.h`, and `.cpp`.
+
+IMPORTANT: `uncrustify` requires an additional config file, a sample can be found
+[`uncrustify.cfg`](https://github.com/uncrustify/uncrustify/blob/master/forUncrustifySources.cfg)
+
+here the `uncrustify` config file is placed in path `~/.gitonic/uncrustify.cfg`.
+make sure that it is there.
+
+
+    ".c,.h,.cpp": {
+        "cmd": "uncrustify",
+        "para": [
+              "-c",
+              "~/.gitonic/uncrustify.cfg",
+              "--replace",
+              "%file",
+              "--no-backup",
+              "--if-changed"
+        ]
+    }
+
 
 
 # platform

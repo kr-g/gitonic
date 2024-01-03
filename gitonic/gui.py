@@ -352,9 +352,11 @@ def get_main():
                                         ("staged", None),
                                         ("type", None),
                                     ],
-                                    header_width=(150, 100, 250, 100, 100, 100),
+                                    header_width=(
+                                        150, 100, 250, 100, 100, 100),
                                     height=13,
-                                    on_double_click=lambda x: on_add_or_undo(x),
+                                    on_double_click=lambda x: on_add_or_undo(
+                                        x),
                                 ),
                                 TileCols(
                                     source=[
@@ -412,7 +414,8 @@ def get_main():
                                             idn="black",
                                             caption="",
                                             commandtext="autoformat source",
-                                            icon=get_icon(ICO_FILE_FORMATSOURCE),
+                                            icon=get_icon(
+                                                ICO_FILE_FORMATSOURCE),
                                             command=lambda: on_formatter(),
                                             hotkey="<Alt-Key-f>",
                                         ),
@@ -440,7 +443,8 @@ def get_main():
                                             caption="message:",
                                             idn="commit_short",
                                             width=50,
-                                            on_select=lambda x, v: on_sel_commit(x),
+                                            on_select=lambda x, v: on_sel_commit(
+                                                x),
                                         ),
                                         TileLabelButton(
                                             caption="",
@@ -473,7 +477,8 @@ def get_main():
                                         TileLabelButton(
                                             caption="",
                                             commandtext="commit + push",
-                                            icon=get_icon("wand-magic-sparkles"),
+                                            icon=get_icon(
+                                                "wand-magic-sparkles"),
                                             command=lambda: on_commit_push_tracked(),
                                             hotkey="<Alt-Key-e>",
                                         ),
@@ -646,6 +651,51 @@ def strip_non_ascii(s):
     return rc
 
 
+def ext_iter(k):
+    if "," not in k:
+        print("found formatter ex", k)
+        yield k
+        return
+
+    for ex in k.split(","):
+        print("found formatter ex", ex)
+        yield ex.strip()
+
+
+def elements_iter(adict, keypath=[]):
+    """deep elements iterator"""
+    def _iter(x): return x.items()
+    if type(adict) == list:
+        _iter = enumerate
+
+    for k, v in _iter(adict):
+        keypath = [*keypath, k]
+
+        if type(v) in [list, dict]:
+            yield from elements_iter(v, keypath)
+            continue
+
+        def setr(nv):
+            adict[k] = nv
+
+        yield keypath, v, setr
+
+
+def expand_all_vars(v):
+
+    for keypath, val, setr in elements_iter(v):
+        org_val = str(val)
+        val = os.path.expanduser(val)
+        val = os.path.expandvars(val)
+        setr(val)
+
+        # todo logging
+        if org_val != val:
+            print("expanded", val)
+
+    return v
+
+
 def read_formatter_settings():
     frmt_cfg = FileStat(fconfigdir.name).join(["formatter.json"])
     if frmt_cfg.exists() is False:
@@ -656,10 +706,11 @@ def read_formatter_settings():
         c = f.read()
         cfg = json.loads(c)
     normdict = {}
-    for k, v in cfg.items():
-        lower_k = k.lower()
-        # todo check for double entries
-        normdict[k.lower()] = v
+    for ki, v in cfg.items():
+        for k in ext_iter(ki):
+            lower_k = k.lower()
+            # todo check for double entries
+            normdict[k.lower()] = expand_all_vars(v)
     return normdict
 
 

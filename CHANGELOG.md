@@ -4,6 +4,10 @@
 
 # version v0.0.14 - ???
 
+- improved formatter 
+  - support for multiple file extension for single config entry 
+  - support for path expansion for formatter config
+  - added sample for uncrustify (c, c++)
 -
 
 
