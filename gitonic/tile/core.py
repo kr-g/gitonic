@@ -4,6 +4,9 @@
 """
 
 
+from tkinter import Tk, ttk, filedialog, scrolledtext
+from tktooltip import ToolTip
+from tkinter import *
 import os
 
 # loggin support
@@ -45,10 +48,6 @@ def print_e(*args):
 
 #
 
-from tkinter import *
-from tktooltip import ToolTip
-
-from tkinter import Tk, ttk, filedialog, scrolledtext
 
 CAPTION = "caption"
 
@@ -190,7 +189,7 @@ class Tile(TkMixin):
 
         # opts = { "borderwidth":2,  "relief":"ridge" }  ##todo debug
 
-        self.frame = ttk.Frame(p)  ## **opts
+        self.frame = ttk.Frame(p)  # **opts
 
     def _end_frame(self):
         # todo rename this ...
@@ -651,7 +650,8 @@ class TileEntryCombo(TileEntry):
 
     def _create_entry(self):
         width = self.pref_int("width", 20)
-        self._combo = ttk.Combobox(self.frame, textvariable=self._var, width=width)
+        self._combo = ttk.Combobox(
+            self.frame, textvariable=self._var, width=width)
         self._combo.bind("<<ComboboxSelected>>", self._handler)
 
         self._bind_focus(self._combo)
@@ -708,11 +708,11 @@ class TileEntryListbox(TileEntry):
         self._width = int(self.pref("width", 20))
 
         self._sel_mode = int(self.pref("select_many", False))
-        ##todo self._height = int(self.pref("height", 5))
+        # todo self._height = int(self.pref("height", 5))
 
     def destroy(self):
         super().destroy()
-        ## init tile (move?)
+        # init tile (move?)
         self._lastsel = None
 
     def scrollbar(self, enable=True):
@@ -936,7 +936,8 @@ class TileEntrySpinbox(TileEntry):
         self.pref(ON_CHANGE, self.on_change)()
 
     def on_change(self):
-        print_t(self.__class__.__name__, ON_CHANGE, self.get_index(), self.get_val())
+        print_t(self.__class__.__name__, ON_CHANGE,
+                self.get_index(), self.get_val())
 
     def get_index(self):
         return self._map_values.index(self.get_val())
@@ -1169,6 +1170,11 @@ class TileTab(Tile):
 
 
 class TileTreeView(Tile):
+
+    class Context(object):
+        def __repr__(self):
+            return str(self.__dict__)
+
     def create_element(self):
         header = self.pref("header", [])
         header_width = self.pref("header_width", [])
@@ -1193,6 +1199,7 @@ class TileTreeView(Tile):
         )
         self._treeview.bind("<<TreeviewSelect>>", self._select_handler)
         self._treeview.bind("<Double-1>", self._on_double_handler)
+        self._treeview.bind("<3>", self._tree_context_menu)
 
         self._yscroll = ttk.Scrollbar(
             self._cont, orient="vertical", command=self._treeview.yview
@@ -1239,6 +1246,42 @@ class TileTreeView(Tile):
         sel = self._treeview.item(sel)
 
         nullable = self.pref("nullable", True)
+
+    def _tree_context_menu(self, ev):
+        ctx = self._context_from_event(ev)
+        selected = self._treeview.selection()
+        print("right-click", ctx, ctx.iid in selected)
+        self.pref(ON_RIGHT_CLICK, self.on_right_click)(ctx)
+        self.on_right_click(ctx)
+
+    def on_right_click(self, ctx):
+        pass
+
+    def _context_from_event(self, ev):
+
+        ctx = self.Context()
+
+        xp = ctx.x = ev.x
+        yp = ctx.y = ev.y
+        ctx.button = ev.num
+
+        widg = self._treeview
+
+        ctx.region = widg.identify("region", xp, yp)
+        # CHECK region for heading or tree
+
+        ctx.iid = widg.identify("item", xp, yp)
+
+        ctx.row = widg.identify("row", xp, yp)
+        ctx.column = widg.identify("column", xp, yp)
+        if ctx.column.startswith("#"):
+            no = int(ctx.column[1:])
+            nam = widg["columns"][no-1] if no > 0 else ctx.column
+            ctx.column = (ctx.column, no, nam)
+
+        ctx.isopen = widg.item(ctx.iid, "open")
+
+        return ctx
 
     def clear(self):
         self._treeview.delete(*self._treeview.get_children())
