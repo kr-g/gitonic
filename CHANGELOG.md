@@ -1,4 +1,4 @@
-
+ 
 # Changelog
 
 
@@ -8,7 +8,9 @@
   - support for multiple file extension for single config entry 
   - support for path expansion for formatter config
   - added sample for uncrustify (c, c++)
--
+- on "changes" tab
+  - added context menu to open file system explorer
+- 
 
 
 # version v0.0.13 - 20231125

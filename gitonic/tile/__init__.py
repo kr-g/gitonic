@@ -6,5 +6,6 @@ from .core import TileEntryCombo, TileEntrySpinbox, TileEntryListbox
 from .core import TileFileSelect, TileDirectorySelect
 from .core import TileTab, TileRows, TileCols
 from .core import TileTreeView
+from .core import ContextMenu
 
 from .tkcmd import TkCmd

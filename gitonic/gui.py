@@ -357,6 +357,8 @@ def get_main():
                                     height=13,
                                     on_double_click=lambda x: on_add_or_undo(
                                         x),
+                                    on_right_click=lambda cntrl, ctx: on_changed_context(
+                                        cntrl, ctx),
                                 ),
                                 TileCols(
                                     source=[
@@ -920,6 +922,43 @@ def on_add_or_undo(cntrl):
         on_add()
     else:
         on_add_undo()
+
+
+def on_changed_context(cntrl, ctx):
+    print("on_changed_context")
+    global changes
+    row_no = ctx.row[1]
+    col_no = ctx.column[1]
+
+    gnam_base = changes[row_no]['git']
+    fnam_base = changes[row_no]['file']
+
+    gnam = FileStat(gws.base_repo_dir.name).join([gnam_base])
+    gnam_dir = gnam.name
+
+    fnam = FileStat(gws.base_repo_dir.name).join([gnam_base, fnam_base])
+    fnam_dir = fnam.dirname()
+    fnam_dirnam = fnam.dirname()[len(gnam.name)+1:]
+
+    print(gnam_base, gnam)
+    print(fnam_base, fnam)
+
+    git = gws.find(gnam)
+
+    ctxmenu = ContextMenu(cntrl._treeview, ctx)
+
+    def open_explorer(fnam):
+        def _call(x):
+            open_file_explorer(fnam)
+        return _call
+
+    ctxmenu.add_command(
+        f"open project folder {gnam_base}", open_explorer(gnam_dir))
+    if gnam_base != fnam_dirnam:
+        ctxmenu.add_command(
+            f"open file folder {fnam_dirnam}", open_explorer(fnam_dir))
+
+    ctxmenu.show()
 
 
 fcommit = FileStat(fconfigdir.name).join(["commit.json"])

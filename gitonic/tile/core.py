@@ -1169,6 +1169,32 @@ class TileTab(Tile):
         el.focus()
 
 
+class ContextMenu(object):
+
+    def __init__(self, root, ctx):
+        self.root = root
+        self.ctx = ctx
+        self._menu = Menu(root, tearoff=0)
+        self._menu.bind("<Leave>", lambda x: self.hide())
+
+    def hide(self):
+        self._menu.destroy()
+        self._menu = None
+
+    def add_separator(self):
+        self._menu.add_separator()
+
+    def add_command(self, caption, cmdfunc, args=None):
+        def _call(args):
+            self.hide()
+            if cmdfunc:
+                cmdfunc(args)
+        self._menu.add_command(label=caption, command=lambda: _call(args))
+
+    def show(self):
+        self._menu.post(self.ctx.x_root, self.ctx.y_root)
+
+
 class TileTreeView(Tile):
 
     class Context(object):
@@ -1249,12 +1275,11 @@ class TileTreeView(Tile):
 
     def _tree_context_menu(self, ev):
         ctx = self._context_from_event(ev)
-        selected = self._treeview.selection()
-        print("right-click", ctx, ctx.iid in selected)
-        self.pref(ON_RIGHT_CLICK, self.on_right_click)(ctx)
-        self.on_right_click(ctx)
+        # selected = self._treeview.selection()
+        # print("right-click", ctx, ctx.iid in selected)
+        self.pref(ON_RIGHT_CLICK, self.on_right_click)(self, ctx)
 
-    def on_right_click(self, ctx):
+    def on_right_click(self, cntrl, ctx):
         pass
 
     def _context_from_event(self, ev):
@@ -1265,6 +1290,9 @@ class TileTreeView(Tile):
         yp = ctx.y = ev.y
         ctx.button = ev.num
 
+        ctx.x_root = ev.x_root
+        ctx.y_root = ev.y_root
+
         widg = self._treeview
 
         ctx.region = widg.identify("region", xp, yp)
@@ -1274,8 +1302,13 @@ class TileTreeView(Tile):
 
         ctx.row = widg.identify("row", xp, yp)
         ctx.column = widg.identify("column", xp, yp)
+
+        if ctx.row.startswith("I"):
+            no = int(ctx.row[1:])-1
+            ctx.row = (ctx.row, no)
+
         if ctx.column.startswith("#"):
-            no = int(ctx.column[1:])
+            no = int(ctx.column[1:])-1
             nam = widg["columns"][no-1] if no > 0 else ctx.column
             ctx.column = (ctx.column, no, nam)
 
