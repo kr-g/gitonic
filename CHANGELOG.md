@@ -10,7 +10,7 @@
   - added sample for uncrustify (c, c++)
 - on "changes" tab
   - added context menu to open file system explorer
-  - added support for custom context menu with `context.json`
+  - added support for custom context menu with `~/.gitonic/context.json`
 - 
 
 
