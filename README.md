@@ -354,7 +354,7 @@ for running on linux with xfce.
 
 remark:
 the sample config file provides support for opening
-- terminal, in this case xfce4-terminal, can be replaced by e.g. `xterm` - depending on your distribution
+- terminal, in this case `xfce4-terminal`, can be replaced by e.g. `xterm` - depending on your distribution
 - [`thonny`](https://thonny.org/), for files matching `*.py`
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
 
