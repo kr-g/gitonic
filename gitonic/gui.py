@@ -981,9 +981,13 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
         print("no context config file")
         return None
 
-    with open(ctx_cfg.name) as f:
-        c = f.read()
-        cfg = json.loads(c)
+    try:
+        with open(ctx_cfg.name) as f:
+            c = f.read()
+            cfg = json.loads(c)
+    except:
+        print("json parsing error")
+        return
 
     env = {"$GIT": gnam_dir, "$PATH": fnam_dir, "$FILE": fnam}
 
