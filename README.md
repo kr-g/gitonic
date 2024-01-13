@@ -451,7 +451,7 @@ when during startup an error is thrown, refer to
 # git configuration
 
 add a `.git-credentials` file as described here 
-[`git-credentials`](https://git-scm.com/docs/git-credential-store#_storage_format)
+[`git-credentials`](https://git-scm.com/docs/git-credential-store)
 
 
 add a `.gitconfig` file as described here
