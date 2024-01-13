@@ -333,7 +333,7 @@ for running on linux with xfce.
           ]
         ]
       },
-      "geany-path": {
+      "geany-ctx": {
         "expr": [
           "*.c",
           "*.cpp",
