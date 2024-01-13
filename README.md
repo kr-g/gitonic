@@ -233,6 +233,8 @@ IMPORTANT: `uncrustify` requires an additional config file, a sample can be foun
 here in the sample the `uncrustify` config file is placed in path `~/.gitonic/uncrustify.cfg`.
 make sure that it is there.
 
+the following needs to be placed inside `~/.gitonic/formatter.json`
+
 
     ".c,.h,.cpp": {
         "cmd": "uncrustify",
