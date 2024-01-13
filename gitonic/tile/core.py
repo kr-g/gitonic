@@ -1304,7 +1304,7 @@ class TileTreeView(Tile):
         ctx.column = widg.identify("column", xp, yp)
 
         if ctx.row.startswith("I"):
-            no = int(ctx.row[1:])-1
+            no = int(ctx.row[1:], 16)-1
             ctx.row = (ctx.row, no)
 
         if ctx.column.startswith("#"):

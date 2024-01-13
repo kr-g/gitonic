@@ -247,6 +247,109 @@ make sure that it is there.
     }
 
 
+# custom menu handler 
+
+when clicking on the `changes` tab right a context memu opens offering 
+to open the system file manager tool (file explorer) 
+at the base git repo path or at the changed file path.
+
+in addition it is possible to add own custom context menu entries here.
+configuration is done with `~/.gitonic/context.json` file.
+
+the general structure is:
+
+    {
+      "a-context-name-ctx": {
+        "expr": "*",
+        "menu": [
+          [
+            "some text $GIT",
+            [
+              "cmd-path",
+              "whatever_param=$GIT"
+            ]
+          ],
+          [
+            "some other text $PATH",
+            [
+              "cmd-path2",
+              "whatever_param=$PATH"
+            ]
+          ]
+        ]
+      },
+      ...
+    }
+
+
+here the variables `$GIT`, `$PATH`, or `$FILE` are replaced 
+by the corrosponding path before execution.
+
+the `expr` key contains a single file pattern, or a list of 
+file patterns - when to enable the context menu. 
+the file pattern is following Unix filename pattern matching.
+
+the `menu` array contains the text to display in the menu, 
+and the command params as embedded array.
+
+the context name as such can have any value 
+(as long it is unique in the structure).
+
+
+below a sample context.json file for running on linux with xfce.
+
+    {
+      "term-ctx": {
+        "expr": "*",
+        "menu": [
+          [
+            "Open Terminal at $GIT",
+            [
+              "xfce4-terminal",
+              "--working-directory=$GIT"
+            ]
+          ],
+          [
+            "Open Terminal at $PATH",
+            [
+              "xfce4-terminal",
+              "--working-directory=$PATH"
+            ]
+          ]
+        ]
+      },
+      "thonny-ctx": {
+        "expr": "*.py",
+        "menu": [
+          [
+            "thonny py $FILE",
+            [
+              "thonny",
+              "$FILE"
+            ]
+          ]
+        ]
+      },
+      "geany-path": {
+        "expr": [
+          "*.c",
+          "*.cpp",
+          "*.h"
+        ],
+        "menu": [
+          [
+            "geany c $FILE",
+            [
+              "geany",
+              "$FILE"
+            ]
+          ]
+        ]
+      }
+    }
+
+
+
 
 # platform
 
@@ -395,6 +498,7 @@ following files are used:
 |~/.gitonic/tracked.json|tracked git repositories|
 |~/.gitonic/config.json|configuration settings|
 |~/.gitonic/formatter.json|configuration for external formatter tools|
+|~/.gitonic/context.json|configuration for context menu on changes tab|
 |~/.gitonic/socket|internal use|
 
 

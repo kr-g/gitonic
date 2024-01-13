@@ -4,6 +4,7 @@ import os
 import time
 import json
 import webbrowser
+import fnmatch
 
 from .pyjsoncfg import Config
 
@@ -958,7 +959,62 @@ def on_changed_context(cntrl, ctx):
         ctxmenu.add_command(
             f"open file folder {fnam_dirnam}", open_explorer(fnam_dir))
 
+    load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam.name)
     ctxmenu.show()
+
+
+def replace_all_vars(d, env):
+
+    for keypath, val, setr in elements_iter(d):
+        org_val = str(val)
+        for k, v in env.items():
+            if type(val) == str:
+                val = val.replace(k, v)
+                setr(val)
+
+    return d
+
+
+def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
+    ctx_cfg = FileStat(fconfigdir.name).join(["context.json"])
+    if ctx_cfg.exists() is False:
+        print("no context config file")
+        return None
+
+    with open(ctx_cfg.name) as f:
+        c = f.read()
+        cfg = json.loads(c)
+
+    env = {"$GIT": gnam_dir, "$PATH": fnam_dir, "$FILE": fnam}
+
+    cfg = replace_all_vars(cfg, env)
+    print(cfg)
+
+    for _, ctxset in cfg.items():
+
+        patnli = ctxset["expr"]
+        if patnli:
+            patnli = patnli if type(patnli) == list else [patnli]
+            found = False
+            for patn in patnli:
+                found = fnmatch.fnmatch(fnam, patn)
+                if found:
+                    break
+            if found is False:
+                continue
+
+        ctxmenu.add_separator()
+        for mi in ctxset["menu"]:
+            def _run(args):
+                def _runner(x):
+                    if args is None or len(args) == 0:
+                        return
+                    print(*args)
+                    rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
+                    print("call result", rc)
+                return _runner
+            ctxmenu.add_command(
+                mi[0], _run(mi[1]))
 
 
 fcommit = FileStat(fconfigdir.name).join(["commit.json"])
