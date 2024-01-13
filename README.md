@@ -247,7 +247,7 @@ make sure that it is there.
     }
 
 
-# custom menu handler 
+# custom context menu handler 
 
 when clicking on the `changes` tab right a context memu opens offering 
 to open the system file manager tool (file explorer) 
@@ -495,10 +495,10 @@ following files are used:
 |file|description|
 |---|---|
 |~/.gitonic/commit.json|the last commit messages show in the combo box|
-|~/.gitonic/tracked.json|tracked git repositories|
 |~/.gitonic/config.json|configuration settings|
-|~/.gitonic/formatter.json|configuration for external formatter tools|
 |~/.gitonic/context.json|configuration for context menu on changes tab|
+|~/.gitonic/formatter.json|configuration for external formatter tools|
+|~/.gitonic/tracked.json|tracked git repositories|
 |~/.gitonic/socket|internal use|
 
 
