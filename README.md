@@ -296,7 +296,8 @@ the context name as such can have any value
 (as long it is unique in the structure).
 
 
-below a sample context.json file for running on linux with xfce.
+below a sample `~/.gitonic/context.json` file 
+for running on linux with xfce.
 
     {
       "term-ctx": {
