@@ -86,6 +86,7 @@ refer to [issues](https://github.com/kr-g/gitonic/issues)
 - `gitonic` interacts with `git` just like starting in bash / commandline.
 at the present time there is _no_additional_ error checking. 
 this must be done by checking the log tab manually where all cmdline output goes.
-
+- at the present time the context menu only works on the underlying file (row) in the table. 
+ there is no support for multiple files (selection) as of now.
  
 
