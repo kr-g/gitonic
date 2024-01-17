@@ -367,6 +367,13 @@ the sample config file provides support for opening
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
 
 
+**limitation:**
+
+at the present time the context menu only works on the underlying file (row) in the table.
+there is **no** support for multiple files (selection) as of now.
+
+
+
 # platform
 
 tested on python3, and linux
