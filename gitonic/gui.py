@@ -653,11 +653,11 @@ def on_cmd_diff(info, diff_, ignore_switch=False):
             logs = []
             rc = diff_(git.path, rec["file"], callb=logs.append)
 
-            if run_first and len(sel) > 1:
-                run_first = False
-                # todo rework -> freezing screen
-                # todo add input field on settings tab
-                time.sleep(0.5)
+#             if run_first and len(sel) > 1:
+#                 run_first = False
+#                 # todo rework -> freezing screen
+#                 # todo add input field on settings tab
+#                 time.sleep(0.5)
 
             dgb_pr(f"--- {git}")
             [dgb_pr(x) for x in rc]

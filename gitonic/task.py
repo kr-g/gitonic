@@ -59,6 +59,7 @@ def run_proc(
             return proc.returncode
 
         else:
+            print("no proc", file=sys.stderr)
             rc = 1
 
     except Exception as ex:
@@ -119,7 +120,8 @@ class Cmd(object):
             return self._stop_req
 
     def run(self):
-        rc = run_proc(self._cmd, callb=self._callb, loopcallb=self._loopcb, shell=True)
+        rc = run_proc(self._cmd, callb=self._callb,
+                      loopcallb=self._loopcb, shell=True)
         return rc
 
 
