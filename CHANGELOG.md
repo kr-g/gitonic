@@ -11,6 +11,10 @@
 - on "changes" tab
   - added context menu to open file system explorer
   - added support for custom context menu with `~/.gitonic/context.json`
+- calling merge-tool with more then more file selected on change tab will 
+ not block the user-interface anymore since starting independent from main process
+  - **important** add `--newtab` to `meld` configuration in `.gitconfig` 
+   to re-use an already running instance of `meld`
 - 
 
 

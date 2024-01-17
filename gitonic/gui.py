@@ -620,15 +620,44 @@ def on_unsel_all_gits():
     set_tracked_gits()
 
 
+def _run_diff_tool(path, file, callb=None):
+    # todo rework with gitutil -> git_difftool
+    print("_run_diff_tool", path, file)
+
+    from .gitutil import GIT
+
+    cwd = os.getcwd()
+
+    try:
+        os.chdir(path)
+        if os.getcwd() != path:
+            raise Exception("path not exist", path)
+        args = [GIT, "difftool", file]
+        rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
+    except Exception as ex:
+        print(ex)
+
+    os.chdir(cwd)
+
+    return ["difftool", file]
+
+
 def on_cmd_diff(info, diff_, ignore_switch=False):
     dgb_pr(info)
     sel = gt("changes").get_selection_values()
+    run_first = True
     for rec in sel:
         if rec["type"] == "file":
             pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
             git = gws.find(pg)[0]
             logs = []
             rc = diff_(git.path, rec["file"], callb=logs.append)
+
+            if run_first and len(sel) > 1:
+                run_first = False
+                # todo rework -> freezing screen
+                time.sleep(0.5)
+
             dgb_pr(f"--- {git}")
             [dgb_pr(x) for x in rc]
             do_log_time(info, ignore_switch=ignore_switch)
@@ -641,7 +670,8 @@ def on_diff():
 
 
 def on_difftool():
-    on_cmd_diff("on_difftool", git_difftool, True)
+    # todo rework with gitutil -> git_difftool
+    on_cmd_diff("on_difftool", _run_diff_tool, True)
 
 
 def strip_non_ascii(s):

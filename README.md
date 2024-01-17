@@ -489,14 +489,14 @@ if meld is not installed pressing the button will have no effect.
     [difftool]
         prompt = false
     [difftool "meld"]
-        cmd = meld "$LOCAL" "$REMOTE"
+        cmd = meld --newtab "$LOCAL" "$REMOTE"
 
     [merge]
         tool = meld
     [mergetool "meld"]
         # Choose one of these 2 lines (not both!) 
         # cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
-        cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+        cmd = meld --newtab "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 
 
 # additional notes 
