@@ -362,7 +362,7 @@ for running on linux with xfce.
 remark:
 the sample config file provides support for opening
 - terminal, in this case `xfce4-terminal`, can be replaced by e.g. `xterm` - depending on your distribution
-- `.gitignore` file for selected repo
+- `.gitignore` file for selected repo with [`xed`](https://en.wikipedia.org/wiki/Xed)
 - [`thonny`](https://thonny.org/), for files matching `*.py`
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
 
