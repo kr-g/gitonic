@@ -656,6 +656,7 @@ def on_cmd_diff(info, diff_, ignore_switch=False):
             if run_first and len(sel) > 1:
                 run_first = False
                 # todo rework -> freezing screen
+                # todo add input field on settings tab
                 time.sleep(0.5)
 
             dgb_pr(f"--- {git}")
