@@ -63,6 +63,7 @@
   - adding single files 
   - open .gitignore for editing
 - execute git operations in parallel where possible
+- make expert mode debugging out better (use python logging)
 - 
 
 
