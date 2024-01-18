@@ -622,7 +622,7 @@ def on_unsel_all_gits():
 
 def _run_diff_tool(path, file, callb=None):
     # todo rework with gitutil -> git_difftool
-    print("_run_diff_tool", path, file)
+    dgb_pr("_run_diff_tool", path, file)
 
     from .gitutil import GIT
 
@@ -635,7 +635,7 @@ def _run_diff_tool(path, file, callb=None):
         args = [GIT, "difftool", file]
         rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
     except Exception as ex:
-        print(ex)
+        dgb_pr(ex)
 
     os.chdir(cwd)
 
@@ -687,12 +687,12 @@ def strip_non_ascii(s):
 
 def ext_iter(k):
     if "," not in k:
-        print("found formatter ex", k)
+        dgb_pr("found formatter ex", k)
         yield k
         return
 
     for ex in k.split(","):
-        print("found formatter ex", ex)
+        dgb_pr("found formatter ex", ex)
         yield ex.strip()
 
 
@@ -725,7 +725,7 @@ def expand_all_vars(v):
 
         # todo logging
         if org_val != val:
-            print("expanded", val)
+            dgb_pr("expanded", val)
 
     return v
 
@@ -733,9 +733,9 @@ def expand_all_vars(v):
 def read_formatter_settings():
     frmt_cfg = FileStat(fconfigdir.name).join(["formatter.json"])
     if frmt_cfg.exists() is False:
-        print("no formatter config file")
+        dgb_pr("no formatter config file")
         return None
-    print("found formatter config file")
+    dgb_pr("found formatter config file")
     with open(frmt_cfg.name) as f:
         c = f.read()
         cfg = json.loads(c)
@@ -957,7 +957,7 @@ def on_add_or_undo(cntrl):
 
 
 def on_changed_context(cntrl, ctx):
-    print("on_changed_context")
+    dgb_pr("on_changed_context")
     global changes
     row_no = ctx.row[1]
     col_no = ctx.column[1]
@@ -972,8 +972,8 @@ def on_changed_context(cntrl, ctx):
     fnam_dir = fnam.dirname()
     fnam_dirnam = fnam.dirname()[len(gnam.name)+1:]
 
-    print(gnam_base, gnam)
-    print(fnam_base, fnam)
+    dgb_pr(gnam_base, gnam)
+    dgb_pr(fnam_base, fnam)
 
     git = gws.find(gnam)
 
@@ -1009,7 +1009,7 @@ def replace_all_vars(d, env):
 def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
     ctx_cfg = FileStat(fconfigdir.name).join(["context.json"])
     if ctx_cfg.exists() is False:
-        print("no context config file")
+        dgb_pr("no context config file")
         return None
 
     try:
@@ -1017,13 +1017,13 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
             c = f.read()
             cfg = json.loads(c)
     except:
-        print("json parsing error")
+        dgb_pr("json parsing error")
         return
 
     env = {"$GIT": gnam_dir, "$PATH": fnam_dir, "$FILE": fnam}
 
     cfg = replace_all_vars(cfg, env)
-    print(cfg)
+    dgb_pr(cfg)
 
     for _, ctxset in cfg.items():
 
@@ -1044,9 +1044,9 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
                 def _runner(x):
                     if args is None or len(args) == 0:
                         return
-                    print(*args)
+                    dgb_pr(*args)
                     rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
-                    print("call result", rc)
+                    dgb_pr("call result", rc)
                 return _runner
             ctxmenu.add_command(
                 mi[0], _run(mi[1]))
