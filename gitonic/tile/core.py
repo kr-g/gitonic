@@ -1300,17 +1300,15 @@ class TileTreeView(Tile):
 
         ctx.iid = widg.identify("item", xp, yp)
 
-        ctx.row = widg.identify("row", xp, yp)
+        ctx.row = ctx.iid, widg.index(ctx.iid)
         ctx.column = widg.identify("column", xp, yp)
-
-        if ctx.row.startswith("I"):
-            no = int(ctx.row[1:], 16)-1
-            ctx.row = (ctx.row, no)
 
         if ctx.column.startswith("#"):
             no = int(ctx.column[1:])-1
             nam = widg["columns"][no-1] if no > 0 else ctx.column
             ctx.column = (ctx.column, no, nam)
+        else:
+            print("error in column", ctx)
 
         ctx.isopen = widg.item(ctx.iid, "open")
 

@@ -957,11 +957,13 @@ def on_add_or_undo(cntrl):
 
 
 def on_changed_context(cntrl, ctx):
-    dgb_pr("on_changed_context")
+    # dgb_pr
+    print("on_changed_context", ctx)
     global changes
     row_no = ctx.row[1]
     col_no = ctx.column[1]
 
+    print(changes)
     gnam_base = changes[row_no]['git']
     fnam_base = changes[row_no]['file']
 
