@@ -15,7 +15,7 @@
  not block the user-interface anymore since starting independent from main process
   - **important** add `--newtab` to `meld` configuration in `.gitconfig` 
    to re-use an already running instance of `meld`
-- context menu handler expands user path 
+- context menu handler expands user path (`~`)
 - 
 
 
