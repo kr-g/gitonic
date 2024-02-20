@@ -1003,6 +1003,7 @@ def replace_all_vars(d, env):
         for k, v in env.items():
             if type(val) == str:
                 val = val.replace(k, v)
+                val = os.path.expanduser(val)
                 setr(val)
 
     return d

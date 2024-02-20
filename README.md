@@ -11,9 +11,6 @@ gitonic simplifies working with multiple git repositories.
 
 gitonic comes with an easy to use Tkinter GUI.
 
-there is also a plugin for thonny 
-[`thonny-gitonic`](https://github.com/kr-g/thonny-gitonic) 
-
 
 # background 
 
@@ -328,13 +325,13 @@ for running on linux with xfce.
           ]
         ]
       },
-      "thonny-ctx": {
+      "spyder-ctx": {
         "expr": "*.py",
         "menu": [
           [
-            "thonny py $FILE",
+            "spyder python $FILE",
             [
-              "thonny",
+              "~/spyder/.venv/bin/spyder",
               "$FILE"
             ]
           ]
@@ -363,7 +360,7 @@ remark:
 the sample config file provides support for opening
 - terminal, in this case `xfce4-terminal`, can be replaced by e.g. `xterm` - depending on your distribution
 - `.gitignore` file for selected repo with [`xed`](https://en.wikipedia.org/wiki/Xed)
-- [`thonny`](https://thonny.org/), for files matching `*.py`
+- [`spyder-ide.org`](https://spyder-ide.org/), for files matching `*.py`
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
 
 
