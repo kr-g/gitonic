@@ -2,7 +2,7 @@
 # Changelog
 
 
-# version v0.0.14 - ???
+# version v0.0.14 - 20240518
 
 - improved formatter 
   - support for multiple file extension for single config entry 
