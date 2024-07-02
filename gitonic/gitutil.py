@@ -184,6 +184,11 @@ class GitStatus(object):
     def set(self, mode, staged, file):
         self.mode = mode.upper() if mode else ""
         self.staged = staged.upper() if staged else ""
+
+        if file and file.startswith("\""):
+            assert file.endswith("\""), "quoted string expected."
+            file = file[1:-1]
+
         self.file = file
         self.state = {}
 

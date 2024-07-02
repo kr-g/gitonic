@@ -3,6 +3,7 @@
 
 
 # version v0.0.15 - ???
+- fix: blank in path will show file as deleted
 - 
 
 
