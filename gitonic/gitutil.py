@@ -185,8 +185,12 @@ class GitStatus(object):
         self.mode = mode.upper() if mode else ""
         self.staged = staged.upper() if staged else ""
 
+        if self.staged == "R":
+            oldname, newname = file.split("->", maxsplit=1)
+            file = newname  # .strip()
+
         if file and file.startswith("\""):
-            assert file.endswith("\""), "quoted string expected."
+            assert file.endswith("\""), "quoted string expected. " + str(file)
             file = file[1:-1]
 
         self.file = file
