@@ -13,6 +13,10 @@ setuptools.setup(
     entry_points=entry_points,
 )
 
+# !!!
+# python3 patch_version.py
+# !!!
+
 # python3 -m setup sdist build bdist_wheel
 
 # test.pypi
