@@ -2,6 +2,11 @@
 # Changelog
 
 
+# version v0.0.16 - ???
+
+- fix: blank in path will show file as deleted
+
+
 # version v0.0.15 - 20240812
 
 - fix: blank in path will show file as deleted
