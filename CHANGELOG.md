@@ -2,7 +2,8 @@
 # Changelog
 
 
-# version v0.0.15 - ???
+# version v0.0.15 - 20240812
+
 - fix: blank in path will show file as deleted
 - fix: rename file with git
 - 
