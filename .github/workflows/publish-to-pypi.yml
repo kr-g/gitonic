@@ -1,9 +1,0 @@
-name: Publish Python 🐍 distributions 📦 to PyPI 
-
-on: release
-
-jobs:
-  build-and-publish:
-    uses: kr-g/github-actions/.github/workflows/publish-to-pypi.yml@main
-    secrets: inherit
-
