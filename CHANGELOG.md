@@ -2,12 +2,12 @@
 # Changelog
 
 
-# version v0.0.16 - ???
+## version v0.0.16 - ???
 
-- fix: blank in path will show file as deleted
+- 
 
 
-# version v0.0.15 - 20240812
+## version v0.0.15 - 20240812
 
 - fix: blank in path will show file as deleted
 - fix: rename file with git
@@ -31,13 +31,13 @@
 - 
 
 
-# version v0.0.13 - 20231125
+## version v0.0.13 - 20231125
 
 - show all untracked files on changes tab (not only the folder)
 - 
 
 
-# version v0.0.12 - 20231111
+## version v0.0.12 - 20231111
 
 - support for more code formatters (included in standard installation as extras)
   - install with `pip install gitonic[PEP08]`
@@ -52,7 +52,7 @@
 - 
 
 
-# version v0.0.11 - 20230710
+## version v0.0.11 - 20230710
 
 - fixed logging
 - fix no branch crash when no branch is set up 
@@ -65,20 +65,20 @@
 -
 
 
-# version v0.0.10 - 20230225
+## version v0.0.10 - 20230225
 
 - sort files in changes tab
 - 
 
 
-# version v0.0.9 - 20221008
+## version v0.0.9 - 20221008
 
 - git current branch in changes tab
 - support for black
 - 
 
 
-# version v0.0.8 - 20220802
+## version v0.0.8 - 20220802
 
 - bug fix, due to corrupted local env
 - double click in changes view will stage/ unstage a file
