@@ -183,8 +183,12 @@ files with extension `.pyx` change the setting to
 
 black is also an offical python tool, but resolves not fully to issues reported by pycodestyle.
 there might be some rework required (from case to case). 
-result is quite similar to autopep8 beside the list reported by pycodestyle (after formatting) 
-is a bit longer comparing to autopep8 what does a better job here.
+result is quite similar to 
+[autopep8](https://github.com/hhatto/autopep8)
+beside the list reported by pycodestyle (after formatting) 
+is a bit longer comparing to 
+[autopep8](https://github.com/hhatto/autopep8)
+what does a better job here.
 
     {
       ".py": {
