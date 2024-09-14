@@ -1,6 +1,9 @@
+
+
 from .const import VERSION
 
 import os
+import sys
 import time
 import json
 import webbrowser
@@ -1043,7 +1046,9 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
         dgb_pr("json parsing error")
         return
 
-    env = {"$GIT": gnam_dir, "$PATH": fnam_dir, "$FILE": fnam}
+    env = {"$GIT": gnam_dir, "$PATH": fnam_dir,
+           "$FILE": fnam, "$PYTHON": sys.executable}
+    dgb_pr("env: " + str(env))
 
     cfg = replace_all_vars(cfg, env)
     dgb_pr(cfg)
@@ -1067,7 +1072,7 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
                 def _runner(x):
                     if args is None or len(args) == 0:
                         return
-                    dgb_pr(*args)
+                    dgb_pr("run command", *args)
                     rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
                     dgb_pr("call result", rc)
                 return _runner

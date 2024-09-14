@@ -285,8 +285,9 @@ the general structure is:
     }
 
 
-here the variables `$GIT`, `$PATH`, or `$FILE` are replaced 
-by the corrosponding path before execution.
+here the variables `$GIT`, `$PATH`, `$FILE`, or `$PYTHON` are replaced 
+by the corrosponding path before execution. 
+where `$PYTHON` expands to `sys.executable` from `gitonic` runtime.
 
 the `expr` key contains a single file pattern, or a list of 
 file patterns - when to enable the context menu. 

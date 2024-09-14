@@ -10,6 +10,7 @@
   - use `~` for user-home path 
   - blanks between `;` separated paths are ignored
   - do **not** use double or single quotes around paths
+- added `$PYTHON` to context menu variables
 - 
 
 
