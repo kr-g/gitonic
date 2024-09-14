@@ -102,7 +102,7 @@ def set_config():
     dgb_pr("set-config", config.__dict__)
 
     global frepo
-    frepo = FileStat(config().workspace)
+    frepo = config().workspace
     global max_history
     max_history = config().max_history
     global max_commit
@@ -182,6 +182,18 @@ PREFS_CAP_W = 27
 PREFS_ENTRY_W = 7
 
 
+def trackgit_name(nam):
+    userhome = os.path.expanduser("~")
+    if nam.startswith(userhome + os.sep):
+        nam = nam.replace(userhome, "~")
+    return nam
+
+
+def update_workspace():
+    write_config()
+    set_workspace()
+
+
 def get_main():
     read_config()
 
@@ -195,17 +207,17 @@ def get_main():
                         TileRows(
                             source=[
                                 TileLabel(caption=""),
-                                TileDirectorySelect(
-                                    caption="select workspace",
-                                    commandtext="...",
-                                    icon=get_icon(ICO_FOLDER_OPEN),
-                                    width=30,
+                                TileEntry(
+                                    caption="workspace folders",
+                                    # commandtext="...",
+                                    # icon=get_icon(ICO_FOLDER_OPEN),
+                                    width=60,
                                     idn="workspace",
-                                    path=frepo.name,
-                                    on_select=lambda x: write_config(),
+                                    value=frepo,
+                                    on_change=lambda o, n: update_workspace(),
                                 ),
                                 TileLabel(
-                                    caption="refresh tracked git's on the next tab manually"
+                                    caption="use ';' as separator for multiple workspaces"
                                 ),
                                 TileLabel(caption=""),
                                 TileEntryInt(
@@ -279,7 +291,8 @@ def get_main():
                                     max_show=15,
                                     width=40,
                                     select_many=True,
-                                    map_value=lambda x: os.path.basename(x),
+                                    map_value=lambda x: trackgit_name(
+                                        x),  # os.path.basename(x),
                                     on_sel=lambda x: set_tracked_gits(),
                                 ),
                                 TileCols(
@@ -648,8 +661,13 @@ def on_cmd_diff(info, diff_, ignore_switch=False):
     run_first = True
     for rec in sel:
         if rec["type"] == "file":
-            pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+
+            gitnam = rec["git"]
+            do_log(f"--- {gitnam}")
+
+            pg = FileStat(gitnam).name
             git = gws.find(pg)[0]
+
             logs = []
             rc = diff_(git.path, rec["file"], callb=logs.append)
 
@@ -763,7 +781,8 @@ def on_formatter():
         cfg = {".py": {"cmd": "black", "para": ["%file"]}}
 
     for rec in sel:
-        repo = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        gitnam = rec["git"]
+        repo = FileStat(gitnam).name
         fnam = rec["file"]
         p = FileStat(repo).join([fnam])
 
@@ -878,7 +897,8 @@ def sel_tracked():
 def on_gits_cmd(info, selcmd_, gits, ignore_switch=False, update_change=False):
     do_log_time(info, ignore_switch)
     for rec in gits:
-        pg = FileStat(gws.base_repo_dir.name).join([rec["git"]]).name
+        gitnam = rec["git"]
+        pg = FileStat(gitnam).name
         git = gws.find(pg)[0]
         logs = []
         rc = selcmd_(git.path, [rec["file"]], callb=logs.append)
@@ -967,12 +987,12 @@ def on_changed_context(cntrl, ctx):
     gnam_base = changes[row_no]['git']
     fnam_base = changes[row_no]['file']
 
-    gnam = FileStat(gws.base_repo_dir.name).join([gnam_base])
+    gnam = FileStat(gnam_base)
     gnam_dir = gnam.name
 
-    fnam = FileStat(gws.base_repo_dir.name).join([gnam_base, fnam_base])
+    fnam = FileStat(gnam_base).join([fnam_base])
     fnam_dir = fnam.dirname()
-    fnam_dirnam = fnam.dirname()[len(gnam.name)+1:]
+    fnam_dirnam = fnam.dirname()[len(gnam.name) + 1:]
 
     dgb_pr(gnam_base, gnam)
     dgb_pr(fnam_base, fnam)
@@ -1213,7 +1233,7 @@ def on_push_all_workspace():
 def set_workspace(update=True):
     dgb_pr("refresh_workspace")
     global gws
-    gws = GitWorkspace(frepo.name)
+    gws = GitWorkspace(frepo)
     gws.refresh()
     gt("gits").set_values(sorted(gws.gits.keys()))
     dgb_pr("gws", gws)
@@ -1250,7 +1270,12 @@ def set_changes():
         fs = FileStat(path, prefetch=True)
         if not fs.exists():
             continue
-        gitnam = fs.basename()
+
+        userhome = os.path.expanduser("~")
+
+        gitnam = fs.name  # fs.basename()
+        if gitnam.startswith(userhome + os.sep):
+            gitnam = gitnam.replace(userhome, "~")
 
         git = git[0]
         git.refresh_status()

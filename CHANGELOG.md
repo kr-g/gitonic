@@ -4,6 +4,12 @@
 
 ## version v0.0.16 - ???
 
+- support for multiple repo workspaces
+  - on `settings` tab the `workspaces` entry field accepts a 
+    list of paths separated by `;`
+  - use `~` for user-home path 
+  - blanks between `;` separated paths are ignored
+  - do _not_ use double or single quotes for around paths
 - 
 
 

@@ -143,6 +143,7 @@ def main_func(debug_=False):
             TileCols(
                 source=[
                     TileLabelButton(
+                        idn="closeapp",
                         caption="close app",
                         commandtext="good bye - click button or 2x ESC (quickly)",
                         icon=get_icon("right-from-bracket"),
@@ -173,5 +174,7 @@ def main_func(debug_=False):
     tk_root.bind("<F6>", f6_handler)
 
     startup_gui()
+
+    gt("closeapp").focus()
 
     mainframe.mainloop()

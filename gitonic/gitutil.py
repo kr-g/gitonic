@@ -274,7 +274,11 @@ class GitRepo(object):
 
 class GitWorkspace(object):
     def __init__(self, base_repo_dir="~/repo"):
-        self.base_repo_dir = FileStat(base_repo_dir)
+        base_repo_dir = base_repo_dir.split(";")
+        base_repo_dir = map(lambda x: x.strip(), base_repo_dir)
+        base_repo_dir = filter(lambda x: FileStat(x).exists(), base_repo_dir)
+
+        self.base_repo_dir = [FileStat(x) for x in base_repo_dir]
         self.gits = {}
 
     def __repr__(self):
@@ -282,11 +286,12 @@ class GitWorkspace(object):
 
     def refresh(self):
         self.gits.clear()
-        gits = self.base_repo_dir.iglob("*/.git", True)
-        for g in gits:
-            path = g.dirname()
-            git = GitRepo(path)
-            self.gits[path] = git
+        for repodir in self.base_repo_dir:
+            gits = repodir.iglob("*/.git", True)
+            for g in gits:
+                path = g.dirname()
+                git = GitRepo(path)
+                self.gits[path] = git
 
     def refresh_status(self):
         for _, git in self.gits.items():
