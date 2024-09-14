@@ -44,6 +44,7 @@ follow = True
 auto_switch = True
 push_tags = False
 show_changes = False
+clear_after_commit = False
 min_commit_length = 5
 dev_mode = False
 dev_follow = True
@@ -127,6 +128,9 @@ def set_config():
     global min_commit_length
     min_commit_length = config().min_commit_length
 
+    global clear_after_commit
+    clear_after_commit = bool(config().clear_after_commit)
+
     global dev_mode
     dev_mode = config().dev_mode
     global dev_follow
@@ -148,6 +152,7 @@ def read_config(autocfg=True):
     config().setdefault("push_tags", push_tags)
     config().setdefault("show_changes", show_changes)
     config().setdefault("min_commit_length", min_commit_length)
+    config().setdefault("clear_after_commit", clear_after_commit)
     config().setdefault("dev_mode", dev_mode)
     config().setdefault("dev_follow", dev_follow)
     config().setdefault("dev_follow_max", dev_follow_max)
@@ -167,6 +172,7 @@ def write_config():
     config().auto_switch = bool(int(gt("auto_switch").get_val()))
     config().push_tags = bool(int(gt("push_tags").get_val()))
     config().show_changes = bool(int(gt("show_changes").get_val()))
+    config().clear_after_commit = bool(int(gt("clear_after_commit").get_val()))
     config().min_commit_length = int(gt("min_commit_length").get_val())
     config().dev_mode = bool(int(gt("dev_mode").get_val()))
     if dev_mode:
@@ -504,6 +510,11 @@ def get_main():
                                         TileCheckbutton(
                                             caption="push tags",
                                             idn="push_tags",
+                                            on_click=lambda x: write_config(),
+                                        ),
+                                        TileCheckbutton(
+                                            caption="clear message after commit",
+                                            idn="clear_after_commit",
                                             on_click=lambda x: write_config(),
                                         ),
                                     ]
@@ -1128,6 +1139,8 @@ def set_commits():
         commits.set_index(0)
         gt("commit_long").set_val(commit_history[0]["long"])
 
+    apply_clear_after_commit()
+
 
 def on_sel_commit(idx):
     dgb_pr(idx)
@@ -1148,11 +1161,19 @@ def on_commit():
     body = gt("commit_long").get_val().strip()
 
     if len(head) < min_commit_length or len(head) > 50:
+
+        gt("maintabs").select("tab_commit")
+
         tkinter.messagebox.showerror(
             "error",
             f"length: {min_commit_length} >= message < 50\ncurrent: {len(head)}",
         )
+
+        gt("commit_short").focus()
+
         return False
+
+    apply_clear_after_commit()
 
     message = head
     if len(body) > 0:
@@ -1306,6 +1327,12 @@ def set_changes():
     gt("changes").set_values(changes)
 
 
+def apply_clear_after_commit():
+    if clear_after_commit:
+        gt("commit_short").set_val("")
+        gt("commit_long").set_val("")
+
+
 def startup_gui():
     # read_config()
     read_commit()
@@ -1318,6 +1345,7 @@ def startup_gui():
     gt("auto_switch").set_val(auto_switch)
     gt("push_tags").set_val(push_tags)
     gt("show_changes").set_val(show_changes)
+    gt("clear_after_commit").set_val(clear_after_commit)
     gt("dev_mode").set_val(dev_mode)
     if dev_mode:
         gt("dev_follow").set_val(dev_follow)
