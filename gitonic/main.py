@@ -177,4 +177,8 @@ def main_func(debug_=False):
 
     gt("closeapp").focus()
 
-    mainframe.mainloop()
+    try:
+        mainframe.mainloop()
+    except KeyboardInterrupt:
+        print("cntrl+c")
+        quit_all(mainframe)
