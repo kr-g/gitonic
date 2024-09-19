@@ -12,6 +12,7 @@
   - do **not** use double or single quotes around paths
 - added `$PYTHON` to context menu variables
 - added clear message after commit select box
+- added keyboard interrupt cntrl+c handler
 - 
 
 
