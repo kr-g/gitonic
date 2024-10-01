@@ -13,6 +13,7 @@
 - added `$PYTHON` to context menu variables
 - added clear message after commit select box
 - added keyboard interrupt cntrl+c handler
+- added `workdir` key for context menu handlers
 - 
 
 

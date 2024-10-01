@@ -264,6 +264,7 @@ the general structure is:
     {
       "a-context-name-ctx": {
         "expr": "*",
+        "workdir": ".",
         "menu": [
           [
             "some text $GIT",
@@ -292,6 +293,9 @@ where `$PYTHON` expands to `sys.executable` from `gitonic` runtime.
 the `expr` key contains a single file pattern, or a list of 
 file patterns - when to enable the context menu. 
 the file pattern is following Unix filename pattern matching.
+
+the `workdir` key will change the current working directory before running
+the command.
 
 the `menu` array contains the text to display in the menu, 
 and the command params as embedded array.
@@ -342,7 +346,20 @@ for running on linux with xfce.
           ]
         ]
       },
-      "geany-ctx": {
+      "autopep8-ctx": {
+        "expr": "*.py",
+        "menu": [
+          [
+            "autopep8 python $FILE",
+            [
+              "autopep8",
+              "-i",
+              "$FILE"
+            ]
+          ]
+        ]
+      },
+      "geany-path": {
         "expr": [
           "*.c",
           "*.cpp",
@@ -357,6 +374,48 @@ for running on linux with xfce.
             ]
           ]
         ]
+      },
+      "uncrustify-path": {
+        "expr": [
+          "*.c",
+          "*.cpp",
+          "*.h"
+        ],
+        "menu": [
+          [
+            "uncrustify c $FILE",
+            [
+              "uncrustify",
+              "-c",
+              "~/.gitonic/uncrustify.cfg",
+              "--replace",
+              "$FILE",
+              "--no-backup",
+              "--if-changed"
+            ]
+          ]
+        ]
+      },
+      "git-base-tools": {
+        "expr": [
+          "*"
+        ],
+        "workdir" : "$GIT",
+        "menu": [
+          [
+            "gitk $GIT",
+            [ 
+              "gitk" 
+            ]
+          ],
+          [
+            "git gui $GIT",
+            [ 
+              "git",
+              "gui" 
+            ]
+          ]
+        ]
       }
     }
 
@@ -367,6 +426,8 @@ the sample config file provides support for opening
 - `.gitignore` file for selected repo with [`xed`](https://en.wikipedia.org/wiki/Xed)
 - [`spyder-ide.org`](https://spyder-ide.org/), for files matching `*.py`
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
+- `gitk` and `git gui` the base git tools which are automatically installed with `git`
+- 
 
 
 **limitation:**
