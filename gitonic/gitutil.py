@@ -276,6 +276,9 @@ class GitWorkspace(object):
     def __init__(self, base_repo_dir="~/repo"):
         base_repo_dir = base_repo_dir.split(";")
         base_repo_dir = map(lambda x: x.strip(), base_repo_dir)
+        base_repo_dir = map(lambda x: self._strip_quotes(x), base_repo_dir)
+        base_repo_dir = map(lambda x: x.strip(), base_repo_dir)
+        base_repo_dir = filter(lambda x: len(x) > 0, base_repo_dir)
         base_repo_dir = filter(lambda x: FileStat(x).exists(), base_repo_dir)
 
         self.base_repo_dir = [FileStat(x) for x in base_repo_dir]
@@ -283,6 +286,12 @@ class GitWorkspace(object):
 
     def __repr__(self):
         return f"{self.__class__.__name__}( { ', '.join(self.gits) } )"
+
+    def _strip_quotes(self, s):
+        for quo in ["\"", "\'"]:
+            if s.startswith(quo) and s.endswith(quo):
+                return s[1:-1]
+        return s
 
     def refresh(self):
         self.gits.clear()

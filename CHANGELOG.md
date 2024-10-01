@@ -9,7 +9,8 @@
     list of paths separated by `;`
   - use `~` for user-home path 
   - blanks between `;` separated paths are ignored
-  - do **not** use double or single quotes around paths
+  - when using double or single quotes around paths make sure the `;` exists to separate paths
+  - blanks at the start or end of paths are not supported
 - added `$PYTHON` to context menu variables
 - added clear message after commit select box
 - added keyboard interrupt cntrl+c handler

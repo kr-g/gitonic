@@ -1066,9 +1066,9 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
 
     for _, ctxset in cfg.items():
 
-        workdir = ctxset.setdefault("workdir",".")
+        workdir = ctxset.setdefault("workdir", ".")
         dgb_pr("workdir for command", workdir)
-        
+
         patnli = ctxset["expr"]
         if patnli:
             patnli = patnli if type(patnli) == list else [patnli]
@@ -1087,11 +1087,12 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
                     if args is None or len(args) == 0:
                         return
                     dgb_pr("run command", *args)
-                    
-                    with PushDir(workdir) as pd:                        
-                        rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
+
+                    with PushDir(workdir) as pd:
+                        rc = os.spawnvpe(
+                            os.P_NOWAIT, args[0], args, os.environ)
                         dgb_pr("call result", rc)
-                        
+
                 return _runner
             ctxmenu.add_command(
                 mi[0], _run(mi[1]))
