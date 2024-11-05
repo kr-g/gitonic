@@ -10,7 +10,7 @@ import re
 def find_version(fnam, version="VERSION"):
     with open(fnam) as f:
         cont = f.read()
-    regex = f'{version}\s*=\s*["]([^"]+)["]'
+    regex = f'{version}\\s*=\\s*["]([^"]+)["]'
     match = re.search(regex, cont)
     if match is None:
         raise Exception(
