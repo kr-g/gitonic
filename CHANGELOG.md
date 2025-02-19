@@ -2,7 +2,7 @@
 # Changelog
 
 
-## version v0.0.16 - 20250219
+## version v0.16.0 - 20250219
 
 - support for multiple repo workspaces
   - on `settings` tab the `workspaces` entry field accepts a 
@@ -15,6 +15,7 @@
 - added clear message after commit select box
 - added keyboard interrupt cntrl+c handler
 - added `workdir` key for context menu handlers
+- changing versioning scheme in pypi 
 - 
 
 
