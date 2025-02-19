@@ -2,7 +2,7 @@
 # Changelog
 
 
-## version v0.0.16 - ???
+## version v0.0.16 - 20250219
 
 - support for multiple repo workspaces
   - on `settings` tab the `workspaces` entry field accepts a 

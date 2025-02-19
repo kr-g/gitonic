@@ -1,7 +1,7 @@
 [![PEP-08](https://img.shields.io/badge/code%20style-PEP08-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 
-you are reading VERSION = v0.0.16-develop
+you are reading VERSION = v0.0.16-dev
 
 
 # gitonic 
