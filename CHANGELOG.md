@@ -4,6 +4,7 @@
 
 ## version v0.17.0 - ???
 - added `$NAME` to context-menu variables for `os.path.basename` placeholder
+- added official logos from [git-scm](https://git-scm.com/downloads/logos)
 - 
 
 
