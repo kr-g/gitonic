@@ -336,6 +336,36 @@ for running on linux with xfce.
           ]
         ]
       },
+      "basic-ctx": {
+        "expr": "*",
+        "menu": [
+          [
+            "less $NAME at $PATH",
+            [
+              "xfce4-terminal",
+              "-x",
+              "less",
+              "$FILE"
+            ]
+          ],
+          [
+            "edit $NAME at $PATH",
+            [
+              "xed",
+              "$FILE"
+            ]
+          ],
+          [
+            "vi $NAME at $PATH",
+            [
+              "xfce4-terminal",
+              "-x",
+              "vi",
+              "$FILE"
+            ]
+          ]
+        ]
+      },
       "spyder-ctx": {
         "expr": "*.py",
         "menu": [
@@ -425,6 +455,7 @@ for running on linux with xfce.
 remark:
 the sample config file provides support for opening
 - terminal, in this case `xfce4-terminal`, can be replaced by e.g. `xterm` - depending on your distribution
+- open file with `less`, `xed`, or `vi` - might be different with your distribution (see line above)
 - `.gitignore` file for selected repo with [`xed`](https://en.wikipedia.org/wiki/Xed)
 - [`spyder-ide.org`](https://spyder-ide.org/), for files matching `*.py`
 - [`geany`](https://www.geany.org/), for files matching `*.c`, `*.cpp`, `*.h`
