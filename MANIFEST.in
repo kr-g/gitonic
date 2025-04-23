@@ -2,3 +2,6 @@ include LICENSE.md
 include README.md
 include CHANGELOG.md
 include BACKLOG.md
+
+include git-*.svg
+
