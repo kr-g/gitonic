@@ -600,4 +600,6 @@ in `config.json`, or delete the config file to fall back to the defaults
 gitonic is released under the following
 [`LICENSE`](https://github.com/kr-g/gitonic/blob/main/LICENSE.md)
 
+git logos from [git-scm](https://git-scm.com/downloads/logos)
+
 
