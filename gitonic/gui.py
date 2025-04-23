@@ -1057,7 +1057,9 @@ def load_and_set_context_settings(ctxmenu, gnam_dir, fnam_dir, fnam):
         dgb_pr("json parsing error")
         return
 
-    env = {"$GIT": gnam_dir, "$PATH": fnam_dir,
+    file_short = FileStat(fnam).basename()
+
+    env = {"$GIT": gnam_dir, "$PATH": fnam_dir, "$NAME" : file_short,
            "$FILE": fnam, "$PYTHON": sys.executable}
     dgb_pr("env: " + str(env))
 
