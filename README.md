@@ -178,6 +178,19 @@ files with extension `.pyx` change the setting to
       }
     }
 
+or in case autopep8 is installed in a venv, e.g.
+
+    {
+      ".py,.pyx": {
+        "cmd": "~/gitonic/.venv/bin/autopep8",
+        "para": [
+          "-i",
+          "%file"
+        ]
+      }
+    }
+
+
 
 ### black
 
