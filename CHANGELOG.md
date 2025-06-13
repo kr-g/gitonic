@@ -6,6 +6,7 @@
 - added `$NAME` to context-menu variables for `os.path.basename` placeholder
 - added official logos from [git-scm](https://git-scm.com/downloads/logos)
 - added `basic-ctx` sample in README
+- partial fix rename/ moved files
 - 
 
 
