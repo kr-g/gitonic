@@ -20,9 +20,9 @@ setuptools.setup(
 # python3 -m setup sdist build bdist_wheel
 
 # test.pypi
-# twine upload --repository testpypi dist/*
+# python3 -m twine upload --repository testpypi dist/*
 # python3 -m pip install --index-url https://test.pypi.org/simple/ gitonic --extra-index-url https://pypi.org/simple/
 # python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps gitonic
 
 # pypi
-# twine upload dist/*
+# python3 -m twine upload dist/*
