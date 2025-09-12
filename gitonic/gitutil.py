@@ -120,7 +120,11 @@ git_push_all = (
 
 def git_add_undo(repo, files, callb=None): return with_git_cmd(
     repo, f"restore --staged {join_files(files)}", callb=callb
-    # repo, f"rm --cached {join_files(files)}", callb=callb
+)
+
+def git_add_index_undo_rm(repo, files, callb=None): return with_git_cmd(
+    # for -A porcelain state
+    repo, f"rm --cached {join_files(files)}", callb=callb
 )
 
 
