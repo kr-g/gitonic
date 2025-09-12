@@ -120,6 +120,7 @@ git_push_all = (
 
 def git_add_undo(repo, files, callb=None): return with_git_cmd(
     repo, f"restore --staged {join_files(files)}", callb=callb
+    # repo, f"rm --cached {join_files(files)}", callb=callb
 )
 
 
@@ -174,7 +175,7 @@ class GitBranch(object):
         return self
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{ self.current }', '{ str(self.bnam) }' )"
+        return f"{self.__class__.__name__}('{self.current}', '{str(self.bnam)}' )"
 
 
 class GitStatus(object):
@@ -230,7 +231,7 @@ class GitStatus(object):
         return self
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{ self.file }', '{ str(self.mode) }', '{ str(self.staged) }' )"
+        return f"{self.__class__.__name__}('{self.file}', '{str(self.mode)}', '{str(self.staged)}' )"
 
 
 class GitRepo(object):
@@ -241,7 +242,7 @@ class GitRepo(object):
         self.current_branch = None
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{ self.path }')"
+        return f"{self.__class__.__name__}('{self.path}')"
 
     def refresh_status(self):
         file_status = git_stat(self.path)
@@ -285,7 +286,7 @@ class GitWorkspace(object):
         self.gits = {}
 
     def __repr__(self):
-        return f"{self.__class__.__name__}( { ', '.join(self.gits) } )"
+        return f"{self.__class__.__name__}( {', '.join(self.gits)} )"
 
     def _strip_quotes(self, s):
         for quo in ["\"", "\'"]:
