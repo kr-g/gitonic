@@ -1,6 +1,6 @@
 ---
 
-Copyright (c) 2022 k. goger - https://github.com/kr-g
+Copyright (c) 2022-2025 k. goger - https://github.com/kr-g
 
 ---
 
