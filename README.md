@@ -306,9 +306,9 @@ the general structure is:
     }
 
 where `changes-all|file|repo` is the section where the context menu should appear.
-- `file` is the right section where all files are listed
-- `repo` is the left section where all repos are listed
-- `all` will appear in both (left and right section)
+- `changes-file` is the right section where all files are listed
+- `changes-repo` is the left section where all repos are listed
+- `changes-all` will appear in both (left and right section)
 
 here the variables `$GIT`, `$FILE`, `$PATH`, `$NAME`, or `$PYTHON` 
 are replaced by the corrosponding path before execution. 
