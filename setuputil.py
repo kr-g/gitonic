@@ -66,7 +66,7 @@ python_requires = f">={pyversion}"
 
 projectname = find_projectname()
 
-file = os.path.join(projectname, "const.py")
+file = os.path.join(projectname, "core", "const.py")
 version = find_version(file)
 
 install_requires = load_requirements()
