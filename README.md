@@ -681,3 +681,11 @@ gitonic is released under the following
 git logos from [git-scm](https://git-scm.com/downloads/logos)
 
 
+# support and donations
+
+support the further development of `gitonic` with a donation of your choice.
+
+[support and donnations](https://github.com/kr-g/gitonic/wiki/Support)
+
+thank you !!!
+
