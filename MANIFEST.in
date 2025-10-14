@@ -3,5 +3,8 @@ include README.md
 include CHANGELOG.md
 include BACKLOG.md
 
+include gitonic/tkui/material_fonts/*
+include gitonic/tkui/otherdeps/*
+
 include git-*.svg
 

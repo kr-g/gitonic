@@ -8,6 +8,7 @@ setuptools.setup(
     author_email=f"k.r.goger+{projectname}@gmail.com",
     url=f"https://github.com/kr-g/{projectname}",
     packages=setuptools.find_packages(),
+    include_package_data=True,
     python_requires=python_requires,
     install_requires=install_requires,
     entry_points=entry_points,

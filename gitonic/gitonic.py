@@ -521,8 +521,6 @@ def commit_commit(nexttask=None):
     lmsgshort = CommitMessageCmd(app).as_shortlist()
     ui_app.pane_commit.msg_cb.set_values(lmsgshort)
 
-    print(lmsgshort)
-
     cmd = CommitCmd(app).setup()
 
     ui_app.set_mouse_pointer(busy=True)
