@@ -270,10 +270,23 @@ class CommitMessageCmd(GitCmd):
         return list(map(lambda x: x[COM_SHORT], self.app.messages.conf))
 
     def push(self, short, long):
+
+        short = short.strip()
+        long = long.strip()
+
+        def _strp(x):
+            return {COM_SHORT: x[COM_SHORT].strip(), COM_LONG: x[COM_LONG].strip()}
+
+        self.app.messages.conf = list(map(_strp, self.app.messages.conf))
+
         el = {COM_SHORT: short, COM_LONG: long}
         nl = list(filter(lambda x: x != el, self.app.messages.conf))
 
-        self.app.messages.conf = [el, *nl]
+        self.app.messages.conf = []
+        for e in [el, *nl]:
+            if e in self.app.messages.conf:
+                continue
+            self.app.messages.conf.append(e)
 
         self.save()
 

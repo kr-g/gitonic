@@ -518,6 +518,11 @@ def commit_commit(nexttask=None):
 
     CommitMessageCmd(app).setup().push(short, long)
 
+    lmsgshort = CommitMessageCmd(app).as_shortlist()
+    ui_app.pane_commit.msg_cb.set_values(lmsgshort)
+
+    print(lmsgshort)
+
     cmd = CommitCmd(app).setup()
 
     ui_app.set_mouse_pointer(busy=True)
@@ -1009,14 +1014,16 @@ def load_and_set_context_settings(sect, ctxmenu, gnam_dir, fnam_dir, fnam):
                 ctxmenu.add_command(
                     nam, _run(mi["para"]))
 
+
 #
 #
 #
 app = None
 
+
 def run_main():
     global app
-    
+
     if switch2instance(PATH):
         logex.info("allready running. switch to instance")
         sys.exit()
@@ -1173,6 +1180,7 @@ def run_main():
     root.after(153, refresh_tracked_from_workspace)
 
     root.mainloop()
+
 
 if __name__ == "__main__":
     run_main()
