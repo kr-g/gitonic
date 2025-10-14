@@ -5,9 +5,15 @@ you are reading VERSION = v0.18.0-develop
 
 version v0.18.0 will come with some bigger changes.
 
-read latest news here
+read latest news here:
 
 [`CHANGELOG`](https://github.com/kr-g/gitonic/blob/main/CHANGELOG.md)
+
+
+older versions:
+
+[`OLD VERSIONS`](https://github.com/kr-g/gitonic/tags)
+
 
 
 
