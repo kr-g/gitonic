@@ -277,40 +277,47 @@ to open the system file manager tool (file explorer)
 at the base git repo path or at the changed file path.
 
 in addition it is possible to add own custom context menu entries here.
-configuration is done with `~/.gitonic/context.json` file.
+configuration is done with `~/.gitonic/contextmenu.json` file.
 
 the general structure is:
 
     {
-      "a-context-name-ctx": {
+    "acontext-name": {
         "expr": "*",
-        "workdir": ".",
-        "menu": [
-          [
-            "some text $GIT",
-            [
+        "changes-all|file|repo": [
+          {
+            "name": "a text $_GIT",
+            "para": [
               "cmd-path",
               "whatever_param=$GIT"
             ]
-          ],
-          [
-            "some other text $PATH",
-            [
+          },
+          {
+            "name": "some other text $_PATH",
+            "para": [
               "cmd-path2",
               "whatever_param=$PATH"
             ]
-          ]
+          },
+          ...
         ]
       },
       ...
     }
 
+where `changes-all|file|repo` is the section where the context menu should appear.
+- `file` is the right section where all files are listed
+- `repo` is the left section where all repos are listed
+- `all` will appear in both (left and right section)
 
 here the variables `$GIT`, `$FILE`, `$PATH`, `$NAME`, or `$PYTHON` 
 are replaced by the corrosponding path before execution. 
 where `$PYTHON` expands to `sys.executable` from `gitonic` runtime.
 and `$NAME` is a placeholder for `os.path.basedir`,
-and `$PATH` for `os.path.dirname`
+and `$PATH` for `os.path.dirname`.
+
+the variables `$_GIT`, `$_FILE`, `$_PATH`, or `$_NAME` are the shorten
+path specifier with `~` reppacing the users home folder.
 
 the `expr` key contains a single file pattern, or a list of 
 file patterns - when to enable the context menu. 
@@ -326,89 +333,89 @@ the context name as such can have any value
 (as long it is unique in the structure).
 
 
-below a sample `~/.gitonic/context.json` file 
+below a sample `~/.gitonic/contextmenu.json` file 
 for running on linux with xfce.
 
     {
       "term-ctx": {
         "expr": "*",
-        "menu": [
-          [
-            "Open Terminal at $GIT",
-            [
+        "changes-all": [
+          {
+            "name": "Open Terminal at $_GIT",
+            "para": [
               "xfce4-terminal",
-              "--working-directory=$GIT"
+              "--default-working-directory=$GIT"
             ]
-          ],
-          [
-            "Open Terminal at $PATH",
-            [
+          },
+          {
+            "name": "Open Terminal at $_PATH",
+            "para": [
               "xfce4-terminal",
-              "--working-directory=$PATH"
+              "--default-working-directory=$PATH"
             ]
-          ],
-          [
-            "Edit .gitignore at $GIT",
-            [
+          },
+          {
+            "name": "Edit .gitignore at $_GIT",
+            "para": [
               "xed",
               "$GIT/.gitignore"
             ]
-          ]
+          }
         ]
       },
       "basic-ctx": {
         "expr": "*",
-        "menu": [
-          [
-            "less $NAME at $PATH",
-            [
+        "changes-file": [
+          {
+            "name": "less $NAME at $_PATH",
+            "para": [
               "xfce4-terminal",
               "-x",
               "less",
               "$FILE"
             ]
-          ],
-          [
-            "edit $NAME at $PATH",
-            [
+          },
+          {
+            "name": "edit $NAME at $_PATH",
+            "para": [
               "xed",
               "$FILE"
             ]
-          ],
-          [
-            "vi $NAME at $PATH",
-            [
+          },
+          {
+            "name": "vi $NAME at $_PATH",
+            "para": [
               "xfce4-terminal",
               "-x",
               "vi",
               "$FILE"
             ]
-          ]
+          }
         ]
       },
       "spyder-ctx": {
         "expr": "*.py",
-        "menu": [
-          [
-            "spyder python $FILE",
-            [
+        "changes-file": [
+          {
+            "name": "spyder python $_FILE",
+            "para": [
               "~/spyder/.venv/bin/spyder",
               "$FILE"
             ]
-          ]
+          }
         ]
       },
       "autopep8-ctx": {
         "expr": "*.py",
-        "menu": [
-          [
-            "autopep8 python $FILE",
-            [
-              "autopep8",
+        "changes-file": [
+          {
+            "name": "autopep8 python $_FILE",
+            "para": [
+              "~/repo/gitonic/.venv/bin/autopep8",
               "-i",
               "$FILE"
             ]
-          ]
+          }
         ]
       },
       "geany-path": {
@@ -417,14 +424,14 @@ for running on linux with xfce.
           "*.cpp",
           "*.h"
         ],
-        "menu": [
-          [
-            "geany c $FILE",
-            [
+        "changes-file": [
+          {
+            "name": "geany c $_FILE",
+            "para": [
               "geany",
               "$FILE"
             ]
-          ]
+          }
         ]
       },
       "uncrustify-path": {
@@ -433,10 +440,10 @@ for running on linux with xfce.
           "*.cpp",
           "*.h"
         ],
-        "menu": [
-          [
-            "uncrustify c $FILE",
-            [
+        "changes-file": [
+          {
+            "name": "uncrustify c $_FILE",
+            "para": [
               "uncrustify",
               "-c",
               "~/.gitonic/uncrustify.cfg",
@@ -445,28 +452,28 @@ for running on linux with xfce.
               "--no-backup",
               "--if-changed"
             ]
-          ]
+          }
         ]
       },
       "git-base-tools": {
         "expr": [
           "*"
         ],
-        "workdir" : "$GIT",
-        "menu": [
-          [
-            "gitk $GIT",
-            [ 
-              "gitk" 
+        "workdir": "$GIT",
+        "changes-all": [
+          {
+            "name": "gitk $_GIT",
+            "para": [
+              "gitk"
             ]
-          ],
-          [
-            "git gui $GIT",
-            [ 
+          },
+          {
+            "name": "git gui $_GIT",
+            "para": [
               "git",
-              "gui" 
+              "gui"
             ]
-          ]
+          }
         ]
       }
     }

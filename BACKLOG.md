@@ -65,6 +65,9 @@
   - ~~open .gitignore for editing~~
 - ~~execute git operations in parallel where possible~~
 - ~~make expert mode debugging out better (use python logging)~~
+- context menu 
+  - less sensitive (disappears to quickly)
+  - multiple row feature
 - 
 
 
