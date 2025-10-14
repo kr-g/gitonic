@@ -271,21 +271,23 @@ class CommitMessageCmd(GitCmd):
 
     def push(self, short, long):
 
-        short = short.strip()
-        long = long.strip()
+        el = {COM_SHORT: short, COM_LONG: long}
+        nl = [el, *self.app.messages.conf]
 
         def _strp(x):
             return {COM_SHORT: x[COM_SHORT].strip(), COM_LONG: x[COM_LONG].strip()}
 
-        self.app.messages.conf = list(map(_strp, self.app.messages.conf))
+        nl = list(map(_strp, nl))
 
-        el = {COM_SHORT: short, COM_LONG: long}
-        nl = list(filter(lambda x: x != el, self.app.messages.conf))
-
+        shrt = []
         self.app.messages.conf = []
-        for e in [el, *nl]:
-            if e in self.app.messages.conf:
+
+        for e in nl:
+            if e[COM_SHORT] == "" and e[COM_LONG] == "":
                 continue
+            if e[COM_SHORT] in shrt:
+                continue
+            shrt.append(e[COM_SHORT])
             self.app.messages.conf.append(e)
 
         self.save()
