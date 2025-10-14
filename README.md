@@ -508,18 +508,6 @@ there is **no** support for multiple files (selection) as of now.
 tested on python3, and linux
 
 
-# development status
-
-alpha state, use on your own risk!!!
-
-core of `gitonic` was developed on a single afternoon, 
-and a simple tk mini-framework was added to have an user-interface.
-
-later more features were just added. 
-
-therefore there is a lot of "ugly" plumming code.
-
-
 # contribution
 
 any contribution is welcome !
