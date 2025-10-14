@@ -1,6 +1,6 @@
 import os
 import re
-from gitonic.const import VERSION
+from gitonic.core.const import VERSION
 
 with open("README.md") as f:
     c = f.read()
