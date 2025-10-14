@@ -662,7 +662,7 @@ following files are used:
 |---|---|
 |~/.gitonic/commit.json|the last commit messages show in the combo box|
 |~/.gitonic/config.json|configuration settings|
-|~/.gitonic/context.json|configuration for context menu on changes tab|
+|~/.gitonic/contextmenu.json|configuration for context menu on changes tab|
 |~/.gitonic/formatter.json|configuration for external formatter tools|
 |~/.gitonic/tracked.json|tracked git repositories|
 |~/.gitonic/socket|internal use|
