@@ -302,23 +302,22 @@ ui_app = App(root,).setup()
 ui_app.pack(expand=True, fill=tk.BOTH)
 
 #
-
+creditURL = "https://github.com/kr-g/gitonic/wiki/Support"
 creditcardbtn = TNButton(
-    root, text="help and sponsor this project (https://github.com/kr-g/gitonic/wiki/Support)", image="credit_card_heart", imagefg="blue")
+    root, text=f"help and sponsor this project ({creditURL})", image="credit_card_heart", imagefg="blue")
 creditcardbtn.pack(side=tk.TOP, pady=7)
 
-# creditcardbtn.on_click = lambda : tk_open_browser_url("https://www.paypal.com/paypalme/krgo")
-creditcardbtn.on_click = lambda: tk_open_browser_url(
-    "https://github.com/kr-g/gitonic/wiki/Support")
+creditcardbtn.on_click = lambda: tk_open_browser_url(creditURL)
 
 #
 
 footer = tk.Frame(root)
 footer.pack(side=tk.LEFT, anchor=tk.S, expand=True, fill=tk.X, pady=3, padx=3)
 
+gitonicURL = "https://github.com/kr-g/gitonic"
 prognam = TNLabelClickUrl(
-    footer, text=f"{T_GITONIC} - https://github.com/kr-g/gitonic", image="home", compound=tk.LEFT)
-prognam.set_url("https://github.com/kr-g/gitonic")
+    footer, text=f"{T_GITONIC} - {gitonicURL}", image="home", compound=tk.LEFT)
+prognam.set_url(gitonicURL)
 prognam.pack(side=tk.LEFT, expand=False)
 prognam.config(cursor="hand2")
 

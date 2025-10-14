@@ -1,4 +1,7 @@
-
+"""
+    (c) 2021-2025 K. Goger - https://github.com/kr-g
+    legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
+"""
 
 from task import Cmd, CmdTask
 from sysutil import platform_windows
