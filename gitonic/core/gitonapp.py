@@ -275,10 +275,13 @@ class CommitMessageCmd(GitCmd):
 
         self.app.messages.conf = [el, *nl]
 
+        self.save()
+
         return self.app.messages.conf
 
     def cut_to(self, maxlength=10):
         self.app.messages.conf = self.app.messages.conf[:maxlength]
+        self.save()
 
     def save(self):
         self.app.messages.save()

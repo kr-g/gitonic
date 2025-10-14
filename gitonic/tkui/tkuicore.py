@@ -10,6 +10,8 @@ from tkinter import Tk
 import tkinter
 import tkinter.ttk as ttk
 
+from tkinter import messagebox as tk_messagebox
+
 from threading import Thread
 
 import webbrowser
@@ -29,9 +31,10 @@ def tk_get_icon(name, height=HEIGHT, image_size=(HEIGHT+3, HEIGHT+3), bg="lightg
 
 
 def tk_show_error(title, message):
-    tkinter.messagebox.showerror(title,message)      
+    tk_messagebox.showerror(title, message)
 
 #
+
 
 def tk_open_browser_url(url, newtab=True):
     if newtab:
