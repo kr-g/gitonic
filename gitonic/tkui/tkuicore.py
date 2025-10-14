@@ -7,12 +7,9 @@ import sys
 
 from tkinter import Tk
 
-import tkinter
 import tkinter.ttk as ttk
 
 from tkinter import messagebox as tk_messagebox
-
-from threading import Thread
 
 import webbrowser
 
@@ -61,31 +58,6 @@ def tk_shutdown():
 def tk_no_shutdown():
     return not bg_stop_req
 
-
-#
-
-
-# class CmdThread(Thread):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.stopped = False
-
-#     def run(self):
-#         super.run()
-
-#         self.proc()
-
-#         self.run_done_cleanup()
-
-#     def proc(self):
-#         pass
-
-#     def run_done_cleanup(self):
-#         pass
-
-#     def stop(self):
-#         self.stopped = True
-#         super.stop()
 
 #
 
@@ -168,18 +140,6 @@ def tk_add_hotkey(key, func):
 
     _root.bind(key, lambda x: inter(key, func))
 
-
-#
-
-
-# class QCmdThread(CmdThread):
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         _root.add_quit_handler(self.stop)
-
-#     def run_done_cleanup(self):
-#         super().run_done_cleanup()
-#         _root.remove_quit_handler(self.stop)
 
 #
 

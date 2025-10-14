@@ -1,13 +1,9 @@
 
 import sys
-import os
 import time
 
 import tkinter as tk
 import tkinter.ttk as ttk
-
-# todo
-
 
 #
 
@@ -22,7 +18,6 @@ from tkuiview import (T_GITONIC, T_SETTINGS, T_LICENCES, TrackedView, ChangesVie
 
 
 #
-#
 
 root = tk_get_root()
 
@@ -30,37 +25,6 @@ root = tk_get_root()
 #
 
 ttk_set_sytle()
-
-#
-
-
-# class Tobj(object):
-#     def _setup(self):
-#         if self.__dict__.get("_ctx", None) is None:
-#             self._ctx = Context()
-
-#     def config(self, *args, **kwargs):
-#         Tobj._setup(self)
-#         return self
-
-#     def setup(self):
-#         Tobj._setup(self)
-#         return self
-
-#     def __repr__(self):
-#         return self.__class__.__name__ + "(" + str(self._ctx) + ")"
-
-
-# class TId(Tobj):
-#     def config(self, *args, **kwargs):
-#         Tobj.config(*args, **kwargs)
-#         nam = kwargs.get("id", None)
-#         self._ctx.oid = nam if nam else None
-#         return self
-
-#     def setup(self):
-#         Tobj.setup(self)
-#         return self
 
 #
 
@@ -80,10 +44,6 @@ def center_wm_after_startup():
 
 
 #
-
-
-#
-
 menubar = tk.Menu(root)
 root.config(menu=menubar)
 
