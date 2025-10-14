@@ -1,0 +1,3 @@
+spyder-kernels==3.0.*
+flake8
+

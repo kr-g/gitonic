@@ -1,11 +1,11 @@
 
-# BACKLOG
+# BACKLOG 
 
 - documentation
 - testcases?
-- revert changes / git checkout support
-  - undo support for unstaged files
-    - git restore <file>
+- ~~revert changes / git checkout support~~
+  - ~~undo support for unstaged files~~
+    - ~~git restore <file~~
 - ~~git fetch / merge  support~~
   - ~~currently gitonic supports only pull~~
 - git branch support
@@ -23,47 +23,48 @@
   - support also git commit --amend 
 - git tag support
 - git stash support (list, show, push, pop/apply, drop, clear)
-- support verbose output in expert mode
-  - support flags -v and -vv where applicable
+- ~~support verbose output in expert mode~~
+  - ~~support flags -v and -vv where applicable~~
 - settings tabs
   - check for installed git
   - ~~git exe configuration in settings~~
   - check for latest version of gitonic
   - 
 - ~~config file for last known config~~
-- diff-tool blocks main screen (see next)
+- ~~diff-tool blocks main screen (see next)~~
 - gui rework
   - theme support
-  - resize behavior -> expand
+  - ~~resize behavior -> expand~~
   - ~~icons~~
-  - grid layout / less floating 
-  - freezing ui -> see background tasks
+  - ~~grid layout / less floating ~~
+  - ~~freezing ui -> see background tasks~~
   -
-- background task and event loop -> freezing gui when running git utils
-  - use TkCmd also for Cmd runners
+- background task and event loop ~~-> freezing gui when running git utils~~
+  - ~~use TkCmd also for Cmd runners~~
   - status bar with running background tasks overview?
   -
 - refact for integration in other tools
-- filter git on 'changes' tab
+- ~~filter git on 'changes' tab~~
 - rework logging
 - ~~remove print statements in main~~
-- remove print statements in tile.core
+- ~~remove print statements in tile.core~~
+- remove print statements
 - automation / external jobs
   - ~~black PEP8 support~~
-  - desktop integration
-    - open shell at repo path
-    - open file management too at repo path
+  - ~~desktop integration~~
+    - ~~open shell at repo path~~
+    - ~~open file management too at repo path~~
 - ~~history of commit texts~~
   - ~~in combo box~~
   - git log / show integration?
 - git error handling
-- switch to log tab after pull
-- logging, use python logger for expert mode output
+- switch to log tab after pull???
+- ~~logging, use python logger for expert mode output~~
 - support for .gitignore 
   - adding single files 
-  - open .gitignore for editing
-- execute git operations in parallel where possible
-- make expert mode debugging out better (use python logging)
+  - ~~open .gitignore for editing~~
+- ~~execute git operations in parallel where possible~~
+- ~~make expert mode debugging out better (use python logging)~~
 - 
 
 

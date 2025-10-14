@@ -1,9 +1,27 @@
  
-# Changelog
+# CHANGELOG
 
 
 ## version v0.18.0 - ???
-- 
+- redesign multi tasking / tk eventloop
+  - user interface is now non-blocking
+  - multi tasking not yet tested with python 3.13 / 3.14
+- ui redesign
+  - resizeable main window
+  - dropped external font-awesome pip package
+  - material design icons included
+- IMPORTANT: new right-mouse context handler `~/.gitonic/contextmenu.json`
+  - INCOMPATIBLE to `~/.gitonic/context.json`
+  - old context `~/.gitonic/context.json` is NOT supported anymore
+- improved logging
+  - filter log for each repo
+- codebase refactored 
+- new commandline tools (UNDER CONTSRUCTION - not yet final - dont expect anything!!!)
+  - `gtcd.py`
+    - opens a new terminal for a git repo quickly
+  - `gtls.py` 
+    - list all changes for all tracked git repo 
+-
 
 
 ## version v0.17.0 - 20250715
