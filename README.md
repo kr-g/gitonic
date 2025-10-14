@@ -1,7 +1,12 @@
 [![PEP-08](https://img.shields.io/badge/code%20style-PEP08-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 
-you are reading VERSION = v0.18.0-develop
+you are reading VERSION = v0.18.0-deprecated
+
+version v0.18.0 will come with some bigger changes.
+
+[read latest news here](https://github.com/kr-g/gitonic/tree/v0180-multthread)
+
 
 
 # gitonic 
