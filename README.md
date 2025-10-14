@@ -323,7 +323,7 @@ and `$NAME` is a placeholder for `os.path.basedir`,
 and `$PATH` for `os.path.dirname`.
 
 the variables `$_GIT`, `$_FILE`, `$_PATH`, or `$_NAME` are the shorten
-path specifier with `~` reppacing the users home folder.
+path specifiers with `~` replacing the users home folder.
 
 the `expr` key contains a single file pattern, or a list of 
 file patterns - when to enable the context menu. 
