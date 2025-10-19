@@ -462,10 +462,12 @@ def changes_undo_sel():
 def changes_diff_sel():
     logex.info("changes_diff_sel")
 
-    sel = ui_app.pane_changes.treechanges.get_selected_rows()
-    logex.info("files sel", sel)
+    selrows = ui_app.pane_changes.treechanges.get_selected_rows()
+    logex.info("files sel", selrows)
 
-    cmd = DiffFileCmd(app).set_sel_files(sel).setup()  # .complete()
+    all_idx = [ui_app.filtered[x].idx-1 for x in selrows]
+
+    cmd = DiffFileCmd(app).set_sel_files(all_idx).setup()  # .complete()
     run_cmd_as_bg_task(cmd, lambda: ui_app.select_tab("log"))
 
 
@@ -483,10 +485,12 @@ def changes_format_sel():
 def changes_difftool_sel():
     logex.info("changes_difftool_sel")
 
-    sel = ui_app.pane_changes.treechanges.get_selected_rows()
-    logex.info("files sel", sel)
+    selrows = ui_app.pane_changes.treechanges.get_selected_rows()
+    logex.info("files sel", selrows)
 
-    cmd = DiffToolFileCmd(app).set_sel_files(sel).setup()  # .complete()
+    all_idx = [ui_app.filtered[x].idx-1 for x in selrows]
+
+    cmd = DiffToolFileCmd(app).set_sel_files(all_idx).setup()  # .complete()
     # run_cmd_as_bg_task(cmd)
 
     ui_app.set_mouse_pointer(busy=True)
