@@ -138,7 +138,6 @@ def refresh_tracked_from_workspace():
     app.wsprop = ui_app.pane_tracked.workspaces
 
     refresh_repos_only()
-    switch_changes()
 
 
 def refresh_repos_only():
@@ -217,14 +216,21 @@ def update_deps():
 
             # show changes tab
             # todo
+            switch_changes()
 
     # call thread and other tasks in tk event loop
     _bg_refresh_task()
 
 
+autoswitchflag = True
+
+
 def switch_changes():
-    if len(app.refs) > 0 or app.base.getbool(CFG_SHOW_CHANGES_TAB, CFG_SHOW_CHANGES_TAB_DEFAULT):
-        ui_app.select_tab()
+    global autoswitchflag
+    if autoswitchflag:
+        if len(app.refs) > 0 or app.base.getbool(CFG_SHOW_CHANGES_TAB, CFG_SHOW_CHANGES_TAB_DEFAULT):
+            ui_app.select_tab()
+        autoswitchflag = False
 
 
 def filter_files(repo=None):
