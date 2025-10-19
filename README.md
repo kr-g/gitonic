@@ -502,6 +502,11 @@ at the present time the context menu only works on the underlying file (row) in 
 there is **no** support for multiple files (selection) as of now.
 
 
+# related
+
+there is a plugin for thonny ide 
+[`thonny-gitonic`](https://github.com/kr-g/thonny-gitonic)
+
 
 # platform
 
