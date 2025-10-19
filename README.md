@@ -504,7 +504,7 @@ there is **no** support for multiple files (selection) as of now.
 
 # related
 
-there is a plugin for thonny ide 
+plugin for thonny ide 
 [`thonny-gitonic`](https://github.com/kr-g/thonny-gitonic)
 
 
