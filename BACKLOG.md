@@ -68,6 +68,8 @@
 - context menu 
   - less sensitive (disappears to quickly)
   - multiple row feature
+- splash screen
+- new version notification 
 - 
 
 
