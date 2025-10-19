@@ -332,8 +332,8 @@ the file pattern is following Unix filename pattern matching.
 the `workdir` key will change the current working directory before running
 the command.
 
-the `menu` array contains the text to display in the menu, 
-and the command params as embedded array.
+the `name` contains the text to display in the menu, 
+and `para` the command-binary plus params as array.
 
 the context name as such can have any value 
 (as long it is unique in the structure).
