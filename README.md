@@ -526,14 +526,21 @@ it is recommented to install gitonic into a
 [virtual environment](https://docs.python.org/3/library/venv.html).
 the following script will install gitonic in your home directory (linux).
 
+
+    #!/bin/bash
+    
     # create virtual environment 
+    
     cd ~
     python3 -m venv gitonic
-
-    # install gitonic with recommended extras
-    ~/gitonic/bin/pip install gitonic[PEP08,MELD]
-    or
-    ~/gitonic/bin/pip install gitonic[DEFAULT]
+    
+    cd gitonic
+    
+    source ./bin/activate
+    
+    # install gitonic with all pep08 and meld
+    
+    pip3 install gitonic[PEP08,MELD]
 
 
 this script can be found here
