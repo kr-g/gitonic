@@ -7,6 +7,7 @@
   - user interface is now non-blocking
     - multi tasking tested with python 3.12 
       - **not yet tested** with python 3.13 / 3.14
+        - `gitonic` is released for python3.12 (fixed version)
       - current implementation uses threads to fork `git` processes in the background
       - the main tk eventloop receives the thread results and process this in callbacks
         - read here for detailed information [`tk eventloop`](https://tkdocs.com/tutorial/eventloop.html))
