@@ -42,7 +42,9 @@
 - background task and event loop ~~-> freezing gui when running git utils~~
   - ~~use TkCmd also for Cmd runners~~
   - status bar with running background tasks overview?
-  -
+  - esc esc handler and shut down
+    - currently it terminates all running background tasks
+      - option to show extra popup to inform the user regarding running tasks
 - refact for integration in other tools
 - ~~filter git on 'changes' tab~~
 - rework logging
