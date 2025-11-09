@@ -5,6 +5,9 @@ you are reading VERSION = v0.19.0-develop
 
 version v0.18.0 will come with some bigger changes.
 
+version v0.18.0 is released for **python3.12 (fixed version)** !!!
+
+
 read latest news here:
 
 [`CHANGELOG`](https://github.com/kr-g/gitonic/blob/main/CHANGELOG.md)
