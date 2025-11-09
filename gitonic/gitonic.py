@@ -1045,7 +1045,13 @@ def main_func():
 
     app = GitonicApp()
     
-    if new_version := check_github_new_version():
+    new_version, ex_version = check_github_new_version()
+    
+    if ex_version:
+        print(f"!!!!!!! new version available {new_version}")
+        tk_show_error("version information","could not connect to update site.\n\nERR: check your internet connection.")
+    
+    if new_version:
         print(f"!!!!!!! new version available {new_version}")
         tk_show_warning("version information",f"there is a new version\nof gitonic availabe\n\n{new_version}")
 
@@ -1194,6 +1200,8 @@ def main_func():
     if new_version:
         titstr += f" ===> !!! NEW VERSION AVAILABLE {new_version} !!!"
         VERSION_INFO.set_val( f"NEW VERSION AVAILABLE: {new_version}" )
+    if ex_version:
+        VERSION_INFO.set_val( "version: could not connect to update site." )
 
     ui_app.set_title(titstr)
 

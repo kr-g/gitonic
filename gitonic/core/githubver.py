@@ -12,8 +12,11 @@ def mkver(x):
 
 def check_github_new_version():
 
-    res = request("GET", URL)
-
+    try:
+        res = request("GET", URL)
+    except Exception as ex:
+        return None, ex
+    
     verslist_published = list(map(lambda x: mkver(x['name']), res.json()))
 
     verlist_published = list(
@@ -24,7 +27,9 @@ def check_github_new_version():
     version_current = semver.Version.parse(mkver(VERSION))
 
     if version_current < latest_published:
-        return latest_published
+        return latest_published, None
+    
+    return None, None
 
 
 if __name__ == "__main__":
