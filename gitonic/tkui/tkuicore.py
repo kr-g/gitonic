@@ -30,6 +30,9 @@ def tk_get_icon(name, height=HEIGHT, image_size=(HEIGHT+3, HEIGHT+3), bg="lightg
 def tk_show_error(title, message):
     tk_messagebox.showerror(title, message)
 
+def tk_show_warning(title, message):
+    tk_messagebox.showwarning(title, message)
+
 #
 
 

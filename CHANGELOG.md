@@ -3,6 +3,7 @@
 
 
 ## version v0.19.0 - ????????
+- check for latest version of gitonic
 - 
 
 

@@ -6,6 +6,9 @@ import fnmatch
 import queue
 
 #
+from core.githubver import check_github_new_version
+
+#
 
 from core.logs import LogOutHandler
 from gtcommon import EXPERT_LOG, REPO_LOG, logex, logrepo
@@ -19,10 +22,10 @@ from core.sysutil import get_terminal_size, open_file_explorer
 
 #
 
-from tkui.tkuicore import tk_show_error
+from tkui.tkuicore import tk_show_error, tk_show_warning
 from tkui.singleinstance import switch2instance, tk_bg_bring_to_front, cleanup_single_instance
 
-from tkui.tkuiapp import ui_app, root, tk_add_bg_callb, tk_get_root
+from tkui.tkuiapp import ui_app, root, tk_add_bg_callb, tk_get_root, VERSION_INFO
 from tkui.tkuiwidg import TNContextMenu
 
 from core.gitonapp import (GitonicApp, FetchCmd, PullCmd, CommitCmd,
@@ -1027,10 +1030,12 @@ def load_and_set_context_settings(sect, ctxmenu, gnam_dir, fnam_dir, fnam):
 #
 #
 app = None
+new_version = None
 
 
 def main_func():
     global app
+    global new_version
 
     if switch2instance(PATH):
         logex.info("allready running. switch to instance")
@@ -1039,6 +1044,10 @@ def main_func():
     tk_get_root().add_quit_handler(cleanup_single_instance)
 
     app = GitonicApp()
+    
+    if new_version := check_github_new_version():
+        print(f"!!!!!!! new version available {new_version}")
+        tk_show_warning("version information",f"there is a new version\nof gitonic availabe\n\n{new_version}")
 
     # cmd = RefreshCmd(app).setup().complete()
     # app.sort_refs()
@@ -1181,8 +1190,12 @@ def main_func():
     tk_bg_bring_to_front(tk_get_root())
 
     #
+    titstr = VERSION
+    if new_version:
+        titstr += f" ===> !!! NEW VERSION AVAILABLE {new_version} !!!"
+        VERSION_INFO.set_val( f"NEW VERSION AVAILABLE: {new_version}" )
 
-    ui_app.set_title(VERSION)
+    ui_app.set_title(titstr)
 
     # update first time
     root.after(153, refresh_tracked_from_workspace)

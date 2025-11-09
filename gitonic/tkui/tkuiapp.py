@@ -286,6 +286,11 @@ filler = TNLabel(
     footer, text=f"env: Python {sysver[0]}.{sysver[1]}.{sysver[2]}", image="info", compound=tk.LEFT)
 filler.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=15)
 
+
+VERSION_INFO = TNLabel(
+    footer, text="version: latest", image="info", compound=tk.LEFT)
+VERSION_INFO.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=15)
+
 #
 
 root.resizable(True, True)

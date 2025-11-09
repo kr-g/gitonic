@@ -28,7 +28,7 @@
 - settings tabs
   - check for installed git
   - ~~git exe configuration in settings~~
-  - check for latest version of gitonic
+  - ~~check for latest version of gitonic~~
   - 
 - ~~config file for last known config~~
 - ~~diff-tool blocks main screen (see next)~~

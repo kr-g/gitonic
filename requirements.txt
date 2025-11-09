@@ -1,3 +1,4 @@
 
 pillow
 tkinter-tooltip
+semver
