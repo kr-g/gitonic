@@ -31,9 +31,9 @@
   - filter log for each repo
 - codebase refactored 
 - new commandline tools (UNDER CONTSRUCTION - not yet final - dont expect anything!!! - this might be dropped in the future)
-  - `gtcd.py`
+  - `gtcd.py` alias `gtcd`
     - opens a new terminal for a git repo quickly
-  - `gtls.py` 
+  - `gtls.py` alias `gtls`
     - list all changes for all tracked git repo 
 -
 
