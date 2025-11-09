@@ -16,7 +16,7 @@ def check_github_new_version():
         res = request("GET", URL)
     except Exception as ex:
         return None, ex
-    
+
     verslist_published = list(map(lambda x: mkver(x['name']), res.json()))
 
     verlist_published = list(
@@ -28,11 +28,12 @@ def check_github_new_version():
 
     if version_current < latest_published:
         return latest_published, None
-    
+
     return None, None
 
 
 if __name__ == "__main__":
-    if latest_published := check_github_new_version():
+    latest_published, ex = check_github_new_version()
+    if latest_published:
         print(f"you are using gitonic {
               VERSION}. there is a new version available {latest_published}")
