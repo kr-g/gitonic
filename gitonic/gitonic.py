@@ -1029,7 +1029,7 @@ def load_and_set_context_settings(sect, ctxmenu, gnam_dir, fnam_dir, fnam):
 app = None
 
 
-def run_main():
+def main_func():
     global app
 
     if switch2instance(PATH):
@@ -1191,4 +1191,4 @@ def run_main():
 
 
 if __name__ == "__main__":
-    run_main()
+    main_func()

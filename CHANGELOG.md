@@ -2,7 +2,16 @@
 # CHANGELOG
 
 
-## version v0.18.0 - ???
+## version v0.19.0 - ????????
+- 
+
+
+## version v0.18.1 - 20251109
+- patch entry point
+-
+
+
+## version v0.18.0 - 20251109
 - redesign multi tasking / tk eventloop
   - user interface is now non-blocking
     - multi tasking tested with python 3.12 
