@@ -17,7 +17,7 @@ from core.gitcmd import set_git_exe, get_git_exe
 #
 
 
-if __name__ == "__main__":
+def main_func():
 
     app = GitonicApp()
 
@@ -67,3 +67,6 @@ if __name__ == "__main__":
     # term = get_terminal_size()
     # if term:
     #     print(term)
+
+if __name__ == "__main__":
+    main_func()

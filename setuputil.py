@@ -35,26 +35,26 @@ def load_requirements():
 
 
 def get_scripts(projectname):
-    console_scripts = []
-    gui_scripts = []
+    # console_scripts = []
+    # gui_scripts = []
 
-    try:
-        mod = importlib.import_module(f"{projectname}.__main__")
-        if "main_func" in dir(mod):
-            console_scripts = [
-                f"{projectname} = {projectname}.__main__:main_func",
-            ]
-        if "gui_func" in dir(mod):
-            gui_scripts = [
-                f"{projectname}-ui = {projectname}.__main__:gui_func",
-            ]
-    except:
-        print("no scripts found", file=sys.stderr)
-        raise Exception()
+    # try:
+    #     mod = importlib.import_module(f"{projectname}.__main__")
+    #     if "main_func" in dir(mod):
+    #         console_scripts = [
+    #             f"{projectname} = {projectname}.__main__:main_func",
+    #         ]
+    #     if "gui_func" in dir(mod):
+    #         gui_scripts = [
+    #             f"{projectname}-ui = {projectname}.__main__:gui_func",
+    #         ]
+    # except:
+    #     print("no scripts found", file=sys.stderr)
+    #     raise Exception()
 
     entry_points = {
-        "console_scripts": console_scripts,
-        "gui_scripts": gui_scripts,
+        "console_scripts": ["gtcd=gitonic.gtcd:main_func", "gtls=gitonic.gtls:main_func"],
+        "gui_scripts": ["gitonic=gitonic.gitonic:main_func"],
     }
 
     return entry_points
@@ -63,6 +63,7 @@ def get_scripts(projectname):
 pyver = platform.python_version_tuple()[:2]
 pyversion = ".".join(pyver)
 python_requires = f"=={pyversion}"
+python_requires = f">=3.12,<3.13"
 
 projectname = find_projectname()
 

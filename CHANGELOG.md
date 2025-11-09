@@ -21,7 +21,7 @@
 - improved logging
   - filter log for each repo
 - codebase refactored 
-- new commandline tools (UNDER CONTSRUCTION - not yet final - dont expect anything!!!)
+- new commandline tools (UNDER CONTSRUCTION - not yet final - dont expect anything!!! - this might be dropped in the future)
   - `gtcd.py`
     - opens a new terminal for a git repo quickly
   - `gtls.py` 
