@@ -471,6 +471,22 @@ for running on linux with xfce.
         "workdir": "$GIT",
         "changes-all": [
           {
+            "name": "git push $_GIT",
+            "para": [
+              "git",
+              "push"
+            ],
+            "logexpert" : true
+          },
+          {
+            "name": "git pull $_GIT",
+            "para": [
+              "git",
+              "pull"
+            ],
+            "logexpert" : true
+          },
+          {
             "name": "gitk $_GIT",
             "para": [
               "gitk"
