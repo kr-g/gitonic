@@ -63,7 +63,7 @@ def get_scripts(projectname):
 pyver = platform.python_version_tuple()[:2]
 pyversion = ".".join(pyver)
 python_requires = f"=={pyversion}"
-python_requires = f">=3.12,<3.13"
+#python_requires = f">=3.12,<3.13"
 
 projectname = find_projectname()
 

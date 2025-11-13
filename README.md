@@ -1,11 +1,9 @@
 [![PEP-08](https://img.shields.io/badge/code%20style-PEP08-green.svg)](https://www.python.org/dev/peps/pep-0008/)
 
 
-you are reading VERSION = v0.19.0-develop
+you are reading VERSION = v0.18.2
 
 version v0.18.0 will come with some bigger changes.
-
-version v0.18.0 is released for **python3.12 (fixed version)** !!!
 
 
 read latest news here:

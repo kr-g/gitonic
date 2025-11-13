@@ -3,6 +3,10 @@
 
 
 ## version v0.19.0 - ????????
+- 
+
+
+## version v0.18.2 - 20251113
 - check for latest version of gitonic
 - fix #9 for renamed file handling
 - 
@@ -13,7 +17,7 @@
 -
 
 
-## version v0.18.0 - 20251109
+## version v0.18.0 - 20251109 - not available on pypi
 - redesign multi tasking / tk eventloop
   - user interface is now non-blocking
     - multi tasking tested with python 3.12 

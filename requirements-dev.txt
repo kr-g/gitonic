@@ -1,4 +1,6 @@
+setuptools
+twine
+
 spyder-kernels==3.0.*
 flake8
 autopep8
-twine
