@@ -319,6 +319,12 @@ class GitonicCmdIt(object):
             print("empty list")
             return
 
+        # remove renamed files
+        files = list(filter(lambda x: x.staged != "R", files))
+
+        # status -> fnam
+        files = list(map(lambda x: x.file, files))
+
         cmd = git_add(repo.path, files, stopcb=self._stop_callb)
         yield cmd
 
@@ -329,6 +335,8 @@ class GitonicCmdIt(object):
         logex.info("unstage_files_task_it", repo, files)
 
         print("***undo add", files)
+
+        files = list(filter(lambda x: x.staged != "R", files))
 
         files_m = list(filter(lambda x: x.staged != "A", files))
         files_m = list(map(lambda x: x.file, files_m))

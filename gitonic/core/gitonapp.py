@@ -413,7 +413,7 @@ class StageFileCmd(GitCmd):
             repofiles = list(
                 filter(lambda x: x.repo.path == repo.path, self.selfiles))
 
-            repofiles = list(map(lambda x: x.file.file, repofiles))
+            repofiles = list(map(lambda x: x.file, repofiles))
 
             if len(repofiles) == 0:
                 yield FuncTask().set_name("nop").set_func()
