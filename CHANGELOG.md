@@ -4,6 +4,7 @@
 
 ## version v0.19.0 - ????????
 - check for latest version of gitonic
+- fix #9 for renamed file handling
 - 
 
 
