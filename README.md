@@ -578,10 +578,13 @@ to run gitonic use the script from the virtual environment directly
     ~/gitonic/bin/gitonic
     
  
-it is recommented to create an alias in `.bash_aliases`. 
+it is recommented to create some alias in `.bash_aliases`. 
 add the following line at the end of `.bash_aliases`
 
     alias gitonic=~/gitonic/bin/gitonic
+    
+    alias gtcd=~/gitonic/bin/gtcd
+    alias gtls=~/gitonic/bin/gtls
     
 
 ## other installation dependencies
