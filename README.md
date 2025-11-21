@@ -208,14 +208,7 @@ or in case autopep8 is installed in a venv, e.g.
 
 ### black
 
-black is also an offical python tool, but resolves not fully to issues reported by pycodestyle.
-there might be some rework required (from case to case). 
-result is quite similar to 
-[autopep8](https://github.com/hhatto/autopep8)
-beside the list reported by pycodestyle (after formatting) 
-is a bit longer comparing to 
-[autopep8](https://github.com/hhatto/autopep8)
-what does a better job here.
+[black](https://github.com/psf/black))
 
     {
       ".py": {
@@ -229,8 +222,8 @@ what does a better job here.
 
 ### yapf 
 
-yapf (google python code formmater) is slow comparing the former tools, and re-arranges code so 
-that it is reported as error by pycodestyle after formatting. 
+[yapf](https://github.com/google/yapf)
+(google python code formatter). 
 
     {
       ".py": {
@@ -245,7 +238,7 @@ that it is reported as error by pycodestyle after formatting.
 
 ## templates for c, c++ formatters
 
-all of the following tools are NOT part of `gitonic` standard installation. 
+all of the following tools are **NOT** part of `gitonic` standard installation. 
 
 
 ### uncrustify
