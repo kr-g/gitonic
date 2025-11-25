@@ -208,7 +208,7 @@ or in case autopep8 is installed in a venv, e.g.
 
 ### black
 
-[black](https://github.com/psf/black))
+[black](https://github.com/psf/black)
 
     {
       ".py": {
