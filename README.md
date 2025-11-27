@@ -625,9 +625,6 @@ add a `.git-credentials` file as described here
 [`git-credentials`](https://git-scm.com/docs/git-credential-store)
 
 
-add a `.gitconfig` file as described here
-[`git-config`](https://git-scm.com/docs/git-config)
-
 NOTE: the structure for an entry in `.git-credentials` is as following, 
  e.g. for github put a single text line with
 
@@ -639,7 +636,10 @@ NOTE: `github` personal access tokens (classic) are maintained on `github` under
     profile > settings > developer settings > personal access tokens > tokens (classic)
 
 
-configure for diff and merge tools. 
+add a `.gitconfig` file as described here
+[`git-config`](https://git-scm.com/docs/git-config)
+
+and configure for diff and merge tools. 
 NOTE: you need to install the diff-tool e.g. 
 [`meld merge`](https://meldmerge.org/) manually, 
 if meld is not installed pressing the button will have no effect.
