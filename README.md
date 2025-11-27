@@ -628,8 +628,8 @@ add a `.git-credentials` file as described here
 add a `.gitconfig` file as described here
 [`git-config`](https://git-scm.com/docs/git-config)
 
-NOTE: the structure for an entry `.gitconfig` is as following, 
- e.g. github put a single text line with
+NOTE: the structure for an entry in `.gitconfig` is as following, 
+ e.g. for github put a single text line with
 
     https://your-user:your-personal-classic-token@github.com
 
