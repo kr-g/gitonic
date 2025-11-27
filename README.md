@@ -630,10 +630,6 @@ NOTE: the structure for an entry in `.git-credentials` is as following,
 
     https://your-user:your-personal-classic-token@github.com
 
-e.g. for gnome / gitlab:
-
-    https://your-user:your-personal-classic-token@gitlab.gnome.org
-    
 
 NOTE: `github` personal access tokens (classic) are maintained on `github` under:
 
