@@ -631,7 +631,7 @@ add a `.gitconfig` file as described here
 NOTE: the structure for an entry `.gitconfig` is as following, 
  e.g. github put a single text line with
 
-    https://*your-user*:*your-personal-classic-token*@github.com
+    https://your-user:your-personal-classic-token@github.com
 
 
 configure for diff and merge tools. 
