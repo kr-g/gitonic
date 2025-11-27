@@ -633,8 +633,10 @@ NOTE: the structure for an entry in `.gitconfig` is as following,
 
     https://your-user:your-personal-classic-token@github.com
 
-`github` personal access tokens (classic) are maintained on `github` under
-profile > settings > developer settings > personal access tokens > tokens (classic)
+
+NOTE: `github` personal access tokens (classic) are maintained on `github` under:
+
+    profile > settings > developer settings > personal access tokens > tokens (classic)
 
 
 configure for diff and merge tools. 
