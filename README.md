@@ -706,6 +706,13 @@ gitonic is released under the following
 git logos from [git-scm](https://git-scm.com/downloads/logos)
 
 
+## included components licenses
+
+[tkinter-tooktip](https://github.com/gnikit/tkinter-tooltip)
+
+[google-material-icons](https://github.com/google/material-design-icons)
+
+
 # support and donations
 
 support the further development of `gitonic` with a donation of your choice.
