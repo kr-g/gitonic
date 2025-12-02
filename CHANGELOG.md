@@ -7,10 +7,12 @@
 
 
 ## version v0.18.4 - ????????
-- fixes on windows (yes - i have now a win11 pc...)
+- fixes for windows platform (yes - i have now a win11 pc...)
   - gitcmd file quoting 
   - localhost paramter for single instance
-  - 
+  - git difftool
+  - context menu
+- 
 - 
 
 

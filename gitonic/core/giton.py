@@ -409,7 +409,14 @@ class GitonicCmdIt(object):
                 # run unattached
 
                 args = [get_git_exe(), "difftool", file.file.file]
-                rc = os.spawnvpe(os.P_NOWAIT, args[0], args, os.environ)
+                
+                print("difftool args", args)
+                
+                # todo windows change test on linux
+                import subprocess
+                rc = subprocess.Popen(args)
+                
+                # rc = os.spawnve(os.P_NOWAIT, args[0], args, os.environ)
 
                 logex.info("difftool_files_task_it started", args)
 

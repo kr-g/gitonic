@@ -1014,8 +1014,15 @@ def load_and_set_context_settings(sect, ctxmenu, gnam_dir, fnam_dir, fnam):
                         logex.info("run command", *args)
 
                         with PushDir(workdir):
-                            rc = os.spawnvpe(
-                                os.P_NOWAIT, args[0], args, os.environ)
+                            
+                            # todo windows change test on linux
+                            
+                            #rc = os.spawnvpe(
+                            #    os.P_NOWAIT, args[0], args, os.environ)
+                            
+                            import subprocess
+                            rc = subprocess.Popen(args)
+                            
                             logex.info("call result", rc)
 
                     return _runner
