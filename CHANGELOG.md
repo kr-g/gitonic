@@ -7,8 +7,11 @@
 
 
 ## version v0.18.4 - ????????
-- fix file quoting on windows
--  
+- fixes on windows (yes - i have now a win11 pc...)
+  - gitcmd file quoting 
+  - localhost paramter for single instance
+  - 
+- 
 
 
 ## version v0.18.3 - 20251113
