@@ -102,7 +102,7 @@ class Config(object):
         return self
 
     def save(self):
-        assert self.conf
+        # assert self.conf
         save_settings(self.conf, self.fnam)
 
     def set_val(self, key, val):

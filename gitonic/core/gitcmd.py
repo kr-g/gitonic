@@ -11,6 +11,8 @@ from sysutil import platform_windows
 
 GIT = "git.exe" if platform_windows() else "git"
 
+OS_QUOTE = "\""  if platform_windows() else "'"
+
 #
 
 
@@ -31,7 +33,7 @@ def git_cmd(repo, cmdline, callb=None, stopcb=None):
     # print("using", gexe)
     return CmdTask() \
         .configure(callb=callb, stop_callb=stopcb) \
-        .set_command(f"{gexe} -C '{repo}' {cmdline}", )
+        .set_command(f"{gexe} -C {OS_QUOTE}{repo}{OS_QUOTE} {cmdline}", )
 
 
 def with_git_cmd(repo, cmd, callb=None, stopcb=None):
@@ -72,7 +74,7 @@ def git_tag(repo, tagnam="", callb=None, stopcb=None):
 
 
 def join_files(files, sep=" "):
-    return sep.join(map(lambda x: "'" + x + "'", files))
+    return sep.join(map(lambda x: OS_QUOTE + x + OS_QUOTE, files))
 
 #
 
@@ -106,7 +108,7 @@ def git_add_index_undo(repo, files, callb=None, stopcb=None):
 
 
 def git_commit(repo, comment, callb=None, stopcb=None):
-    return with_git_cmd(repo, f"commit -m '{comment}'", callb=callb, stopcb=stopcb)
+    return with_git_cmd(repo, f"commit -m {OS_QUOTE}{comment}{OS_QUOTE}", callb=callb, stopcb=stopcb)
 
 #
 

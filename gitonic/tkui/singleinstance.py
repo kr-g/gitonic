@@ -111,8 +111,12 @@ def switch2instance(path):
 
     global _fnam
 
-    _fnam = os.path.join("~", path, "socket")
+    _fnam = os.path.join("~", path)
     _fnam = os.path.expanduser(_fnam)
+
+    os.makedirs(_fnam, exist_ok=True)
+
+    _fnam = os.path.join(_fnam, "socket")
 
     print_t("EXE", _fnam)
 
