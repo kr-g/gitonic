@@ -31,7 +31,7 @@ def create_socket(port=0):
 
 def create_client_socket(port=0):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(("", port))
+    sock.connect(("localhost", port))
     try:
         rc = sock.send("helo\n".encode())
         print_t("send helo", rc)
@@ -42,6 +42,7 @@ def create_client_socket(port=0):
 
 
 def bring_to_front(wndw):
+    # todo not working on windows
     wndw.deiconify()
     wndw.lift()
 
