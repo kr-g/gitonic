@@ -1015,11 +1015,7 @@ def load_and_set_context_settings(sect, ctxmenu, gnam_dir, fnam_dir, fnam):
 
                         with PushDir(workdir):
                             
-                            # todo windows change test on linux
-                            
-                            #rc = os.spawnvpe(
-                            #    os.P_NOWAIT, args[0], args, os.environ)
-                            
+                            # todo                            
                             import subprocess
                             rc = subprocess.Popen(args)
                             
