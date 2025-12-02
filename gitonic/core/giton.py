@@ -412,7 +412,7 @@ class GitonicCmdIt(object):
                 
                 print("difftool args", args)
                 
-                # todo windows change test on linux
+                # todo
                 import subprocess
                 rc = subprocess.Popen(args)
                 
