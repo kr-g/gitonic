@@ -1117,6 +1117,9 @@ def main_func():
     ui_app.pane_commit.msg_cb.set_val(msgshort)
     ui_app.pane_commit.msg_text.set_val(msglong)
 
+    if ui_app.pane_commit.clrcommit_ck.get_val():
+        commit_clear()
+
     # log
 
     ui_app.pane_log.repos.on_click = on_filter_log_repo

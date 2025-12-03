@@ -12,7 +12,7 @@
   - localhost paramter for single instance
   - git difftool
   - context menu process start
-- 
+- rework handling commit clear 
 - 
 
 
