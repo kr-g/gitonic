@@ -6,7 +6,7 @@
 -
 
 
-## version v0.18.4 - ????????
+## version v0.18.5 - 20251207
 - fixes for windows platform (looking for contributors on windows platform !!!)
   - gitcmd file quoting 
   - localhost paramter for single instance

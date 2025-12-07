@@ -2,3 +2,4 @@
 pillow
 tkinter-tooltip
 semver
+urllib3
