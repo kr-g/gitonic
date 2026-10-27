@@ -1,10 +1,11 @@
 """
-    (c) 2021-2025 K. Goger - https://github.com/kr-g
-    legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
+(c) 2021-2025 K. Goger - https://github.com/kr-g
+legal: https://github.com/kr-g/gitonic/blob/main/LICENSE.md
 """
 
 from const import GITIGNORE
 from file import FileStat
+
 # from .sysutil import platform_windows
 
 #
@@ -27,7 +28,9 @@ class GitBranch(object):
         return self
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.current}', '{str(self.bnam)}' )"
+        return (
+            f"{self.__class__.__name__}('{self.current}', '{str(self.bnam)}' )"
+        )
 
 
 class GitStatus(object):
@@ -41,25 +44,33 @@ class GitStatus(object):
 
         self.mode = mode.upper() if mode else ""
         self.staged = staged.upper() if staged else ""
+
+        if file:
+            if file.startswith('"') and file.endswith('"'):
+                file = file[1:-1]
+            elif file.startswith("'") and file.endswith("'"):
+                file = file[1:-1]
+
         self.file = file
-#         self.state = {}
-#
-#         for s, fc in [
-#             ("M", "modified"),
-#             ("A", "added"),
-#             ("D", "deleted"),
-#             ("R", "renamed"),
-#             ("C", "copied"),
-#             ("U", "updated_but_unmerged"),
-#             ("??", "not_in_git"),
-#         ]:
-#             comb = {f"is_{fc}": self.mode.find(s) >= 0}
-#             self.state.update(comb)
-#             self.__dict__.update(comb)
-#
-#             comb = {f"is_staged_{fc}": self.staged.find(s) >= 0}
-#             self.state.update(comb)
-#             self.__dict__.update(comb)
+
+        #         self.state = {}
+        #
+        #         for s, fc in [
+        #             ("M", "modified"),
+        #             ("A", "added"),
+        #             ("D", "deleted"),
+        #             ("R", "renamed"),
+        #             ("C", "copied"),
+        #             ("U", "updated_but_unmerged"),
+        #             ("??", "not_in_git"),
+        #         ]:
+        #             comb = {f"is_{fc}": self.mode.find(s) >= 0}
+        #             self.state.update(comb)
+        #             self.__dict__.update(comb)
+        #
+        #             comb = {f"is_staged_{fc}": self.staged.find(s) >= 0}
+        #             self.state.update(comb)
+        #             self.__dict__.update(comb)
 
         return self
 
@@ -156,9 +167,9 @@ class GitWorkspace(object):
             self.gits[path] = git
         return self
 
-#     def refresh_status(self):
-#         for _, git in self.gits.items():
-#             git.refresh_status()
+    #     def refresh_status(self):
+    #         for _, git in self.gits.items():
+    #             git.refresh_status()
 
     def find(self, search_str):
         return list(
