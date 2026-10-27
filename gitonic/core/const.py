@@ -1,4 +1,4 @@
-VERSION = "v0.18.6-develop"
+VERSION = "v0.18.6"
 
 GITIGNORE = ".gitignore"
 

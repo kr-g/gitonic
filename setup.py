@@ -15,6 +15,7 @@ setuptools.setup(
 )
 
 # !!!
+# rm build/ dist/ gitonic.egg-info/ -r
 # python3 patch_version.py
 # !!!
 
