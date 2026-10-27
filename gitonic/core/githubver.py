@@ -1,5 +1,6 @@
 from const import VERSION
 
+import sys
 import semver
 from urllib3 import request
 
@@ -17,17 +18,30 @@ def check_github_new_version():
     except Exception as ex:
         return None, ex
 
-    verslist_published = list(map(lambda x: mkver(x['name']), res.json()))
+    verslist_published = list(map(lambda x: mkver(x["name"]), res.json()))
 
     verlist_published = list(
-        map(lambda x: semver.Version.parse(x), verslist_published))
+        map(lambda x: semver.Version.parse(x), verslist_published)
+    )
+
+    infover = list(
+        map(lambda x: [x.major, x.minor, x.patch], verlist_published)
+    )
+
+    print("pubished versions", infover, file=sys.stderr)
 
     latest_published = max(verlist_published)
 
+    print("latest version", latest_published, file=sys.stderr)
+
     version_current = semver.Version.parse(mkver(VERSION))
+
+    print("version_current version", version_current, file=sys.stderr)
 
     if version_current < latest_published:
         return latest_published, None
+
+    print("no new version available", file=sys.stderr)
 
     return None, None
 
@@ -35,5 +49,7 @@ def check_github_new_version():
 if __name__ == "__main__":
     latest_published, ex = check_github_new_version()
     if latest_published:
-        print(f"you are using gitonic {
-              VERSION}. there is a new version available {latest_published}")
+        print(
+            f"you are using gitonic {
+              VERSION}. there is a new version available {latest_published}"
+        )
